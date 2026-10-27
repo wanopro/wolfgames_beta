@@ -159,7 +159,7 @@ private fun Ctx.closedFace(bite: Float) {
 fun WolfTeethGame(onBack: () -> Unit) {
     val s = LocalStrings.current
     var prizes by rememberSaveable { mutableIntStateOf(1) }
-    var started by rememberSaveable { mutableStateOf(false) }
+    var started by rememberSaveable { mutableStateOf(com.wolfgames.app.DebugOpen.autostart) }
     GameScaffold(s.menuCroc, onBack) {
         if (!started) SetupPanel(description = s.teethDesc, onStart = { started = true }) { Stepper(s.prizes, prizes, 1..10) { prizes = it } }
         else WolfTeethPlay(prizes, onSetup = { started = false })
