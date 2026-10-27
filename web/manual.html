@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Wolf Games · 설치 안내 / Install guide</title>
+  <meta name="description" content="울프 게임즈 v1.4 — 안드로이드 APK 설치 방법과 아이폰 홈 화면 추가 방법 (6개 언어)">
+  <meta name="theme-color" content="#12121A">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <style>
+    :root { --bg:#12121A; --surface:#1E1E2A; --surface2:#2C2C3E; --accent:#FFB300; --text:#F2F2F7; --sub:#A4A4BA; --win:#FF3D5A; --link:#7FB2FF; color-scheme: dark; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans CJK KR", "Segoe UI", Roboto, sans-serif; line-height: 1.65; font-size: 16px; }
+    main { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+    a { color: var(--link); }
+    header { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+    header img { width: 84px; height: 84px; border-radius: 50%; flex: none; }
+    h1 { font-size: 28px; line-height: 1.25; color: var(--accent); font-weight: 900; }
+    .ver { display: inline-block; font-size: 14px; color: #000; background: var(--accent); border-radius: 8px; padding: 1px 8px; font-weight: 800; vertical-align: middle; margin-left: 6px; }
+    .lead { color: var(--sub); margin: 4px 0 0; font-size: 15px; }
+    .langbar { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; margin-bottom: 14px; }
+    .langbar button { font: inherit; border: 2px solid var(--surface); background: var(--surface); color: var(--text); border-radius: 20px; padding: 5px 11px; font-size: 13px; cursor: pointer; }
+    .langbar button.sel { border-color: var(--accent); font-weight: 800; }
+    .back { color: var(--sub); text-decoration: none; font-size: 14px; }
+    .top-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+    .red { color: #FF2D55; }
+    .games { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 14px; }
+    .games div { background: var(--surface); border-radius: 14px; padding: 12px; font-size: 14px; color: var(--sub); }
+    .games b { display: block; color: var(--text); font-size: 16px; }
+    .list { padding-left: 20px; } .list li { margin: 4px 0; }
+    @media (max-width: 560px) { .games { grid-template-columns: 1fr; } }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 8px; }
+    nav a { background: var(--surface); border-radius: 20px; padding: 6px 14px; text-decoration: none; color: var(--text); font-size: 14px; }
+    h2 { font-size: 23px; margin: 40px 0 14px; padding-top: 8px; display: flex; align-items: center; gap: 10px; }
+    h2 .tag { font-size: 13px; font-weight: 700; background: var(--surface2); color: var(--sub); border-radius: 8px; padding: 2px 8px; }
+    .quick { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+    .q { background: var(--surface); border-radius: 18px; padding: 16px; text-align: center; }
+    .q b { display: block; font-size: 17px; margin-bottom: 2px; }
+    .q small { display: block; color: var(--sub); font-size: 13px; margin-bottom: 10px; }
+    .q img { width: 100%; max-width: 170px; border-radius: 10px; background: #fff; }
+    .q a.btn { display: block; margin-top: 10px; background: var(--accent); color: #000; font-weight: 800; border-radius: 12px; padding: 10px; text-decoration: none; font-size: 15px; word-break: keep-all; }
+    .step { display: grid; grid-template-columns: 220px 1fr; gap: 18px; background: var(--surface); border-radius: 20px; padding: 16px; margin-bottom: 12px; align-items: start; }
+    .step img { width: 100%; border-radius: 14px; display: block; border: 1px solid #33334a; }
+    .step h3 { font-size: 18px; margin-bottom: 6px; display: flex; gap: 10px; align-items: center; }
+    .num { flex: none; min-width: 30px; height: 30px; border-radius: 15px; padding: 0 9px; background: var(--accent); color: #000; font-size: 15px; font-weight: 900; display: inline-flex; align-items: center; justify-content: center; }
+    .step p, .step li { color: #DADAE6; font-size: 15.5px; }
+    .step ul { padding-left: 18px; margin-top: 6px; }
+    .note { background: #2A2416; border-left: 4px solid var(--accent); border-radius: 10px; padding: 12px 14px; margin: 14px 0; font-size: 15px; color: #EDE3C8; }
+    .note.warn { background: #2D1A20; border-left-color: var(--win); color: #F3D3DA; }
+    .k { background: var(--surface2); border-radius: 6px; padding: 0 6px; font-weight: 700; white-space: nowrap; }
+    .faq details { background: var(--surface); border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; }
+    .faq summary { font-weight: 700; cursor: pointer; }
+    .faq details p { margin-top: 8px; color: #DADAE6; font-size: 15px; }
+    footer { text-align: center; color: var(--sub); font-size: 13px; margin-top: 48px; }
+    footer a { color: var(--accent); font-weight: 900; }
+    .illu { color: var(--sub); font-size: 13px; margin-top: -4px; margin-bottom: 14px; }
+    @media (max-width: 560px) {
+      .step { grid-template-columns: 1fr; }
+      .step img { max-width: 260px; margin: 0 auto; }
+      .quick { grid-template-columns: 1fr; }
+      h1 { font-size: 24px; }
+      header img { width: 68px; height: 68px; }
+    }
+    @media print {
+      :root { --bg:#fff; --surface:#F4F4F8; --surface2:#E6E6EE; --text:#15151c; --sub:#555566; --link:#0b57d0; color-scheme: light; }
+      body { font-size: 13.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      main { padding: 0; max-width: none; }
+      nav, .q a.btn, .langbar, .back { display: none; }
+      h1 { color: #B07800; }
+      h2 { margin-top: 18px; break-after: avoid; }
+      .step, .faq details, .q, .note { break-inside: avoid; }
+      .step { grid-template-columns: 150px 1fr; padding: 10px; gap: 14px; margin-bottom: 8px; }
+      .step p, .step li, .faq details p { color: #222; font-size: 13.5px; }
+      .note { background: #FFF6DD; color: #3a3000; }
+      .note.warn { background: #FFE8EC; color: #4a0010; }
+      .q img { max-width: 140px; }
+      .faq details { display: block; }
+      .faq details > *:not(summary) { display: block !important; }
+      #iphone { break-before: page; }
+      #update { break-before: page; }
+    }
+  .rel { background: var(--surface); border-radius: 16px; padding: 14px 18px; margin: 10px 0; break-inside: avoid; }
+.rel .rh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.rel .rh b { font-size: 20px; color: var(--accent); }
+.rel .rh span { color: var(--sub); font-size: 13px; }
+.rel .rh .new { background: #FFB300; color: #000; font-weight: 800; border-radius: 10px; padding: 2px 8px; font-size: 12px; }
+.rel ul { list-style: none; margin: 0; padding: 0; }
+.rel li { display: flex; gap: 10px; padding: 4px 0; line-height: 1.5; }
+.rel li .e { flex: none; width: 24px; text-align: center; }
+</style>
+  <!-- 방문자 통계 (GoatCounter, 쿠키 없음) -->
+</head>
+<body>
+<main id="m"></main>
+<script type="module">
+import { MANUAL } from './manual-i18n.js';
+import { STRINGS } from './i18n.js';
+import { CHANGELOG } from './changelog.js';
+const V = CHANGELOG[0].ver;
+
+const LANGS = [['ko', '🇰🇷', '한국어'], ['en', '🇺🇸', 'English'], ['ja', '🇯🇵', '日本語'], ['zh', '🇨🇳', '简体中文'], ['th', '🇹🇭', 'ไทย'], ['vi', '🇻🇳', 'Tiếng Việt']];
+const APK = 'https://github.com/wanopro/wolfgames/releases/latest/download/WolfGames.apk';
+const get = (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } };
+const put = (k, v) => { try { localStorage.setItem(k, v); } catch (_) { /* 무시 */ } };
+
+function pickLang() {
+  const q = new URLSearchParams(location.search).get('lang');
+  if (q && MANUAL[q]) return q;
+  const saved = get('wg-lang');
+  if (saved && MANUAL[saved]) return saved;
+  const sys = (navigator.language || 'en').slice(0, 2).toLowerCase();
+  return MANUAL[sys] ? sys : 'en';
+}
+
+function render(lang) {
+  const t = MANUAL[lang], s = STRINGS[lang], img = (n) => `manual/${lang}/${n}.jpg`;
+  document.documentElement.lang = lang;
+  document.title = `${t.title} · ${s.appName} v${V}`;
+  const steps = (arr, imgs, from) => arr.map(([h, p, li], k) => `
+    <div class="step"><img src="${img(imgs[k])}" alt="${h}" loading="lazy"><div>
+      <h3><span class="num">${lang === 'zh' ? t.step + (k + from) + '步' : t.step + ' ' + (k + from)}</span>${h}${imgs[k] === 'android-5-protect' ? ` <small style="color:var(--sub);font-weight:400">${t.optional}</small>` : ''}</h3>
+      <p>${p}</p>${li.length ? `<ul>${li.map((x) => `<li>${x}</li>`).join('')}</ul>` : ''}
+    </div></div>`).join('');
+  const games = [['🎲', s.menuDice, s.menuDiceSub], ['🃏', s.menuCards, s.menuCardsSub], ['👆', s.menuFinger, s.menuFingerSub], ['⚡', s.menuQuick, s.menuQuickSub],
+    ['🐺', s.menuWolf, s.menuWolfSub], ['🍀', s.menuLuck, s.menuLuckSub], ['⚔️', s.menuBattle, s.menuBattleSub]];
+  document.getElementById('m').innerHTML = `
+  <div class="top-row"><a class="back" href="./">${t.back}</a>
+    <div class="langbar">${LANGS.map(([c, f, l]) => `<button data-l="${c}" class="${c === lang ? 'sel' : ''}">${f} ${l}</button>`).join('')}</div></div>
+  <header><img src="icons/logo.png" alt="${s.appName}"><div><h1>${s.appName} <span class="ver">v${V}</span></h1><p class="lead">${t.lead}</p></div></header>
+  <nav><a href="#android">${t.navAndroid}</a><a href="#iphone">${t.navIphone}</a><a href="#how">${t.navHow}</a><a href="#new">${t.navNew}</a><a href="#update">${t.navUpdate}</a><a href="#log">📜 ${s.logTitle}</a><a href="#faq">${t.navFaq}</a></nav>
+  <div class="quick">
+    <div class="q"><b>${t.qAndroid}</b><small>${t.qAndroidSub}</small><img src="manual/qr-apk.png" alt="QR APK"><a class="btn" href="${APK}">${t.qApk}</a></div>
+    <div class="q"><b>${t.qWeb}</b><small>${t.qWebSub}</small><img src="manual/qr-web.png" alt="QR web"><a class="btn" href="./">wanopro.github.io/wolfgames</a></div>
+  </div>
+  <h2 id="android">${t.hAndroid} <span class="tag">${t.tAndroid}</span></h2>
+  <p class="illu">${t.illuA}</p><div class="note">${t.noteA}</div>
+  ${steps(t.a, ['android-1-download', 'android-2-blocked', 'android-3-allow', 'android-4-install', 'android-5-protect', 'android-6-done'], 1)}
+  <h2 id="iphone">${t.hIphone} <span class="tag">${t.tIphone}</span></h2>
+  <p class="illu">${t.illuI}</p><div class="note">${t.noteI}</div>
+  ${steps(t.i, ['ios-1-safari', 'ios-2-share', 'ios-3-add', 'ios-4-home'], 1)}
+  <div class="step"><img src="${img('web-home')}" alt="${t.mainT}" loading="lazy"><div><h3>${t.mainT}</h3><p>${t.mainP}</p></div></div>
+  <h2 id="how">${t.hHow}</h2>
+  <p class="illu" style="font-size:15px;color:var(--text)">${t.howIntro}</p>
+  ${t.howKeys.map(([shot, key], k) => `
+    <div class="step"><img src="${img(shot)}" alt="${s[key]}" loading="lazy"><div>
+      <h3>${t.howEmoji[k] ? t.howEmoji[k] + ' ' : ''}${s[key]}</h3>
+      <ol class="list">${t.steps[k].map((x) => `<li>${x}</li>`).join('')}</ol>
+    </div></div>`).join('')}
+  <h2 id="new">${t.hNew}</h2>
+  <p>${t.newIntro}</p>
+  <div class="games">${games.map(([e, n, d]) => `<div><b>${e} ${n}</b>${d}</div>`).join('')}</div>
+  <ul class="list">${t.newFeat.map((x) => `<li>${x}</li>`).join('')}</ul>
+  <h3 style="margin:18px 0 6px">${t.hChange}</h3>
+  <ul class="list">${t.changes.map((x) => `<li>${x}</li>`).join('')}</ul>
+  <h2 id="update">${t.hUpdate}</h2>
+  <div class="step" style="grid-template-columns:1fr"><div><p>${t.updA}</p><p style="margin-top:8px">${t.updI}</p></div></div>
+  <h2 id="log">📜 ${s.logTitle}</h2>
+  ${CHANGELOG.map((r, i) => `<div class="rel"><div class="rh"><b>v${r.ver}</b><span>${r.date.replace(/-/g, '.')}</span>${i === 0 ? `<span class="new">${s.logLatest}</span>` : ''}</div>
+    <ul>${r.items.map(([e, tx]) => `<li><span class="e">${e}</span><span>${tx[lang] || tx.en}</span></li>`).join('')}</ul></div>`).join('')}
+  <h2 id="faq">${t.hFaq}</h2>
+  <div class="faq">${t.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>
+  <footer>Powered by <a href="https://wolf.community" target="_blank" rel="noopener">WOLF</a>(feat. segna) · ${s.appName} v${V}</footer>`;
+  document.querySelectorAll('.langbar button').forEach((b) => b.addEventListener('click', () => {
+    put('wg-lang', b.dataset.l);
+    const u = new URL(location.href); u.searchParams.set('lang', b.dataset.l); history.replaceState(null, '', u);
+    render(b.dataset.l);
+  }));
+}
+render(pickLang());
+</script>
+</body>
+</html>
