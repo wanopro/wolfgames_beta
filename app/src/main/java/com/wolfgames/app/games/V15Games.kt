@@ -110,7 +110,7 @@ private fun AnimCanvas(modifier: Modifier, input: Modifier, draw: (Ctx, Float, F
 }
 
 // ---------- 위·아래 2명 화면 (누르기·떼기 둘 다 받음) ----------
-private interface DuelGame {
+private interface TwoSideGame {
     fun draw(ctx: Ctx, w: Float, h: Float, t: Float, s: Strings)
     fun down(p: Int, t: Float, x: Float, y: Float)
     fun up(p: Int, t: Float, left: Int) {}
@@ -118,7 +118,7 @@ private interface DuelGame {
 }
 
 @Composable
-private fun DuelCanvas(game: DuelGame) {
+private fun TwoSideCanvas(game: TwoSideGame) {
     val s = LocalStrings.current
     val density = LocalDensity.current.density
     val t0 = remember(game) { System.nanoTime() }
@@ -160,7 +160,7 @@ private fun Ctx.half(w: Float, h: Float, topSide: Boolean, fn: Ctx.() -> Unit) {
 }
 
 // ===================== 🎀 탭 줄다리기 =====================
-private class TugGame(val vibe: Vibe) : DuelGame {
+private class TugGame(val vibe: Vibe) : TwoSideGame {
     var startAt = 0f; var pos = 0f; var disp = 0f; val cnt = IntArray(2); var win = -1; var winAt = 0f; var last = 0f; var buzz = false
     val ripples = ArrayDeque<FloatArray>()
     init { round(0f) }
@@ -211,12 +211,12 @@ private class TugGame(val vibe: Vibe) : DuelGame {
 @Composable
 fun TugWarScreen(onBack: () -> Unit) {
     val s = LocalStrings.current; val vibe = LocalVibe.current
-    SetupThen(s.tugTitle, onBack, { start -> SetupPanel(s.tugDesc, start) {} }) { DuelCanvas(remember { TugGame(vibe) }) }
+    SetupThen(s.tugTitle, onBack, { start -> SetupPanel(s.tugDesc, start) {} }) { TwoSideCanvas(remember { TugGame(vibe) }) }
 }
 
 // ===================== 🐾 슬랩 대결 =====================
 private const val IMPACT = 0.22f
-private class SlapGame(val vibe: Vibe) : DuelGame {
+private class SlapGame(val vibe: Vibe) : TwoSideGame {
     var att = Random.nextInt(2); val score = IntArray(2); val hold = IntArray(2); var phase = "wait"; var at = 0f; var kind = ""
     fun result(k: String, t: Float) { phase = "result"; kind = k; at = t; if (k == "hit" || k == "flinch") { score[att]++; vibe.strong() } else vibe.tick() }
     override fun down(p: Int, t: Float, x: Float, y: Float) {
@@ -267,7 +267,7 @@ private class SlapGame(val vibe: Vibe) : DuelGame {
 @Composable
 fun SlapDuelScreen(onBack: () -> Unit) {
     val s = LocalStrings.current; val vibe = LocalVibe.current
-    SetupThen(s.slapTitle, onBack, { start -> SetupPanel(s.slapDesc, start) {} }) { DuelCanvas(remember { SlapGame(vibe) }) }
+    SetupThen(s.slapTitle, onBack, { start -> SetupPanel(s.slapDesc, start) {} }) { TwoSideCanvas(remember { SlapGame(vibe) }) }
 }
 
 // ===================== 🍺 맥주 거품 채우기 =====================
