@@ -51,12 +51,12 @@ export const CHANGELOG = [
    [
     "🪙",
     {
-     "ko": "🪙 동전 던지기 추가 (운빨게임): 최대 8명이 앞(늑대 얼굴)·뒤(늑대 엉덩이)를 고르고 동전이 빙글빙글, 아주 가끔 세로로 서면 전원 틀림",
-     "en": "New 🪙 Coin Toss (Luck Games): up to 8 players pick heads (wolf face) or tails (wolf butt); very rarely it lands on its edge and everyone loses",
-     "ja": "🪙 コイントス追加（運ゲー）：最大8人が表（オオカミの顔）・裏（おしり）を選んでコインがくるくる、ごくまれに立つと全員はずれ",
-     "zh": "新增🪙 抛硬币（拼手气）：最多8人选正面（狼脸）或反面（狼屁股），极少数情况硬币立起来全员猜错",
-     "th": "เพิ่ม 🪙 โยนเหรียญ (เกมดวง): สูงสุด 8 คนเลือกหัว (หน้าหมาป่า) หรือก้อย (ก้น) นานๆ ทีเหรียญตั้งขึ้นผิดทุกคน",
-     "vi": "Thêm 🪙 Tung đồng xu (May rủi): tối đa 8 người chọn sấp (mặt sói) hoặc ngửa (mông sói); rất hiếm khi đồng xu đứng thẳng và tất cả đều sai"
+     "ko": "🪙 동전 던지기 추가 (운빨게임): 최대 8명이 앞(늑대 얼굴)·뒤(늑대 엉덩이)를 고르고 동전이 빙글빙글, 가끔(15%) 세로로 서면 전원 틀림",
+     "en": "New 🪙 Coin Toss (Luck Games): up to 8 players pick heads (wolf face) or tails (wolf butt); sometimes (15%) it lands on its edge and everyone loses",
+     "ja": "🪙 コイントス追加（運ゲー）：最大8人が表（オオカミの顔）・裏（おしり）を選んでコインがくるくる、ときどき（15%）立つと全員はずれ",
+     "zh": "新增🪙 抛硬币（拼手气）：最多8人选正面（狼脸）或反面（狼屁股），有时（15%）硬币立起来全员猜错",
+     "th": "เพิ่ม 🪙 โยนเหรียญ (เกมดวง): สูงสุด 8 คนเลือกหัว (หน้าหมาป่า) หรือก้อย (ก้น) บางครั้ง (15%) เหรียญตั้งขึ้นผิดทุกคน",
+     "vi": "Thêm 🪙 Tung đồng xu (May rủi): tối đa 8 người chọn sấp (mặt sói) hoặc ngửa (mông sói); thỉnh thoảng (15%) đồng xu đứng thẳng và tất cả đều sai"
     }
    ],
    [

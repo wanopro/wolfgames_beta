@@ -206,7 +206,7 @@ export function beerPour(root, back) {
 }
 
 // ===================== 🪙 동전 던지기 =====================
-export const EDGE_CHANCE = 0.03;
+export const EDGE_CHANCE = 0.15;
 export function coinToss(root, back) {
   const s = S();
   let n = 4, cv = null;

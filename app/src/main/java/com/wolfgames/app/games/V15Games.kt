@@ -324,7 +324,7 @@ fun BeerPourScreen(onBack: () -> Unit) {
 }
 
 // ===================== 🪙 동전 던지기 =====================
-const val EDGE_CHANCE = 0.03f
+const val EDGE_CHANCE = 0.15f
 private class CoinGame(override val n: Int, val vibe: Vibe) : SplitGame {
     var pick = IntArray(n); var allAt = 0f; var spinAt = 0f; var landAt = 0f; var result = 1; var last = 9; var buzzed = false
     fun round() { pick = IntArray(n); allAt = 0f; last = 9; buzzed = false }
