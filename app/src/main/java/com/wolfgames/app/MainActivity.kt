@@ -63,6 +63,12 @@ import com.wolfgames.app.games.ColorGameScreen
 import com.wolfgames.app.games.DiceDuelScreen
 import com.wolfgames.app.games.ReactionGameScreen
 import com.wolfgames.app.games.StopwatchScreen
+import com.wolfgames.app.games.TugWarScreen
+import com.wolfgames.app.games.SlapDuelScreen
+import com.wolfgames.app.games.BeerPourScreen
+import com.wolfgames.app.games.CoinTossScreen
+import com.wolfgames.app.games.KingsCupScreen
+import com.wolfgames.app.games.QrScreen
 import com.wolfgames.app.games.FourGame
 import com.wolfgames.app.games.LadderGame
 import com.wolfgames.app.games.PirateGame
@@ -117,7 +123,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr }
 
 @Composable
 fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
@@ -126,7 +132,10 @@ fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
     val back: () -> Unit = {
         screen = when (screen) {
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
-            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch -> Screen.QuickMenu
+            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer -> Screen.QuickMenu
+            Screen.Tug, Screen.Slap -> Screen.BattleMenu
+            Screen.Coin -> Screen.LuckMenu
+            Screen.Kings -> Screen.CardMenu
             Screen.UpDown, Screen.HoChiMinh -> Screen.CardMenu
             Screen.Finger -> Screen.FingerMenu
             Screen.Croc, Screen.Race, Screen.Pirate, Screen.Arrow -> Screen.WolfMenu
@@ -158,21 +167,23 @@ fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
                 MenuItem("🔄", s.menuArrow, s.menuArrowSub, Screen.Arrow),
             )) { screen = it }
             Screen.LuckMenu -> CategoryScreen("🍀 ${s.menuLuck}", back, listOf(
-                MenuItem("🪜", s.menuLadder, s.menuLadderSub, Screen.Ladder),
+                MenuItem("@ladder", s.menuLadder, s.menuLadderSub, Screen.Ladder),
                 MenuItem("🎡", s.menuRoulette, s.menuRouletteSub, Screen.Roulette),
                 MenuItem("💣", s.bombTitle, s.bombSub, Screen.Bomb),
+                MenuItem("@coin", s.coinTitle, s.coinSub, Screen.Coin),
             )) { screen = it }
             Screen.QuickMenu -> CategoryScreen("⚡ ${s.menuQuick}", back, listOf(
                 MenuItem("🟢", s.reactTitle, s.reactSub, Screen.Reaction),
                 MenuItem("🎨", s.colorTitle, s.colorSub, Screen.ColorReact),
                 MenuItem("⏱️", s.stopTitle, s.stopSub, Screen.Stopwatch),
+                MenuItem("🍺", s.beerTitle, s.beerSub, Screen.Beer),
             )) { screen = it }
             Screen.DiceDuel -> DiceDuelScreen(onBack = back)
             Screen.Reaction -> ReactionGameScreen(onBack = back)
             Screen.ColorReact -> ColorGameScreen(onBack = back)
             Screen.Stopwatch -> StopwatchScreen(onBack = back)
             Screen.Bomb -> BombGameScreen(onBack = back)
-            Screen.BattleMenu -> CategoryScreen("⚔️ ${s.menuBattle}", back, listOf(MenuItem("🔴", s.menuFour, s.menuFourSub, Screen.Four))) { screen = it }
+            Screen.BattleMenu -> CategoryScreen("⚔️ ${s.menuBattle}", back, listOf(MenuItem("🔴", s.menuFour, s.menuFourSub, Screen.Four), MenuItem("🎀", s.tugTitle, s.tugSub, Screen.Tug), MenuItem("🐾", s.slapTitle, s.slapSub, Screen.Slap))) { screen = it }
             Screen.Croc -> WolfTeethGame(onBack = back)
             Screen.Ladder -> LadderGame(onBack = back)
             Screen.Roulette -> RouletteGame(onBack = back)
@@ -184,6 +195,12 @@ fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
             Screen.Fx -> ExchangeScreen(onBack = back, langCode = currentLang.code)
             Screen.Language -> LanguageScreen(langPref, onBack = back, onSelect = onLangChange)
             Screen.Changelog -> ChangelogScreen(currentLang.code, onBack = back)
+            Screen.Tug -> TugWarScreen(onBack = back)
+            Screen.Slap -> SlapDuelScreen(onBack = back)
+            Screen.Beer -> BeerPourScreen(onBack = back)
+            Screen.Coin -> CoinTossScreen(onBack = back)
+            Screen.Kings -> KingsCupScreen(onBack = back)
+            Screen.Qr -> QrScreen(onBack = back)
         }
     }
 }
@@ -247,6 +264,17 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text("🧮 ${s.calcTitle}", color = WG.Text, fontSize = 14.sp)
+                        }
+                        // 📇 연락처 QR 버튼
+                        Row(
+                            Modifier
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(WG.Surface)
+                                .clickable { vibe.tap(); onSelect(Screen.Qr) }
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text("▦ QR", color = WG.Text, fontSize = 14.sp)
                         }
                     }
                 }
@@ -442,6 +470,7 @@ fun CardMenuScreen(onBack: () -> Unit, onSelect: (Screen) -> Unit) {
         ) {
             MenuCard("↕️", s.udTitle, s.udSub) { onSelect(Screen.UpDown) }
             MenuCard("🇻🇳", s.hcmTitle, s.hcmSub) { onSelect(Screen.HoChiMinh) }
+            MenuCard("👑", s.kcTitle, s.kcSub) { onSelect(Screen.Kings) }
         }
     }
 }
