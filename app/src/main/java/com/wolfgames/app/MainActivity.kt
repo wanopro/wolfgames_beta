@@ -93,12 +93,16 @@ import com.wolfgames.app.ui.WG
 import com.wolfgames.app.ui.WolfTheme
 
 private const val PREFS = "wolfgames"
+
+/** 점검용: adb 로 특정 화면을 바로 열기 (am start --es screen Tug --ez autostart true) */
+object DebugOpen { var screen: String? = null; var autostart = false }
 private const val KEY_LANG = "lang"
 private const val HOMEPAGE = "https://wolf.community"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DebugOpen.screen = intent?.getStringExtra("screen"); DebugOpen.autostart = intent?.getBooleanExtra("autostart", false) ?: false
         enableEdgeToEdge()
         // 술자리에서 화면이 꺼지지 않도록
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -127,7 +131,7 @@ enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu,
 
 @Composable
 fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
-    var screen by rememberSaveable { mutableStateOf(Screen.Home) }
+    var screen by rememberSaveable { mutableStateOf(DebugOpen.screen?.let { n -> Screen.entries.firstOrNull { it.name == n } } ?: Screen.Home) }
     val s = LocalStrings.current
     val back: () -> Unit = {
         screen = when (screen) {

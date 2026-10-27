@@ -90,7 +90,7 @@ private fun ease(u: Float) = 1f - (1f - u.coerceIn(0f, 1f)).pow(3)
 /** 설정 화면 → 게임 화면 */
 @Composable
 private fun SetupThen(title: String, onBack: () -> Unit, setup: @Composable (start: () -> Unit) -> Unit, game: @Composable () -> Unit) {
-    var started by rememberSaveable { mutableStateOf(false) }
+    var started by rememberSaveable { mutableStateOf(com.wolfgames.app.DebugOpen.autostart) }
     if (!started) GameScaffold(title, onBack) { setup { started = true } }
     else { BackHandler { started = false }; GameScaffold(title, onBack = { started = false }) { game() } }
 }
