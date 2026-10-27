@@ -13,6 +13,8 @@ import { tugWar, slapDuel, beerPour, coinToss, kingsCup } from './games-v15.js';
 import { qrScreen, qrEdit } from './qr.js';
 
 const HOMEPAGE = 'https://wolf.community';
+// 이모지가 폰마다 다르게(또는 네모로) 나오는 것 대신 직접 그린 아이콘
+const icon = (name) => h('img', { src: `icons/${name}.png`, alt: '', style: 'width:44px;height:44px;display:block' });
 const app = document.getElementById('app');
 let cleanup = null;
 
@@ -195,10 +197,10 @@ function quickMenu(root) {
 function luckMenu(root) {
   const s = S();
   root.append(top(`🍀 ${s.menuLuck}`, back), h('div', { class: 'scroll' },
-    card('🪜', s.menuLadder, s.menuLadderSub, () => go('ladder')),
+    card(icon('ladder'), s.menuLadder, s.menuLadderSub, () => go('ladder')),
     card('🎡', s.menuRoulette, s.menuRouletteSub, () => go('roulette')),
     card('💣', s.bombTitle, s.bombSub, () => go('bomb')),
-    card('🪙', s.coinTitle, s.coinSub, () => go('coin'))));
+    card(icon('coin'), s.coinTitle, s.coinSub, () => go('coin'))));
 }
 function battleMenu(root) {
   const s = S();
