@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -199,7 +200,7 @@ private fun CenterBar(
 ) {
     val s = LocalStrings.current
     Row(
-        Modifier.fillMaxWidth().height(64.dp).padding(horizontal = 4.dp),
+        Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         VTextButton(onClick = onExit) { Text(s.exit, color = WG.SubText) }

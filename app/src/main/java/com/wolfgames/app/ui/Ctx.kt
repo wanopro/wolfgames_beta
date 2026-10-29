@@ -123,8 +123,9 @@ class Ctx(val c: Canvas, density: Float) {
     fun fillText(s: String, x: Float, y: Float) {
         // 두 언어 문구: 위아래 두 줄 (같은 크기, 아래 줄만 살짝 흐리게)
         if (com.wolfgames.app.i18n.SEP in s) {
-            val (m, sub) = s.split(com.wolfgames.app.i18n.SEP); val dy = fontSize * 0.58f; val al = globalAlpha
-            fillText(m, x, y - dy); globalAlpha = al * 0.85f; fillText(sub, x, y + dy); globalAlpha = al; return
+            // 두 줄이 원래 한 줄 자리 정도에 들어가도록 같이 줄임 (11 까지만)
+            val (m, sub) = s.split(com.wolfgames.app.i18n.SEP); val f0 = fontSize; val lp = maxOf(f0 * 0.62f, minOf(f0, 11f)); val dy = lp * 0.56f; val al = globalAlpha
+            fontSize = lp; fillText(m, x, y - dy); globalAlpha = al * 0.85f; fillText(sub, x, y + dy); globalAlpha = al; fontSize = f0; return
         }
         textP.textSize = fontSize
         textP.typeface = if (fontBold) Typeface.create(Typeface.DEFAULT, Typeface.BOLD) else Typeface.DEFAULT
@@ -133,7 +134,7 @@ class Ctx(val c: Canvas, density: Float) {
         val fm = textP.fontMetrics
         c.drawText(s, x, y - (fm.ascent + fm.descent) / 2f, textP)
     }
-    fun measureText(s: String): Float { if (com.wolfgames.app.i18n.SEP in s) return s.split(com.wolfgames.app.i18n.SEP).maxOf { measureText(it) }; textP.textSize = fontSize; textP.typeface = if (fontBold) Typeface.create(Typeface.DEFAULT, Typeface.BOLD) else Typeface.DEFAULT; return textP.measureText(s) }
+    fun measureText(s: String): Float { if (com.wolfgames.app.i18n.SEP in s) { val f0 = fontSize; fontSize = maxOf(f0 * 0.62f, minOf(f0, 11f)); val w = s.split(com.wolfgames.app.i18n.SEP).maxOf { measureText(it) }; fontSize = f0; return w }; textP.textSize = fontSize; textP.typeface = if (fontBold) Typeface.create(Typeface.DEFAULT, Typeface.BOLD) else Typeface.DEFAULT; return textP.measureText(s) }
 
     companion object {
         private val cache = HashMap<String, Int>()

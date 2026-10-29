@@ -63,13 +63,26 @@ export const one = (str) => String(str).split(SEP).join(' / ');
 // 캔버스: 두 언어 문구는 두 줄로 (같은 크기)
 {
   const P = CanvasRenderingContext2D.prototype, F = P.fillText, ST = P.strokeText, M = P.measureText;
+  // 두 줄이 원래 한 줄 자리 정도에 들어가도록 같이 줄임 (너무 작아지지 않게 11px 까지만)
   const two = (ctx, str, x, y, fn) => {
-    const [m, sub] = str.split(SEP), px = parseFloat((/(\d+(?:\.\d+)?)px/.exec(ctx.font) || [0, 16])[1]), dy = px * 0.58;
-    fn.call(ctx, m, x, y - dy); const al = ctx.globalAlpha; ctx.globalAlpha = al * 0.85; fn.call(ctx, sub, x, y + dy); ctx.globalAlpha = al;
+    const [m, sub] = str.split(SEP), f0 = ctx.font, px = parseFloat((/(\d+(?:\.\d+)?)px/.exec(f0) || [0, 16])[1]);
+    const lp = Math.max(px * 0.62, Math.min(px, 11)), dy = lp * 0.56;
+    ctx.font = f0.replace(/(\d+(?:\.\d+)?)px/, `${lp}px`);
+    const bl = ctx.textBaseline; ctx.textBaseline = 'middle';
+    const yc = bl === 'middle' ? y : bl === 'alphabetic' || bl === 'bottom' ? y - px * 0.35 : y + px * 0.5;
+    fn.call(ctx, m, x, yc - dy); const al = ctx.globalAlpha; ctx.globalAlpha = al * 0.85; fn.call(ctx, sub, x, yc + dy); ctx.globalAlpha = al;
+    ctx.textBaseline = bl; ctx.font = f0;
   };
   P.fillText = function (str, x, y, ...r) { if (typeof str === 'string' && str.includes(SEP)) return two(this, str, x, y, F); return F.call(this, str, x, y, ...r); };
   P.strokeText = function (str, x, y, ...r) { if (typeof str === 'string' && str.includes(SEP)) return two(this, str, x, y, ST); return ST.call(this, str, x, y, ...r); };
-  P.measureText = function (str) { if (typeof str === 'string' && str.includes(SEP)) { const ws = str.split(SEP).map((q) => M.call(this, q)); return ws[0].width >= ws[1].width ? ws[0] : ws[1]; } return M.call(this, str); };
+  P.measureText = function (str) {
+    if (typeof str === 'string' && str.includes(SEP)) {
+      const f0 = this.font, px = parseFloat((/(\d+(?:\.\d+)?)px/.exec(f0) || [0, 16])[1]), lp = Math.max(px * 0.62, Math.min(px, 11));
+      this.font = f0.replace(/(\d+(?:\.\d+)?)px/, `${lp}px`); const ws = str.split(SEP).map((q) => M.call(this, q)); this.font = f0;
+      return ws[0].width >= ws[1].width ? ws[0] : ws[1];
+    }
+    return M.call(this, str);
+  };
 }
 // 글자(DOM): SEP 가 든 글자는 "메인 + 보조 한 줄" 로 바꿈 (textContent 로 넣은 것도 자동으로)
 export function dualize(root) {

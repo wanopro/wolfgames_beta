@@ -6,6 +6,13 @@ const GOLD = '#FFD740', RED = '#FF3D5A';
 const ease = (u) => 1 - Math.pow(1 - Math.min(1, Math.max(0, u)), 3);
 const font = (c, size, w = 900) => { c.font = `${w} ${size}px -apple-system, "Noto Sans KR", "Noto Sans Thai", sans-serif`; c.textAlign = 'center'; c.textBaseline = 'middle'; };
 const txt = (c, s, x, y, size, color, w = 900) => { font(c, size, w); c.fillStyle = color; c.fillText(s, x, y); };
+/** 두 언어를 원래 크기 그대로 두 줄로 (자리가 넉넉한 곳용) */
+const txtBig = (c, s, x, y, size, color) => {
+  if (!String(s).includes(SEP)) return txt(c, s, x, y, size, color);
+  const [m, sub] = String(s).split(SEP); txt(c, m, x, y - size * 0.58, size, color);
+  const al = c.globalAlpha; c.globalAlpha = al * 0.85; txt(c, sub, x, y + size * 0.58, size, color); c.globalAlpha = al;
+};
+const wide = (c, s, size) => { font(c, size); return Math.max(...String(s).split(SEP).map((q) => c.measureText(q).width)); };
 
 /** 캔버스 화면 하나 + 터치 좌표 */
 function stage(root, title, onBack, game) {
@@ -42,17 +49,17 @@ function fitLabel(c, str, cx, cy, maxW, size, color) {
 
 /** 위·아래 양쪽에서 읽히는 안내 글자 (위쪽은 뒤집어서) */
 function bothSides(c, W, H, str, size, color, pad = 26) {
-  txt(c, str, W / 2, H - pad - (str.includes(SEP) ? size * 0.5 : 0), size, color);
-  c.save(); c.translate(W / 2, pad + (str.includes(SEP) ? size * 0.5 : 0)); c.rotate(Math.PI); txt(c, str, 0, 0, size, color); c.restore();
+  txt(c, str, W / 2, H - pad - (str.includes(SEP) ? size * 0.25 : 0), size, color);
+  c.save(); c.translate(W / 2, pad + (str.includes(SEP) ? size * 0.25 : 0)); c.rotate(Math.PI); txt(c, str, 0, 0, size, color); c.restore();
 }
 
 /** 위·아래 사람 각자 자기 쪽 글자 (msgs[0] 아래 사람, msgs[1] 위 사람 · 위쪽은 뒤집어서) */
 function eachSide(c, W, H, msgs, size, cols, pad = 26) {
   msgs.forEach((m, i) => {
-    let sz = size; font(c, sz); while (c.measureText(m).width > W - 72 && sz > 10) { sz -= 0.5; font(c, sz); }
-    const off = m.includes(SEP) ? sz * 0.5 : 0;
+    let sz = size; while (wide(c, m, sz) > W - 72 && sz > 10) sz -= 0.5;
+    const off = m.includes(SEP) ? sz * 0.6 : 0;
     c.save(); if (i) { c.translate(W, H); c.rotate(Math.PI); }
-    txt(c, m, W / 2, H - pad - off, sz, cols[i]); c.restore();
+    txtBig(c, m, W / 2, H - pad - off, sz, cols[i]); c.restore();
   });
 }
 
@@ -342,7 +349,7 @@ export function gomoku(root, back) {
         eachSide(c, W, H, [0, 1].map((p) => cat(s.youAre(names[p]), '  ·  ', msg)), 19, [0, 1].map((p) => (g.win || t - g.banAt < 1.2 ? col : p === g.turn - 1 ? '#fff' : '#8A8FA0')), pd);
         for (const p of [0, 1]) {
           c.save(); if (p) { c.translate(W, H); c.rotate(Math.PI); }
-          const sy = H - pd - (msg.includes(SEP) ? 10 : 0);
+          const sy = H - pd - (msg.includes(SEP) ? 11 : 0);
           c.beginPath(); c.arc(28, sy, 11, 0, 7); c.fillStyle = p ? '#eee' : '#111'; c.fill(); c.lineWidth = 2; c.strokeStyle = !g.win && p === g.turn - 1 ? GOLD : '#888'; c.stroke(); c.restore();
         }
         if (!g.win) { /* 차례 표시는 위 글자로 */ } else if (t - g.endAt > 0.8) { c.fillStyle = 'rgba(0,0,0,.6)'; c.beginPath(); c.roundRect(W / 2 - 110, H / 2 - 22, 220, 44, 22); c.fill(); fitLabel(c, s.playAgain, W / 2, H / 2, 200, 17, '#fff'); }

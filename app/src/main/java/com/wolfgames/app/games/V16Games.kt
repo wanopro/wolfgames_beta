@@ -124,10 +124,15 @@ private fun Ctx.bothSides(w: Float, h: Float, str: String, size: Float, color: S
 /** 위·아래 사람 각자 자기 쪽 글자 (msgs[0] 아래 사람, msgs[1] 위 사람 · 위쪽은 뒤집어서) */
 private fun Ctx.eachSide(w: Float, h: Float, msgs: List<String>, size: Float, cols: List<String>, pad: Float = 26f) {
     msgs.forEachIndexed { i, m ->
-        var sz = size; font(sz); while (measureText(m) > w - 72 && sz > 10) { sz -= 0.5f; font(sz) }
-        val off = if (SEP in m) sz * 0.5f else 0f
+        // 자리가 넉넉해서 두 언어도 원래 크기 그대로 두 줄
+        val parts = m.split(SEP)
+        var sz = size; while (sz > 10 && parts.maxOf { font(sz); measureText(it) } > w - 72) sz -= 0.5f
+        val off = if (parts.size > 1) sz * 0.6f else 0f
         save(); if (i == 1) { translate(w, h); rotate(PIf) }
-        text(m, w / 2, h - pad - off, sz, cols[i]); restore()
+        val yc = h - pad - off
+        if (parts.size > 1) { text(parts[0], w / 2, yc - sz * 0.58f, sz, cols[i]); val al = globalAlpha; globalAlpha = al * 0.85f; text(parts[1], w / 2, yc + sz * 0.58f, sz, cols[i]); globalAlpha = al }
+        else text(m, w / 2, yc, sz, cols[i])
+        restore()
     }
 }
 

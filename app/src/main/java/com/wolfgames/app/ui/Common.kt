@@ -335,7 +335,7 @@ fun ChoiceRow(label: String, options: List<String>, selected: Int, onChange: (In
             options.forEachIndexed { i, o ->
                 val on = i == selected
                 Box(
-                    Modifier.weight(1f).height(44.dp).clip(RoundedCornerShape(12.dp)).background(if (on) WG.Accent else WG.Surface2)
+                    Modifier.weight(1f).heightIn(min = 44.dp).clip(RoundedCornerShape(12.dp)).background(if (on) WG.Accent else WG.Surface2)
                         .clickable { vibe.tap(); onChange(i) },
                     contentAlignment = Alignment.Center,
                 ) { Text(o, color = if (on) Color.Black else WG.Text, fontSize = 14.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, maxLines = 1) }
