@@ -10,7 +10,7 @@ px() { echo $(( $1 * W / 1000 )); }   # 천분율 → 픽셀
 py() { echo $(( $1 * H / 1000 )); }
 tap() { adb shell input tap $(px $1) $(py $2); }
 shot() { adb exec-out screencap -p > out/$1.png; if ! adb shell pidof $PKG >/dev/null; then echo "CRASH at $1" >> out/log.txt; fi; }
-open() { adb shell am force-stop $PKG; adb shell am start -n $PKG/com.wolfgames.app.MainActivity --es screen "$1" --ez autostart ${2:-false} >/dev/null; sleep 3; }
+open() { adb shell am force-stop $PKG; adb shell am start -n $PKG/com.wolfgames.app.MainActivity --es screen "$1" --ez autostart ${2:-false} >/dev/null; sleep 5; }
 tapExact() { adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; b=$(adb shell cat /sdcard/ui.xml | grep -o "text=\"$1\"[^>]*bounds=\"[^\"]*\"" | head -1 | grep -o 'bounds="[^"]*"' | grep -o '[0-9]\+'); set -- $b; [ -n "$4" ] && adb shell input tap $(( ($1+$3)/2 )) $(( ($2+$4)/2 )); }
 tapText() { adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; b=$(adb shell cat /sdcard/ui.xml | grep -o "text=\"[^\"]*$1[^\"]*\"[^>]*bounds=\"[^\"]*\"" | head -1 | grep -o 'bounds="[^"]*"' | grep -o '[0-9]\+'); set -- $b; [ -n "$4" ] && adb shell input tap $(( ($1+$3)/2 )) $(( ($2+$4)/2 )); }
 adb logcat -c
@@ -24,27 +24,28 @@ prefs() {
 gx() { echo $(( 500 + ($1 - 7) * 63 )); }
 gy() { echo $(( 518 + ($1 - 7) * 29 )); }
 run() { # $1 = 이름 앞글자
-  open Home; shot ${1}01_home
-  open Language; shot ${1}02_lang
-  open LuckMenu; shot ${1}03_luck
-  open BattleMenu; shot ${1}04_battle
-  open Hotel; shot ${1}05_hotel
-  tapText "숙소 수정"; sleep 1; shot ${1}06_hotel_edit
+  local P=$1
+  open Home; shot ${P}01_home
+  open Language; shot ${P}02_lang
+  open LuckMenu; shot ${P}03_luck
+  open BattleMenu; shot ${P}04_battle
+  open Hotel; sleep 3; shot ${P}05_hotel
+  tapText "숙소 수정"; sleep 1; shot ${P}06_hotel_edit
   # 플링코: 위쪽 터치 → 떨어짐 → 결과 → 섞기
-  open Plinko; shot ${1}07_plinko_setup
-  open Plinko true; tap 420 150; sleep 1; shot ${1}08_plinko_drop; sleep 4; shot ${1}09_plinko_result; sleep 3; shot ${1}10_plinko_next
+  open Plinko; shot ${P}07_plinko_setup
+  open Plinko true; sleep 1.5; tap 420 150; sleep 1; shot ${P}08_plinko_drop; sleep 4; shot ${P}09_plinko_result; sleep 3; shot ${P}10_plinko_next
   # 삼목: 초록 가운데, 빨강 모서리 … 그다음 2초 기다려 시간 초과
-  open Ttt true; sleep 1.3; tap 500 518; sleep 0.3; tap 201 380; sleep 0.3; tap 799 380; sleep 0.2; shot ${1}11_ttt_mid; sleep 2.4; shot ${1}12_ttt_timeup
+  open Ttt true; sleep 1.3; tap 500 518; sleep 0.3; tap 201 380; sleep 0.3; tap 799 380; sleep 0.2; shot ${P}11_ttt_mid; sleep 2.4; shot ${P}12_ttt_timeup
   # 삼목 승리: 다시 시작해서 초록 가로 한 줄
-  open Ttt true; sleep 1.3; tap 201 380; tap 201 518; tap 500 380; tap 500 518; tap 799 380; sleep 1.2; shot ${1}13_ttt_win
+  open Ttt true; sleep 1.3; tap 201 380; tap 201 518; tap 500 380; tap 500 518; tap 799 380; sleep 1.2; shot ${P}13_ttt_win
   # 오목: 33 금지 확인 (흑 (6,7)(7,7)(8,6)(8,5) → (8,7))
   open Gomoku true
-  for xy in "6 7" "1 13" "7 7" "3 13" "8 6" "5 13" "8 5" "13 1"; do set -- $xy; tap $(gx $1) $(gy $2); sleep 0.25; done
-  tap $(gx 8) $(gy 7); sleep 0.3; shot ${1}14_gomoku_ban
+  for xy in "6 7" "1 13" "7 7" "3 13" "8 6" "5 13" "8 5" "13 1"; do read a b <<< "$xy"; tap $(gx $a) $(gy $b); sleep 0.25; done
+  tap $(gx 8) $(gy 7); sleep 0.3; shot ${P}14_gomoku_ban
   # 오목 승리: 흑 5개 가로
   open Gomoku true
   for i in 2 3 4 5 6; do tap $(gx $i) $(gy 2); sleep 0.2; [ $i -lt 6 ] && { tap $(gx $i) $(gy 12); sleep 0.2; }; done
-  sleep 1; shot ${1}15_gomoku_win
+  sleep 1; shot ${P}15_gomoku_win
 }
 prefs ""; run k
 prefs en; run d
