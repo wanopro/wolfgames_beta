@@ -435,7 +435,7 @@ private fun ChangeRow(item: ChangeItem, langCode: String) {
 @Composable
 fun ChangelogScreen(langCode: String, onBack: () -> Unit) {
     val s = LocalStrings.current
-    GameScaffold("📜 ${m.logTitle}", onBack) {
+    GameScaffold("📜 ${s.logTitle}", onBack) {
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
