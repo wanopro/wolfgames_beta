@@ -47,8 +47,12 @@ run() { # $1 = 이름 앞글자
   for i in 2 3 4 5 6; do tap $(gx $i) $(gy 2); sleep 0.2; [ $i -lt 6 ] && { tap $(gx $i) $(gy 12); sleep 0.2; }; done
   sleep 1; shot ${P}15_gomoku_win
 }
-prefs ""; run k
-prefs en; run d
-prefs th; open Home; shot t01_home; open Plinko true; tap 420 150; sleep 5; shot t09_plinko_result
+# 두 언어(한국어+태국어) 겹침 점검: 모든 화면 설정 → 시작 → 몇 번 눌러 보기
+prefs th
+for sc in Home DiceMenu LuckMenu RollDice ShutBox FiveDice D789 DiceDuel Reaction ColorReact Stopwatch Bomb Finger UpDown HoChiMinh Croc Ladder Roulette Race Pirate Arrow Four Tug Slap Beer Coin Kings Plinko Ttt Gomoku Calc Fx Hotel Changelog Language; do
+  open $sc; shot "t_${sc}_0"
+  open $sc true; sleep 1; shot "t_${sc}_1"
+  tap 500 750; sleep 0.3; tap 500 250; sleep 0.3; tap 500 515; sleep 3; shot "t_${sc}_2"
+done
 adb logcat -d -b crash > out/crash.txt
 echo done >> out/log.txt
