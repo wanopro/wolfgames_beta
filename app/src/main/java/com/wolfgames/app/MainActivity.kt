@@ -452,7 +452,7 @@ fun ChangelogScreen(langCode: String, onBack: () -> Unit) {
                         if (i == 0) {
                             Spacer(Modifier.width(10.dp))
                             Text(
-                                s.logLatest,
+                                com.wolfgames.app.i18n.part(s.logLatest, 0),
                                 color = Color.Black,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.ExtraBold,

@@ -1,5 +1,5 @@
 // 울프 게임즈 웹 버전 — 화면 이동, 메인, 언어 설정
-import { S, h, btn, card, top, lang, LANGS, vibe, VERSION, dualize, one, SEP } from './core.js';
+import { S, h, btn, card, top, lang, LANGS, vibe, VERSION, dualize, one, SEP, main1 } from './core.js';
 import { rollDice, shutBox, fiveDice, d789, diceDuel } from './games-dice.js';
 import { reaction, colorGame, stopwatch, bombGame } from './games-quick.js';
 import { upDown, hoChiMinh } from './games-cards.js';
@@ -136,7 +136,7 @@ const fmtDate = (d) => d.replace(/-/g, '.');
 function releaseCard(r, latest) {
   const s = S();
   return h('div', { class: 'rel' },
-    h('div', { class: 'rh' }, h('b', {}, `v${r.ver}`), h('span', {}, fmtDate(r.date)), latest ? h('span', { class: 'new' }, s.logLatest) : null),
+    h('div', { class: 'rh' }, h('b', {}, `v${r.ver}`), h('span', {}, fmtDate(r.date)), latest ? h('span', { class: 'new' }, main1(s.logLatest)) : null),
     h('ul', {}, r.items.map(([emo, tx]) => h('li', {}, h('span', { class: 'e' }, emo), h('span', {}, tx[lang.current] || tx.en)))));
 }
 function logScreen(root) {
