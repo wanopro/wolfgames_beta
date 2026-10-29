@@ -110,6 +110,7 @@ export function plinko(root, back) {
         c.beginPath(); c.roundRect(6, 6, W - 12, H - 12, 18); c.fillStyle = bg; c.fill(); c.lineWidth = 3; c.strokeStyle = '#2E3650'; c.stroke();
         let u = 0, landed = false;
         if (g.drop) { u = Math.floor((t - g.drop.at) * 60); landed = u >= g.drop.sim.path.length; }
+        window.__plinkoPhase = g.phase; // 설명서 그림용
         if (g.phase === 'drop' && landed) { g.phase = 'result'; g.at = t; if (!g.buzz) { g.buzz = true; vibe.strong(); } }
         if (g.phase === 'result' && t - g.at > 2.6) startShuffle(t);
         if (g.phase === 'shuffle' && t - g.at > 0.7) { g.phase = 'ready'; g.prev = null; }
