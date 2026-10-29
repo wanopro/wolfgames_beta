@@ -114,10 +114,12 @@ export function btn(text, onClick, cls = 'btn', opts = {}) {
 }
 
 /** 상단 뒤로가기 + 제목 */
+/** 메뉴 · 화면 제목은 메인 언어만 (두 언어로 쓰면 너무 커짐) */
+export const main1 = (str) => String(str).split(SEP)[0];
 export function top(title, onBack, ...actions) {
   return h('div', { class: 'top' },
     btn('←', onBack, 'back'),
-    h('div', { class: 'title' }, title),
+    h('div', { class: 'title' }, main1(title)),
     ...actions);
 }
 
@@ -143,7 +145,7 @@ export function toggle(label, value, onChange) {
 }
 
 export function card(emo, title, sub, onClick) {
-  return btn([h('span', { class: 'emo' }, emo), h('div', {}, h('div', { class: 't' }, title), h('div', { class: 's' }, sub)), h('span', { class: 'chev' }, '›')], onClick, 'card');
+  return btn([h('span', { class: 'emo' }, emo), h('div', {}, h('div', { class: 't' }, main1(title)), h('div', { class: 's' }, main1(sub))), h('span', { class: 'chev' }, '›')], onClick, 'card');
 }
 
 /** 시작 전 설정 화면 */

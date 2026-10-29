@@ -390,4 +390,5 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     hotelCall = join2(a.hotelCall, b.hotelCall)
     hotelEditBtn = join2(a.hotelEditBtn, b.hotelEditBtn)
     colorTurn = { p0 -> join2(a.colorTurn(part(p0, 0)), b.colorTurn(part(p0, 1))) }
+    youAre = { p0 -> join2(a.youAre(part(p0, 0)), b.youAre(part(p0, 1))) }
 }

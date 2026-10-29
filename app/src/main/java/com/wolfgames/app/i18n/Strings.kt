@@ -422,6 +422,7 @@ class Strings {
     lateinit var hotelCall: String
     lateinit var hotelEditBtn: String
     lateinit var colorTurn: (String) -> String
+    lateinit var youAre: (String) -> String
 }
 
 val KoStrings = Strings().apply {
@@ -769,8 +770,8 @@ val KoStrings = Strings().apply {
     plinkoShuffling = "🔀 칸 섞는 중…"
     plinkoSlots = "1잔|반 잔|다시|오른쪽 사람|왼쪽 사람|다 같이|통과"
     tttTitle = "삼목"
-    tttSub = "3×3 늑대 코인 · 한 수 2초!"
-    tttDesc = "초록과 빨강이 번갈아 늑대 코인을 놓아요.\n가로·세로·대각선 3개를 먼저 이으면 승리!\n한 수에 2초, 넘기면 차례가 넘어가요. 진 사람은 원샷!"
+    tttSub = "3×3 늑대 코인 · 3개까지만 · 한 수 2초!"
+    tttDesc = "초록과 빨강이 번갈아 늑대 코인을 놓아요.\n가로·세로·대각선 3개를 먼저 이으면 승리!\n코인은 한 사람당 3개까지 — 4번째를 놓으면 내 가장 오래된 코인이 사라져요 (사라질 코인은 깜빡여요).\n한 수에 2초, 넘기면 차례가 넘어가요. 진 사람은 원샷!"
     green = "초록"
     red = "빨강"
     winsOf = { "${it} 승리!" }
@@ -796,6 +797,7 @@ val KoStrings = Strings().apply {
     hotelCall = "📞 전화하기"
     hotelEditBtn = "✏️ 숙소 수정"
     colorTurn = { "${it} 차례" }
+    youAre = { "나: ${it}" }
 }
 
 val EnStrings = Strings().apply {
@@ -1143,8 +1145,8 @@ val EnStrings = Strings().apply {
     plinkoShuffling = "🔀 Shuffling slots…"
     plinkoSlots = "1 drink|Half|Again|Right person|Left person|Everyone|Pass"
     tttTitle = "Tic-Tac-Toe"
-    tttSub = "3×3 wolf coins · 2 seconds a move!"
-    tttDesc = "Green and red take turns placing wolf coins.\nThree in a row (across, down or diagonal) wins!\n2 seconds per move — run out and your turn passes. Loser drinks!"
+    tttSub = "3×3 wolf coins · only 3 each · 2 s a move!"
+    tttDesc = "Green and red take turns placing wolf coins.\nThree in a row (across, down or diagonal) wins!\nEach player can have only 3 coins — placing a 4th removes your oldest one (it blinks before it goes).\n2 seconds per move — run out and your turn passes. Loser drinks!"
     green = "Green"
     red = "Red"
     winsOf = { "$it wins!" }
@@ -1170,6 +1172,7 @@ val EnStrings = Strings().apply {
     hotelCall = "📞 Call"
     hotelEditBtn = "✏️ Edit hotels"
     colorTurn = { "$it's turn" }
+    youAre = { "You: $it" }
 }
 
 val JaStrings = Strings().apply {
@@ -1517,8 +1520,8 @@ val JaStrings = Strings().apply {
     plinkoShuffling = "🔀 シャッフル中…"
     plinkoSlots = "1杯|半分|もう一回|右の人|左の人|みんなで|セーフ"
     tttTitle = "三目並べ"
-    tttSub = "3×3 オオカミコイン · 1手2秒！"
-    tttDesc = "緑と赤が交互にオオカミコインを置きます。\n縦・横・斜めに3つ先にそろえたら勝ち！\n1手2秒、過ぎると相手の番に。負けたら一気！"
+    tttSub = "3×3 オオカミコイン · 3個まで · 1手2秒！"
+    tttDesc = "緑と赤が交互にオオカミコインを置きます。\n縦・横・斜めに3つ先にそろえたら勝ち！\nコインは1人3個まで — 4個目を置くと自分の一番古いコインが消えます（消えるコインは点滅）。\n1手2秒、過ぎると相手の番に。負けたら一気！"
     green = "緑"
     red = "赤"
     winsOf = { "${it}の勝ち！" }
@@ -1544,6 +1547,7 @@ val JaStrings = Strings().apply {
     hotelCall = "📞 電話する"
     hotelEditBtn = "✏️ 宿を編集"
     colorTurn = { "${it}の番" }
+    youAre = { "あなた: ${it}" }
 }
 
 val ZhStrings = Strings().apply {
@@ -1891,8 +1895,8 @@ val ZhStrings = Strings().apply {
     plinkoShuffling = "🔀 正在洗牌…"
     plinkoSlots = "1杯|半杯|再来|右边的人|左边的人|大家一起|过"
     tttTitle = "井字棋"
-    tttSub = "3×3 狼币 · 每步2秒！"
-    tttDesc = "绿和红轮流放狼币。\n横、竖、斜先连成3个就赢！\n每步2秒，超时就轮到对方。输的人干杯！"
+    tttSub = "3×3 狼币 · 每人3个 · 每步2秒！"
+    tttDesc = "绿和红轮流放狼币。\n横、竖、斜先连成3个就赢！\n每人最多3个狼币 — 放第4个时，自己最早的那个会消失（要消失的会闪烁）。\n每步2秒，超时就轮到对方。输的人干杯！"
     green = "绿"
     red = "红"
     winsOf = { "${it}胜！" }
@@ -1918,6 +1922,7 @@ val ZhStrings = Strings().apply {
     hotelCall = "📞 打电话"
     hotelEditBtn = "✏️ 编辑住处"
     colorTurn = { "轮到${it}" }
+    youAre = { "你: ${it}" }
 }
 
 val ThStrings = Strings().apply {
@@ -2265,8 +2270,8 @@ val ThStrings = Strings().apply {
     plinkoShuffling = "🔀 กำลังสลับช่อง…"
     plinkoSlots = "1 แก้ว|ครึ่งแก้ว|อีกรอบ|คนขวา|คนซ้าย|ทุกคน|รอด"
     tttTitle = "โอเอ็กซ์"
-    tttSub = "3×3 เหรียญหมาป่า · ตาละ 2 วินาที!"
-    tttDesc = "เขียวกับแดงผลัดกันวางเหรียญหมาป่า\nเรียง 3 อันก่อน (แนวนอน ตั้ง ทแยง) ชนะ!\nตาละ 2 วินาที เกินเวลาเสียตา คนแพ้หมดแก้ว!"
+    tttSub = "3×3 เหรียญหมาป่า · คนละ 3 อัน · ตาละ 2 วิ!"
+    tttDesc = "เขียวกับแดงผลัดกันวางเหรียญหมาป่า\nเรียง 3 อันก่อน (แนวนอน ตั้ง ทแยง) ชนะ!\nแต่ละคนมีได้แค่ 3 เหรียญ — วางอันที่ 4 เหรียญที่เก่าที่สุดของเราจะหายไป (อันที่จะหายจะกะพริบ)\nตาละ 2 วินาที หมดเวลาเสียตา คนแพ้หมดแก้ว!"
     green = "เขียว"
     red = "แดง"
     winsOf = { "${it}ชนะ!" }
@@ -2292,6 +2297,7 @@ val ThStrings = Strings().apply {
     hotelCall = "📞 โทร"
     hotelEditBtn = "✏️ แก้ไขที่พัก"
     colorTurn = { "ตา${it}" }
+    youAre = { "คุณ: ${it}" }
 }
 
 val ViStrings = Strings().apply {
@@ -2639,8 +2645,8 @@ val ViStrings = Strings().apply {
     plinkoShuffling = "🔀 Đang xáo ô…"
     plinkoSlots = "1 ly|Nửa ly|Lại|Người bên phải|Người bên trái|Cả bàn|Qua"
     tttTitle = "Cờ ba"
-    tttSub = "3×3 đồng xu sói · 2 giây mỗi lượt!"
-    tttDesc = "Xanh và đỏ lần lượt đặt đồng xu sói.\nNối 3 hàng (ngang, dọc, chéo) trước là thắng!\nMỗi lượt 2 giây, hết giờ thì mất lượt. Người thua cạn ly!"
+    tttSub = "3×3 xu sói · mỗi người 3 xu · 2 giây một lượt!"
+    tttDesc = "Xanh và đỏ lần lượt đặt đồng xu sói.\nNối 3 hàng (ngang, dọc, chéo) trước là thắng!\nMỗi người chỉ có 3 xu — đặt xu thứ 4 thì xu cũ nhất của bạn biến mất (xu sắp mất sẽ nhấp nháy).\nMỗi lượt 2 giây, hết giờ thì mất lượt. Người thua cạn ly!"
     green = "Xanh"
     red = "Đỏ"
     winsOf = { "$it thắng!" }
@@ -2666,6 +2672,7 @@ val ViStrings = Strings().apply {
     hotelCall = "📞 Gọi"
     hotelEditBtn = "✏️ Sửa chỗ ở"
     colorTurn = { "Lượt $it" }
+    youAre = { "Bạn: $it" }
 }
 
 fun stringsFor(lang: Lang): Strings = when (lang) {

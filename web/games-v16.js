@@ -46,6 +46,16 @@ function bothSides(c, W, H, str, size, color, pad = 26) {
   c.save(); c.translate(W / 2, pad + (str.includes(SEP) ? size * 0.5 : 0)); c.rotate(Math.PI); txt(c, str, 0, 0, size, color); c.restore();
 }
 
+/** 위·아래 사람 각자 자기 쪽 글자 (msgs[0] 아래 사람, msgs[1] 위 사람 · 위쪽은 뒤집어서) */
+function eachSide(c, W, H, msgs, size, cols, pad = 26) {
+  msgs.forEach((m, i) => {
+    let sz = size; font(c, sz); while (c.measureText(m).width > W - 72 && sz > 10) { sz -= 0.5; font(c, sz); }
+    const off = m.includes(SEP) ? sz * 0.5 : 0;
+    c.save(); if (i) { c.translate(W, H); c.rotate(Math.PI); }
+    txt(c, m, W / 2, H - pad - off, sz, cols[i]); c.restore();
+  });
+}
+
 // ===================== 🔻 플링코 =====================
 export const PLINKO_ICONS = ['🍺', '🥃', '🔄', '👉', '👈', '🍻', '✅'];
 const PLINKO_COLS = ['#FF7043', '#29B6F6', '#78909C', '#AB47BC', '#EC407A', '#FFB300', '#43A047'];
@@ -152,7 +162,7 @@ export function ticTacToe(root, back) {
   const play = () => {
     const g = {};
     const names = [s.green, s.red];
-    const round = (t) => { Object.assign(g, { cells: Array(9).fill(-1), placed: Array(9).fill(0), turn: starter, turnAt: t + 1.2, win: -2, line: null, endAt: 0, timeUpAt: -9, tick: 9 }); starter = 1 - starter; };
+    const round = (t) => { Object.assign(g, { cells: Array(9).fill(-1), placed: Array(9).fill(0), turn: starter, q: [[], []], turnAt: t + 1.2, win: -2, line: null, endAt: 0, timeUpAt: -9, tick: 9 }); starter = 1 - starter; };
     round(0);
     const geo = (W, H) => { const sz = Math.min(W - 40, H - 190, 420), x0 = (W - sz) / 2, y0 = (H - sz) / 2; return { sz, x0, y0, cell: sz / 3 }; };
     const finish = (t) => {
@@ -166,7 +176,9 @@ export function ticTacToe(root, back) {
         const { x0, y0, cell } = geo(W, H), cx = Math.floor((x - x0) / cell), cy = Math.floor((y - y0) / cell);
         if (cx < 0 || cy < 0 || cx > 2 || cy > 2) return;
         const k = cy * 3 + cx; if (g.cells[k] >= 0) return;
-        g.cells[k] = g.turn; g.placed[k] = t; vibe.tap(); finish(t);
+        // 한 사람당 3개까지: 4번째를 놓으면 내 가장 오래된 코인이 사라짐
+        if (g.q[g.turn].length >= 3) g.cells[g.q[g.turn].shift()] = -1;
+        g.q[g.turn].push(k); g.cells[k] = g.turn; g.placed[k] = t; vibe.tap(); finish(t);
         if (g.win === -2) { g.turn = 1 - g.turn; g.turnAt = t; g.tick = 9; }
       },
       draw(c, W, H, t) {
@@ -185,7 +197,9 @@ export function ticTacToe(root, back) {
         for (let k = 0; k < 9; k++) {
           const v = g.cells[k]; if (v < 0) continue;
           const cx = x0 + (k % 3 + 0.5) * cell, cy = y0 + (Math.floor(k / 3) + 0.5) * cell, pop = ease((t - g.placed[k]) / 0.18);
-          const dim = g.line && !g.line.includes(k) ? 0.35 : 1;
+          // 다음에 사라질 코인 (지금 차례인 사람이 3개 다 놓았을 때) 은 깜빡임
+          const goes = g.win === -2 && v === g.turn && g.q[v].length >= 3 && g.q[v][0] === k;
+          const dim = g.line && !g.line.includes(k) ? 0.35 : goes ? 0.45 + 0.35 * Math.sin(t * 10) : 1;
           c.globalAlpha = dim; coin(c, cx, cy, cell * 0.36 * (0.5 + 0.5 * pop), 1, 1, v ? 'red' : 'green'); c.globalAlpha = 1;
         }
         if (g.line) {
@@ -200,11 +214,13 @@ export function ticTacToe(root, back) {
             c.beginPath(); c.roundRect((W - bw) / 2 + (yy < H / 2 ? bw * (1 - u) : 0), yy - 6, Math.max(6, bw * u), 12, 6); c.fillStyle = u < 0.35 ? RED : col; c.fill();
           }
           const msg = t - g.timeUpAt < 1 ? s.timeUp : t < g.turnAt ? s.colorTurn(names[g.turn]) : cat(s.colorTurn(names[g.turn]), `  ${left.toFixed(1)}`);
-          bothSides(c, W, H, msg, 22, t - g.timeUpAt < 1 ? RED : col);
-          coin(c, 34, H - 26 - (msg.includes(SEP) ? 11 : 0), 14, 1, 1, g.turn ? 'red' : 'green');
+          // 아래 사람 = 초록, 위 사람 = 빨강. 각자 쪽에 "나: 초록" + 지금 상황
+          const tu = t - g.timeUpAt < 1;
+          eachSide(c, W, H, [0, 1].map((p) => cat(s.youAre(names[p]), '  ·  ', msg)), 19, [0, 1].map((p) => (tu ? RED : p === g.turn ? TTT_COL[p] : '#8A8FA0')));
+          for (const p of [0, 1]) { c.save(); if (p) { c.translate(W, H); c.rotate(Math.PI); } coin(c, 30, H - 26 - (msg.includes(SEP) ? 11 : 0), 13, 1, 1, p ? 'red' : 'green'); c.restore(); }
         } else {
           const msg = g.win === -1 ? s.drawWord : cat(s.winsOf(names[g.win]), '  ·  ', names[1 - g.win], ' ', s.shotWord);
-          bothSides(c, W, H, msg, 21, g.win === -1 ? GOLD : TTT_COL[g.win]);
+          eachSide(c, W, H, [0, 1].map((p) => cat(s.youAre(names[p]), '  ·  ', msg)), 19, [0, 1].map(() => (g.win === -1 ? GOLD : TTT_COL[g.win])));
           if (t - g.endAt > 0.8) { c.fillStyle = 'rgba(0,0,0,.55)'; c.beginPath(); c.roundRect(W / 2 - 110, H / 2 - 22, 220, 44, 22); c.fill(); fitLabel(c, s.playAgain, W / 2, H / 2, 200, 17, '#fff'); }
         }
       },
@@ -321,11 +337,15 @@ export function gomoku(root, back) {
         else if (g.win) { msg = cat(s.winsOf(names[g.win - 1]), '  ·  ', names[2 - g.win], ' ', s.shotWord); col = GOLD; }
         else if (t - g.banAt < 1.2) { msg = s.banned33; col = RED; }
         else { msg = s.colorTurn(names[g.turn - 1]); col = g.turn === 1 ? '#fff' : '#ddd'; }
-        bothSides(c, W, H, msg, 20, col, Math.max(22, y0 / 2));
-        if (!g.win) {
-          const sy = H - Math.max(22, y0 / 2) - (msg.includes(SEP) ? 10 : 0);
-          c.beginPath(); c.arc(30, sy, 11, 0, 7); c.fillStyle = g.turn === 1 ? '#111' : '#eee'; c.fill(); c.lineWidth = 2; c.strokeStyle = '#888'; c.stroke();
-        } else if (t - g.endAt > 0.8) { c.fillStyle = 'rgba(0,0,0,.6)'; c.beginPath(); c.roundRect(W / 2 - 110, H / 2 - 22, 220, 44, 22); c.fill(); fitLabel(c, s.playAgain, W / 2, H / 2, 200, 17, '#fff'); }
+        // 아래 사람 = 흑, 위 사람 = 백. 각자 쪽에 "나: 흑" + 지금 상황 (내 차례면 밝게)
+        const pd = Math.max(22, y0 / 2);
+        eachSide(c, W, H, [0, 1].map((p) => cat(s.youAre(names[p]), '  ·  ', msg)), 19, [0, 1].map((p) => (g.win || t - g.banAt < 1.2 ? col : p === g.turn - 1 ? '#fff' : '#8A8FA0')), pd);
+        for (const p of [0, 1]) {
+          c.save(); if (p) { c.translate(W, H); c.rotate(Math.PI); }
+          const sy = H - pd - (msg.includes(SEP) ? 10 : 0);
+          c.beginPath(); c.arc(28, sy, 11, 0, 7); c.fillStyle = p ? '#eee' : '#111'; c.fill(); c.lineWidth = 2; c.strokeStyle = !g.win && p === g.turn - 1 ? GOLD : '#888'; c.stroke(); c.restore();
+        }
+        if (!g.win) { /* 차례 표시는 위 글자로 */ } else if (t - g.endAt > 0.8) { c.fillStyle = 'rgba(0,0,0,.6)'; c.beginPath(); c.roundRect(W / 2 - 110, H / 2 - 22, 220, 44, 22); c.fill(); fitLabel(c, s.playAgain, W / 2, H / 2, 200, 17, '#fff'); }
       },
     });
   };

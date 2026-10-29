@@ -121,6 +121,16 @@ private fun Ctx.bothSides(w: Float, h: Float, str: String, size: Float, color: S
     save(); translate(w / 2, pad + off); rotate(PIf); text(str, 0f, 0f, size, color); restore()
 }
 
+/** 위·아래 사람 각자 자기 쪽 글자 (msgs[0] 아래 사람, msgs[1] 위 사람 · 위쪽은 뒤집어서) */
+private fun Ctx.eachSide(w: Float, h: Float, msgs: List<String>, size: Float, cols: List<String>, pad: Float = 26f) {
+    msgs.forEachIndexed { i, m ->
+        var sz = size; font(sz); while (measureText(m) > w - 72 && sz > 10) { sz -= 0.5f; font(sz) }
+        val off = if (SEP in m) sz * 0.5f else 0f
+        save(); if (i == 1) { translate(w, h); rotate(PIf) }
+        text(m, w / 2, h - pad - off, sz, cols[i]); restore()
+    }
+}
+
 /** 가운데 "다시 하기" 알약 */
 private fun Ctx.againPill(w: Float, h: Float, s: Strings) {
     fillStyle = "rgba(0,0,0,.6)"; beginPath(); roundRect(w / 2 - 110, h / 2 - 22, 220f, 44f, 22f); fill()
@@ -247,10 +257,10 @@ const val TTT_SEC = 2f
 
 private class TttGame(val vibe: Vibe) : PadGame {
     var starter = 0
-    val cells = IntArray(9) { -1 }; val placed = FloatArray(9)
+    val cells = IntArray(9) { -1 }; val placed = FloatArray(9); val q = listOf(ArrayDeque<Int>(), ArrayDeque<Int>())
     var turn = 0; var turnAt = 0f; var win = -2; var line: IntArray? = null; var endAt = 0f; var timeUpAt = -9f; var tick = 9
     init { round(0f) }
-    fun round(t: Float) { cells.fill(-1); placed.fill(0f); turn = starter; turnAt = t + 1.2f; win = -2; line = null; endAt = 0f; timeUpAt = -9f; tick = 9; starter = 1 - starter }
+    fun round(t: Float) { q[0].clear(); q[1].clear(); cells.fill(-1); placed.fill(0f); turn = starter; turnAt = t + 1.2f; win = -2; line = null; endAt = 0f; timeUpAt = -9f; tick = 9; starter = 1 - starter }
     fun geo(w: Float, h: Float): FloatArray { val sz = minOf(w - 40, h - 190, 420f); return floatArrayOf(sz, (w - sz) / 2, (h - sz) / 2, sz / 3) }
     fun finish(t: Float) {
         for (l in TTT_LINES) { val v = cells[l[0]]; if (v >= 0 && l.all { cells[it] == v }) { win = v; line = l; endAt = t; vibe.strong(); return } }
@@ -263,7 +273,9 @@ private class TttGame(val vibe: Vibe) : PadGame {
         val cx = floor((x - x0) / cell).toInt(); val cy = floor((y - y0) / cell).toInt()
         if (cx !in 0..2 || cy !in 0..2) return
         val k = cy * 3 + cx; if (cells[k] >= 0) return
-        cells[k] = turn; placed[k] = t; vibe.tap(); finish(t)
+        // 한 사람당 3개까지: 4번째를 놓으면 내 가장 오래된 코인이 사라짐
+        if (q[turn].size >= 3) cells[q[turn].removeFirst()] = -1
+        q[turn].addLast(k); cells[k] = turn; placed[k] = t; vibe.tap(); finish(t)
         if (win == -2) { turn = 1 - turn; turnAt = t; tick = 9 }
     }
     override fun draw(c: Ctx, w: Float, h: Float, t: Float, s: Strings) = with(c) {
@@ -280,7 +292,9 @@ private class TttGame(val vibe: Vibe) : PadGame {
             val v = cells[k]; if (v < 0) continue
             val cx = x0 + (k % 3 + 0.5f) * cell; val cy = y0 + (k / 3 + 0.5f) * cell; val pop = ease((t - placed[k]) / 0.18f)
             val l = line
-            globalAlpha = if (l != null && k !in l) 0.35f else 1f
+            // 다음에 사라질 코인 (지금 차례인 사람이 3개 다 놓았을 때) 은 깜빡임
+            val goes = win == -2 && v == turn && q[v].size >= 3 && q[v].first() == k
+            globalAlpha = if (l != null && k !in l) 0.35f else if (goes) 0.45f + 0.35f * sin(t * 10) else 1f
             coin(cx, cy, cell * 0.36f * (0.5f + 0.5f * pop), 1, 1f, if (v == 1) "red" else "green"); globalAlpha = 1f
         }
         line?.let { l ->
@@ -295,11 +309,12 @@ private class TttGame(val vibe: Vibe) : PadGame {
             }
             val tu = t - timeUpAt < 1
             val msg = if (tu) s.timeUp else if (t < turnAt) s.colorTurn(names[turn]) else cat(s.colorTurn(names[turn]), "  " + String.format(java.util.Locale.US, "%.1f", left))
-            bothSides(w, h, msg, 22f, if (tu) RED else col)
-            coin(34f, h - 26 - (if (SEP in msg) 11f else 0f), 14f, 1, 1f, if (turn == 1) "red" else "green")
+            // 아래 사람 = 초록, 위 사람 = 빨강. 각자 쪽에 "나: 초록" + 지금 상황
+            eachSide(w, h, listOf(0, 1).map { cat(s.youAre(names[it]), "  ·  ", msg) }, 19f, listOf(0, 1).map { if (tu) RED else if (it == turn) TTT_COL[it] else "#8A8FA0" })
+            for (p in 0..1) { save(); if (p == 1) { translate(w, h); rotate(PIf) }; coin(30f, h - 26 - (if (SEP in msg) 11f else 0f), 13f, 1, 1f, if (p == 1) "red" else "green"); restore() }
         } else {
             val msg = if (win == -1) s.drawWord else cat(s.winsOf(names[win]), "  ·  ", names[1 - win], " ", s.shotWord)
-            bothSides(w, h, msg, 21f, if (win == -1) GOLD else TTT_COL[win])
+            eachSide(w, h, listOf(0, 1).map { cat(s.youAre(names[it]), "  ·  ", msg) }, 19f, listOf(0, 1).map { if (win == -1) GOLD else TTT_COL[win] })
             if (t - endAt > 0.8f) againPill(w, h, s)
         }
     }
@@ -415,11 +430,14 @@ private class GomokuGame(val vibe: Vibe) : PadGame {
             else -> s.colorTurn(names[turn - 1]) to (if (turn == 1) "#ffffff" else "#dddddd")
         }
         val pd = max(22f, y0 / 2)
-        bothSides(w, h, msg, 20f, col, pd)
-        if (win == 0) {
+        // 아래 사람 = 흑, 위 사람 = 백. 각자 쪽에 "나: 흑" + 지금 상황 (내 차례면 밝게)
+        eachSide(w, h, listOf(0, 1).map { cat(s.youAre(names[it]), "  ·  ", msg) }, 19f, listOf(0, 1).map { if (win != 0 || t - banAt < 1.2f) col else if (it == turn - 1) "#ffffff" else "#8A8FA0" }, pd)
+        for (p in 0..1) {
+            save(); if (p == 1) { translate(w, h); rotate(PIf) }
             val sy = h - pd - (if (SEP in msg) 10f else 0f)
-            beginPath(); arc(30f, sy, 11f, 0f, TAU); fillStyle = if (turn == 1) "#111111" else "#eeeeee"; fill(); lineWidth = 2f; strokeStyle = "#888888"; stroke()
-        } else if (t - endAt > 0.8f) againPill(w, h, s)
+            beginPath(); arc(28f, sy, 11f, 0f, TAU); fillStyle = if (p == 1) "#eeeeee" else "#111111"; fill(); lineWidth = 2f; strokeStyle = if (win == 0 && p == turn - 1) GOLD else "#888888"; stroke(); restore()
+        }
+        if (win != 0 && t - endAt > 0.8f) againPill(w, h, s)
     }
 }
 

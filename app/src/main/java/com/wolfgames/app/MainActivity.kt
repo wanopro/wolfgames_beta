@@ -352,7 +352,7 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
             // 설치 안내(웹) 링크 + 버전
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "📖 ${s.installGuide}",
+                    "📖 ${m.installGuide}",
                     color = WG.SubText,
                     fontSize = 12.sp,
                     modifier = Modifier
@@ -368,7 +368,7 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                 )
                 Text("  ·  ", color = WG.SubText.copy(alpha = 0.6f), fontSize = 12.sp)
                 Text(
-                    "📜 v$version ${s.logTitle}",
+                    "📜 v$version ${m.logTitle}",
                     color = WG.SubText,
                     fontSize = 12.sp,
                     textDecoration = TextDecoration.Underline,
@@ -435,7 +435,7 @@ private fun ChangeRow(item: ChangeItem, langCode: String) {
 @Composable
 fun ChangelogScreen(langCode: String, onBack: () -> Unit) {
     val s = LocalStrings.current
-    GameScaffold("📜 ${s.logTitle}", onBack) {
+    GameScaffold("📜 ${m.logTitle}", onBack) {
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),

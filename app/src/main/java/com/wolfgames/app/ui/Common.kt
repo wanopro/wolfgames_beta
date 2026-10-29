@@ -122,7 +122,7 @@ fun GameScaffold(
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = LocalStrings.current.back, tint = WG.Text)
             }
             Text(
-                title,
+                com.wolfgames.app.i18n.part(title, 0), // 화면 제목은 메인 언어만
                 color = WG.Text,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -217,8 +217,9 @@ fun MenuCard(emoji: String, title: String, subtitle: String, onClick: () -> Unit
         else Text(emoji, fontSize = 40.sp)
         Spacer(Modifier.width(16.dp))
         Column(Modifier.weight(1f)) {
-            Text(title, color = WG.Text, fontSize = 22.sp, fontWeight = FontWeight.Bold, inline = true)
-            Text(subtitle, color = WG.SubText, fontSize = 14.sp)
+            // 메뉴는 메인 언어만 (두 언어로 쓰면 너무 커짐)
+            Text(com.wolfgames.app.i18n.part(title, 0), color = WG.Text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(com.wolfgames.app.i18n.part(subtitle, 0), color = WG.SubText, fontSize = 14.sp)
         }
         Text("›", color = WG.SubText, fontSize = 32.sp)
     }
