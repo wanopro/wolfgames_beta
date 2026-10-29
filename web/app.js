@@ -1,5 +1,5 @@
 // 울프 게임즈 웹 버전 — 화면 이동, 메인, 언어 설정
-import { S, h, btn, card, top, lang, LANGS, vibe, VERSION, dualize, one } from './core.js';
+import { S, h, btn, card, top, lang, LANGS, vibe, VERSION, dualize, one, SEP } from './core.js';
 import { rollDice, shutBox, fiveDice, d789, diceDuel } from './games-dice.js';
 import { reaction, colorGame, stopwatch, bombGame } from './games-quick.js';
 import { upDown, hoChiMinh } from './games-cards.js';
@@ -90,19 +90,20 @@ function homeScreen(root) {
   const s = S();
   const cur = LANGS.find((l) => l.code === lang.current);
   const ask = () => confirmLink(root);
-  const logo = h('img', { src: 'icons/logo.png', alt: s.appName });
+  const m = (x) => String(x).split(SEP)[0]; // 맨 위 머리 부분은 메인 언어만
+  const logo = h('img', { src: 'icons/logo.png', alt: m(s.appName) });
   logo.addEventListener('click', () => { vibe.tap(); ask(); });
   const scroll = h('div', { class: 'scroll' },
     h('div', { class: 'hero' },
       logo,
       h('div', {},
-        h('h1', { style: s.appName.length > 6 ? 'font-size:27px;line-height:31px' : '' }, s.appName),
-        h('p', {}, s.appSubtitle, ' ', h('a', { href: FEEDBACK, target: '_blank', rel: 'noopener', class: 'fb', onclick: () => vibe.tap() }, s.feedback)),
+        h('h1', { style: m(s.appName).length > 6 ? 'font-size:27px;line-height:31px' : '' }, m(s.appName)),
+        h('p', {}, m(s.appSubtitle), ' ', h('a', { href: FEEDBACK, target: '_blank', rel: 'noopener', class: 'fb', onclick: () => vibe.tap() }, m(s.feedback))),
         h('div', { style: 'display:flex;gap:6px;flex-wrap:wrap' },
-          btn([h('span', { class: 'flag' }, cur.flag), `🌐 ${s.language}`], () => go('lang'), 'chip'),
-          btn(`🧮 ${s.calcTitle}`, () => go('calc'), 'chip'),
+          btn([h('span', { class: 'flag' }, cur.flag), `🌐 ${m(s.language)}`], () => go('lang'), 'chip'),
+          btn(`🧮 ${m(s.calcTitle)}`, () => go('calc'), 'chip'),
           btn('▦ QR', () => go('qr'), 'chip'),
-          btn(s.hotelBtn, () => go('hotel'), 'chip')))),
+          btn(m(s.hotelBtn), () => go('hotel'), 'chip')))),
     h('div', { style: 'height:4px' }),
     card('🎲', s.menuDice, s.menuDiceSub, () => go('dice')),
     card('🃏', s.menuCards, s.menuCardsSub, () => go('cards')),

@@ -229,6 +229,8 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
 @Composable
 fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
     val s = LocalStrings.current
+    // 맨 위 머리 부분(앱 이름 · 버튼들)은 메인 언어만
+    val m = com.wolfgames.app.i18n.stringsFor(currentLang)
     val context = LocalContext.current
     var askOpen by remember { mutableStateOf(false) }
     val vibe = LocalVibe.current
@@ -249,7 +251,7 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     painter = painterResource(R.drawable.wolf_logo),
-                    contentDescription = s.appName,
+                    contentDescription = m.appName,
                     modifier = Modifier
                         .size(104.dp)
                         .clip(CircleShape)
@@ -257,11 +259,11 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                 )
                 Spacer(Modifier.width(14.dp))
                 Column(Modifier.weight(1f)) {
-                    Text(s.appName, color = WG.Accent, fontSize = if (s.appName.length > 6) 27.sp else 32.sp, fontWeight = FontWeight.Black, lineHeight = 36.sp)
-                    Text(s.appSubtitle, color = WG.SubText, fontSize = 16.sp)
+                    Text(m.appName, color = WG.Accent, fontSize = if (m.appName.length > 6) 27.sp else 32.sp, fontWeight = FontWeight.Black, lineHeight = 36.sp)
+                    Text(m.appSubtitle, color = WG.SubText, fontSize = 16.sp)
                     // 💬 피드백: 게시판 글로 이동
                     Text(
-                        s.feedback, color = WG.Accent, fontSize = 13.sp, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline,
+                        m.feedback, color = WG.Accent, fontSize = 13.sp, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clip(RoundedCornerShape(4.dp)).clickable {
                             vibe.tap()
                             try { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(FEEDBACK))) } catch (_: ActivityNotFoundException) { }
@@ -280,7 +282,7 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                         ) {
                             Text(currentLang.flag, fontSize = 18.sp)
                             Spacer(Modifier.width(6.dp))
-                            Text("🌐 ${s.language}", color = WG.Text, fontSize = 14.sp)
+                            Text("🌐 ${m.language}", color = WG.Text, fontSize = 14.sp)
                         }
                         // 계산기 버튼
                         Row(
@@ -291,7 +293,7 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                                 .padding(horizontal = 12.dp, vertical = 6.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Text("🧮 ${s.calcTitle}", color = WG.Text, fontSize = 14.sp)
+                            Text("🧮 ${m.calcTitle}", color = WG.Text, fontSize = 14.sp)
                         }
                         // 📇 연락처 QR 버튼
                         Row(
@@ -313,7 +315,7 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                                 .padding(horizontal = 12.dp, vertical = 6.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Text(s.hotelBtn, color = WG.Text, fontSize = 14.sp)
+                            Text(m.hotelBtn, color = WG.Text, fontSize = 14.sp)
                         }
                     }
                 }
