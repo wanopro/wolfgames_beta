@@ -46,7 +46,7 @@ fun Text(
     }
     val parts = text.split(SEP)
     // 보조 줄은 같은 크기, 투명도만 낮춤
-    val base = if (color != Color.Unspecified) color else style.color.takeIf { it != Color.Unspecified } ?: Color.White
+    val base = if (color != Color.Unspecified) color else style.color.takeIf { it != Color.Unspecified } ?: androidx.compose.material3.LocalContentColor.current
     val two = buildAnnotatedString {
         append(parts[0]); append('\n')
         val st = length; append(parts[1])
