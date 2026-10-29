@@ -33,7 +33,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
+import com.wolfgames.app.ui.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -69,6 +69,11 @@ import com.wolfgames.app.games.BeerPourScreen
 import com.wolfgames.app.games.CoinTossScreen
 import com.wolfgames.app.games.KingsCupScreen
 import com.wolfgames.app.games.QrScreen
+import com.wolfgames.app.games.PlinkoScreen
+import com.wolfgames.app.games.TicTacToeScreen
+import com.wolfgames.app.games.GomokuScreen
+import com.wolfgames.app.games.HotelScreen
+import com.wolfgames.app.i18n.dualStrings
 import com.wolfgames.app.games.FourGame
 import com.wolfgames.app.games.LadderGame
 import com.wolfgames.app.games.PirateGame
@@ -97,6 +102,8 @@ private const val PREFS = "wolfgames"
 /** 점검용: adb 로 특정 화면을 바로 열기 (am start --es screen Tug --ez autostart true) */
 object DebugOpen { var screen: String? = null; var autostart = false }
 private const val KEY_LANG = "lang"
+private const val KEY_LANG2 = "lang2"
+private const val FEEDBACK = "https://wolf.community/traveltalk/6817682"
 private const val HOMEPAGE = "https://wolf.community"
 
 class MainActivity : ComponentActivity() {
@@ -110,15 +117,19 @@ class MainActivity : ComponentActivity() {
         val vibe = Vibe.from(this)
         setContent {
             var langPref by remember { mutableStateOf(prefs.getString(KEY_LANG, Lang.SYSTEM) ?: Lang.SYSTEM) }
+            var lang2Pref by remember { mutableStateOf(prefs.getString(KEY_LANG2, null)) }
             val lang = Lang.resolve(langPref)
-            CompositionLocalProvider(LocalStrings provides stringsFor(lang), LocalVibe provides vibe) {
+            // 두 번째 언어 (메인과 같으면 없음)
+            val lang2 = Lang.entries.firstOrNull { it.code == lang2Pref }?.takeIf { it != lang }
+            CompositionLocalProvider(LocalStrings provides dualStrings(lang, lang2), LocalVibe provides vibe) {
                 WolfTheme {
                     App(
                         langPref = langPref,
                         currentLang = lang,
-                        onLangChange = {
-                            langPref = it
-                            prefs.edit().putString(KEY_LANG, it).apply()
+                        lang2 = lang2,
+                        onLangChange = { main, second ->
+                            langPref = main; lang2Pref = second
+                            prefs.edit().putString(KEY_LANG, main).putString(KEY_LANG2, second).apply()
                         },
                     )
                 }
@@ -127,18 +138,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel }
 
 @Composable
-fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
+fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String, String?) -> Unit) {
     var screen by rememberSaveable { mutableStateOf(DebugOpen.screen?.let { n -> Screen.entries.firstOrNull { it.name == n } } ?: Screen.Home) }
     val s = LocalStrings.current
     val back: () -> Unit = {
         screen = when (screen) {
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
             Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer -> Screen.QuickMenu
-            Screen.Tug, Screen.Slap -> Screen.BattleMenu
-            Screen.Coin -> Screen.LuckMenu
+            Screen.Tug, Screen.Slap, Screen.Ttt, Screen.Gomoku -> Screen.BattleMenu
+            Screen.Coin, Screen.Plinko -> Screen.LuckMenu
             Screen.Kings -> Screen.CardMenu
             Screen.UpDown, Screen.HoChiMinh -> Screen.CardMenu
             Screen.Finger -> Screen.FingerMenu
@@ -175,6 +186,7 @@ fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
                 MenuItem("🎡", s.menuRoulette, s.menuRouletteSub, Screen.Roulette),
                 MenuItem("💣", s.bombTitle, s.bombSub, Screen.Bomb),
                 MenuItem("@coin", s.coinTitle, s.coinSub, Screen.Coin),
+                MenuItem("🔻", s.plinkoTitle, s.plinkoSub, Screen.Plinko),
             )) { screen = it }
             Screen.QuickMenu -> CategoryScreen("⚡ ${s.menuQuick}", back, listOf(
                 MenuItem("🟢", s.reactTitle, s.reactSub, Screen.Reaction),
@@ -187,7 +199,7 @@ fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
             Screen.ColorReact -> ColorGameScreen(onBack = back)
             Screen.Stopwatch -> StopwatchScreen(onBack = back)
             Screen.Bomb -> BombGameScreen(onBack = back)
-            Screen.BattleMenu -> CategoryScreen("⚔️ ${s.menuBattle}", back, listOf(MenuItem("🔴", s.menuFour, s.menuFourSub, Screen.Four), MenuItem("🎀", s.tugTitle, s.tugSub, Screen.Tug), MenuItem("🐾", s.slapTitle, s.slapSub, Screen.Slap))) { screen = it }
+            Screen.BattleMenu -> CategoryScreen("⚔️ ${s.menuBattle}", back, listOf(MenuItem("🔴", s.menuFour, s.menuFourSub, Screen.Four), MenuItem("🎀", s.tugTitle, s.tugSub, Screen.Tug), MenuItem("🐾", s.slapTitle, s.slapSub, Screen.Slap), MenuItem("🟢", s.tttTitle, s.tttSub, Screen.Ttt), MenuItem("⚫", s.gomokuTitle, s.gomokuSub, Screen.Gomoku))) { screen = it }
             Screen.Croc -> WolfTeethGame(onBack = back)
             Screen.Ladder -> LadderGame(onBack = back)
             Screen.Roulette -> RouletteGame(onBack = back)
@@ -197,7 +209,7 @@ fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
             Screen.Four -> FourGame(onBack = back)
             Screen.Calc -> CalculatorScreen(onBack = back, onExchange = { screen = Screen.Fx })
             Screen.Fx -> ExchangeScreen(onBack = back, langCode = currentLang.code)
-            Screen.Language -> LanguageScreen(langPref, onBack = back, onSelect = onLangChange)
+            Screen.Language -> LanguageScreen(langPref, lang2?.code, onBack = back, onSelect = onLangChange)
             Screen.Changelog -> ChangelogScreen(currentLang.code, onBack = back)
             Screen.Tug -> TugWarScreen(onBack = back)
             Screen.Slap -> SlapDuelScreen(onBack = back)
@@ -205,6 +217,10 @@ fun App(langPref: String, currentLang: Lang, onLangChange: (String) -> Unit) {
             Screen.Coin -> CoinTossScreen(onBack = back)
             Screen.Kings -> KingsCupScreen(onBack = back)
             Screen.Qr -> QrScreen(onBack = back)
+            Screen.Plinko -> PlinkoScreen(onBack = back)
+            Screen.Ttt -> TicTacToeScreen(onBack = back)
+            Screen.Gomoku -> GomokuScreen(onBack = back)
+            Screen.Hotel -> HotelScreen(onBack = back, langCode = currentLang.code, secondCode = lang2?.code)
         }
     }
 }
@@ -243,6 +259,14 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                 Column(Modifier.weight(1f)) {
                     Text(s.appName, color = WG.Accent, fontSize = if (s.appName.length > 6) 27.sp else 32.sp, fontWeight = FontWeight.Black, lineHeight = 36.sp)
                     Text(s.appSubtitle, color = WG.SubText, fontSize = 16.sp)
+                    // 💬 피드백: 게시판 글로 이동
+                    Text(
+                        s.feedback, color = WG.Accent, fontSize = 13.sp, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clip(RoundedCornerShape(4.dp)).clickable {
+                            vibe.tap()
+                            try { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(FEEDBACK))) } catch (_: ActivityNotFoundException) { }
+                        }.padding(vertical = 4.dp),
+                    )
                     Spacer(Modifier.height(8.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         // 언어 버튼 (현재 국기 표시)
@@ -279,6 +303,17 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text("▦ QR", color = WG.Text, fontSize = 14.sp)
+                        }
+                        // 🏨 숙소 주소 카드 버튼
+                        Row(
+                            Modifier
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(WG.Surface)
+                                .clickable { vibe.tap(); onSelect(Screen.Hotel) }
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(s.hotelBtn, color = WG.Text, fontSize = 14.sp)
                         }
                     }
                 }
@@ -479,25 +514,37 @@ fun CardMenuScreen(onBack: () -> Unit, onSelect: (Screen) -> Unit) {
     }
 }
 
-/** 언어 선택 화면 */
+/** 언어 선택 화면: 최대 2개 (① 메인 · ② 보조). 누른 걸 다시 누르면 빠짐 */
 @Composable
-fun LanguageScreen(langPref: String, onBack: () -> Unit, onSelect: (String) -> Unit) {
+fun LanguageScreen(langPref: String, lang2: String?, onBack: () -> Unit, onSelect: (String, String?) -> Unit) {
     val s = LocalStrings.current
+    val main = if (langPref == Lang.SYSTEM) null else langPref
+    fun pick(code: String) {
+        when {
+            code == Lang.SYSTEM -> onSelect(Lang.SYSTEM, null)
+            code == main -> onSelect(lang2 ?: Lang.SYSTEM, null) // 메인을 빼면 보조가 메인으로
+            code == lang2 -> onSelect(langPref, null)
+            main == null -> onSelect(code, null)
+            else -> onSelect(main, code) // 두 번째로 고른 언어 (이미 2개면 보조만 바뀜)
+        }
+    }
     GameScaffold("🌐 ${s.language}", onBack) {
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            LanguageRow("📱", s.followSystem, selected = langPref == Lang.SYSTEM) { onSelect(Lang.SYSTEM) }
+            Text(s.langPickTwo, color = WG.SubText, fontSize = 14.sp, lineHeight = 20.sp)
+            LanguageRow("📱", s.followSystem, selected = langPref == Lang.SYSTEM, num = "") { pick(Lang.SYSTEM) }
             for (lang in Lang.entries) {
-                LanguageRow(lang.flag, lang.label, selected = langPref == lang.code) { onSelect(lang.code) }
+                val num = when (lang.code) { main -> "①"; lang2 -> "②"; else -> "" }
+                LanguageRow(lang.flag, lang.label, selected = num.isNotEmpty(), num = num) { pick(lang.code) }
             }
         }
     }
 }
 
 @Composable
-private fun LanguageRow(flag: String, label: String, selected: Boolean, onClick: () -> Unit) {
+private fun LanguageRow(flag: String, label: String, selected: Boolean, num: String, onClick: () -> Unit) {
     val vibe = LocalVibe.current
     val shape = RoundedCornerShape(16.dp)
     Row(
@@ -519,6 +566,6 @@ private fun LanguageRow(flag: String, label: String, selected: Boolean, onClick:
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
             modifier = Modifier.weight(1f),
         )
-        if (selected) Text("✓", color = WG.Accent, fontSize = 24.sp, fontWeight = FontWeight.Black)
+        if (selected) Text(num.ifEmpty { "✓" }, color = WG.Accent, fontSize = 24.sp, fontWeight = FontWeight.Black)
     }
 }

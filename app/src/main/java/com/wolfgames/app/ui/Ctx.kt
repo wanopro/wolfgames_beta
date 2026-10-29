@@ -121,6 +121,11 @@ class Ctx(val c: Canvas, density: Float) {
     // ---------- 글자 (가운데 정렬, 세로 가운데) ----------
     fun font(size: Float, bold: Boolean = true) { fontSize = size; fontBold = bold }
     fun fillText(s: String, x: Float, y: Float) {
+        // 두 언어 문구: 위아래 두 줄 (같은 크기, 아래 줄만 살짝 흐리게)
+        if (com.wolfgames.app.i18n.SEP in s) {
+            val (m, sub) = s.split(com.wolfgames.app.i18n.SEP); val dy = fontSize * 0.58f; val al = globalAlpha
+            fillText(m, x, y - dy); globalAlpha = al * 0.85f; fillText(sub, x, y + dy); globalAlpha = al; return
+        }
         textP.textSize = fontSize
         textP.typeface = if (fontBold) Typeface.create(Typeface.DEFAULT, Typeface.BOLD) else Typeface.DEFAULT
         textP.color = parseColor(fillStyle)
@@ -128,7 +133,7 @@ class Ctx(val c: Canvas, density: Float) {
         val fm = textP.fontMetrics
         c.drawText(s, x, y - (fm.ascent + fm.descent) / 2f, textP)
     }
-    fun measureText(s: String): Float { textP.textSize = fontSize; textP.typeface = if (fontBold) Typeface.create(Typeface.DEFAULT, Typeface.BOLD) else Typeface.DEFAULT; return textP.measureText(s) }
+    fun measureText(s: String): Float { if (com.wolfgames.app.i18n.SEP in s) return s.split(com.wolfgames.app.i18n.SEP).maxOf { measureText(it) }; textP.textSize = fontSize; textP.typeface = if (fontBold) Typeface.create(Typeface.DEFAULT, Typeface.BOLD) else Typeface.DEFAULT; return textP.measureText(s) }
 
     companion object {
         private val cache = HashMap<String, Int>()
