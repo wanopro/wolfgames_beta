@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -125,6 +126,10 @@ fun GameScaffold(
                 color = WG.Text,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                lineHeight = 23.sp,
+                inline = true,
                 modifier = Modifier.weight(1f),
             )
             actions()
@@ -212,7 +217,7 @@ fun MenuCard(emoji: String, title: String, subtitle: String, onClick: () -> Unit
         else Text(emoji, fontSize = 40.sp)
         Spacer(Modifier.width(16.dp))
         Column(Modifier.weight(1f)) {
-            Text(title, color = WG.Text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(title, color = WG.Text, fontSize = 22.sp, fontWeight = FontWeight.Bold, inline = true)
             Text(subtitle, color = WG.SubText, fontSize = 14.sp)
         }
         Text("›", color = WG.SubText, fontSize = 32.sp)

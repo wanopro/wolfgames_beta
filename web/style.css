@@ -259,3 +259,6 @@ canvas { display: block; touch-action: none; }
 .hrow { display: flex; flex-direction: column; gap: 8px; background: var(--surface); border-radius: 14px; padding: 12px; }
 .hrow input, .hrow textarea { background: var(--bg); border: 1px solid #333; border-radius: 10px; color: var(--text); padding: 10px; font-size: 15px; font-family: inherit; resize: vertical; }
 .hdel { align-self: flex-end; color: #FF8A80; }
+/* 큰 제목은 두 언어를 한 줄에 (보조 언어는 오른쪽) */
+.card .t .dual, .top .title .dual { display: inline; margin: 0 0 0 10px; }
+.top .title:has(.dual) { white-space: normal; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }

@@ -39,6 +39,8 @@ fun Text(
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
     style: TextStyle = LocalTextStyle.current,
+    /** true: 두 언어를 한 줄에 (보조 언어는 오른쪽). 큰 제목용 */
+    inline: Boolean = false,
 ) {
     if (SEP !in text) {
         androidx.compose.material3.Text(text, modifier = modifier, color = color, fontSize = fontSize, fontStyle = fontStyle, fontWeight = fontWeight, fontFamily = fontFamily, letterSpacing = letterSpacing, textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight, overflow = overflow, softWrap = softWrap, maxLines = maxLines, minLines = minLines, style = style)
@@ -48,14 +50,14 @@ fun Text(
     // 보조 줄은 같은 크기, 투명도만 낮춤
     val base = if (color != Color.Unspecified) color else style.color.takeIf { it != Color.Unspecified } ?: androidx.compose.material3.LocalContentColor.current
     val two = buildAnnotatedString {
-        append(parts[0]); append('\n')
+        append(parts[0]); append(if (inline) "  " else "\n")
         val st = length; append(parts[1])
         addStyle(SpanStyle(color = base.copy(alpha = base.alpha * 0.8f)), st, length)
     }
     androidx.compose.material3.Text(
         two, modifier = modifier, color = color, fontSize = fontSize, fontStyle = fontStyle, fontWeight = fontWeight, fontFamily = fontFamily,
         letterSpacing = letterSpacing, textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight, overflow = overflow, softWrap = softWrap,
-        maxLines = if (maxLines == Int.MAX_VALUE) maxLines else maxLines * 2, minLines = minLines, style = style,
+        maxLines = if (maxLines == Int.MAX_VALUE || inline) maxLines else maxLines * 2, minLines = minLines, style = style,
     )
 }
 
