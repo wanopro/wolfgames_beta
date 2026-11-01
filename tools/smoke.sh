@@ -53,7 +53,7 @@ v17() { local P=$1
   open LuckMenu; shot ${P}_luck; adb shell input swipe $(px 500) $(py 800) $(px 500) $(py 200) 300; sleep 1; shot ${P}_luck2
   # 숫자 폭탄: 50 → 25 → 범위 밖 숫자
   open NumberBomb; shot ${P}_nb0
-  open NumberBomb true; sleep 1; tapExact "1"; tapText "확인"; sleep 0.6; shot ${P}_nb1; sleep 1.6; shot ${P}_nb2
+  open NumberBomb true; sleep 1; tapExact "1"; tapExact "확인"; sleep 0.6; shot ${P}_nb1; sleep 1.6; shot ${P}_nb2
   # 풍선: 3번, 그다음 30번 (반드시 터짐)
   open Balloon true; sleep 1; for i in 1 2 3; do tap 500 450; sleep 0.15; done; shot ${P}_bl1
   for i in $(seq 1 30); do tap 500 450; sleep 0.08; done; sleep 1.2; shot ${P}_bl2
