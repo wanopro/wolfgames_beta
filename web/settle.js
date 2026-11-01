@@ -45,7 +45,7 @@ export function settleScreen(root, back) {
     // 사람
     const people = h('div', { class: 'strow' }, ...d.people.map((p, i) => {
       const inp = h('input', { value: p, maxlength: 12, class: 'stname' });
-      inp.addEventListener('change', () => { d.people[i] = inp.value.trim() || `P${i + 1}`; render(); });
+      inp.addEventListener('change', () => { d.people[i] = inp.value.trim() || `P${i + 1}`; setTimeout(render, 0); }); // 입력칸이 포커스를 잃는 중에 다시 그리면 오류 → 다음 틱에
       return h('div', { class: 'stp' }, inp, d.people.length > 2 ? btn('✕', () => {
         vibe.tap(); d.people.splice(i, 1);
         d.ex = d.ex.filter((e) => e.by !== i).map((e) => ({ ...e, by: e.by > i ? e.by - 1 : e.by, for: e.for.filter((k) => k !== i).map((k) => (k > i ? k - 1 : k)) })).filter((e) => e.for.length);
