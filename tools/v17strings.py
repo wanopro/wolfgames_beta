@@ -20,6 +20,9 @@ S = {
  'nbOut': ['범위 안의 숫자를 눌러요', 'Pick a number inside the range', '範囲内の数字を入れてね', '请输入范围内的数字', 'ใส่เลขที่อยู่ในช่วง', 'Chọn số trong khoảng'],
  'nbPass': ['다음 사람에게 넘겨요 👉', 'Pass it to the next person 👉', '次の人に渡して 👉', '传给下一个人 👉', 'ส่งให้คนถัดไป 👉', 'Chuyền cho người kế tiếp 👉'],
  'nbOk': ['확인', 'OK', 'OK', '确定', 'ตกลง', 'OK'],
+ 'nbDazed': ['헤롱헤롱~ 😵‍💫', 'Dizzy~ 😵‍💫', 'フラフラ〜 😵‍💫', '晕乎乎~ 😵‍💫', 'มึนตึ้บ~ 😵‍💫', 'Choáng váng~ 😵‍💫'],
+ 'phSpeak': ['🔊 들려주기', '🔊 Play sound', '🔊 読み上げる', '🔊 朗读', '🔊 เปิดเสียง', '🔊 Phát âm'],
+ 'phNoVoice': ['이 휴대폰에 이 언어 음성이 없어요. 휴대폰 설정 → 음성(텍스트 음성 변환)에서 받을 수 있어요.', "This phone has no voice for this language. You can download one in phone Settings → Text-to-speech.", 'このスマホにはこの言語の音声がありません。スマホの設定 → テキスト読み上げで追加できます。', '这部手机没有这种语言的语音。可以在手机设置 → 文字转语音里下载。', 'มือถือเครื่องนี้ไม่มีเสียงภาษานี้ ดาวน์โหลดได้ที่ ตั้งค่า → การอ่านออกเสียงข้อความ', 'Điện thoại này chưa có giọng đọc cho ngôn ngữ này. Có thể tải trong Cài đặt → Chuyển văn bản thành giọng nói.'],
  # 🎈 풍선 불기
  'blTitle': ['풍선 불기', 'Balloon Pump', '風船ふくらまし', '吹气球', 'เป่าลูกโป่ง', 'Thổi bóng bay'],
  'blSub': ['언제 터질지 몰라! 펑!', "Who knows when it pops! BANG!", 'いつ割れるかわからない！パン！', '不知道什么时候爆！砰！', 'ไม่รู้จะแตกตอนไหน! ปัง!', 'Không biết khi nào nổ! Bụp!'],

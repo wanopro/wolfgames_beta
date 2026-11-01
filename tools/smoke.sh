@@ -50,15 +50,15 @@ run() { # $1 = 이름 앞글자
 # v1.7 새 화면 점검 (한국어 → 한국어+태국어)
 v17() { local P=$1
   open Home; shot ${P}_home
-  open LuckMenu; shot ${P}_luck
+  open LuckMenu; shot ${P}_luck; adb shell input swipe $(px 500) $(py 800) $(px 500) $(py 200) 300; sleep 1; shot ${P}_luck2
   # 숫자 폭탄: 50 → 25 → 범위 밖 숫자
   open NumberBomb; shot ${P}_nb0
-  open NumberBomb true; sleep 1; tapText "^5$"; for k in 5 0; do tapExact "$k"; done; tapText "확인"; sleep 0.5; for k in 2 5; do tapExact "$k"; done; tapText "확인"; sleep 0.5; shot ${P}_nb1
+  open NumberBomb true; sleep 1; tapExact "1"; tapText "확인"; sleep 0.6; shot ${P}_nb1; sleep 1.6; shot ${P}_nb2
   # 풍선: 3번, 그다음 30번 (반드시 터짐)
   open Balloon true; sleep 1; for i in 1 2 3; do tap 500 450; sleep 0.15; done; shot ${P}_bl1
   for i in $(seq 1 30); do tap 500 450; sleep 0.08; done; sleep 1.2; shot ${P}_bl2
   # 회화 카드: 목록 → 세 번째 문장 크게
-  open Phrase; shot ${P}_ph0; tapText "계산해"; sleep 1; shot ${P}_ph1
+  open Phrase; shot ${P}_ph0; tapText "계산해"; sleep 1; shot ${P}_ph1; tapText "들려주기"; sleep 1.5; shot ${P}_ph2
   # 정산: 빈 화면
   open Settle; shot ${P}_st0
 }

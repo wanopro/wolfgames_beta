@@ -463,6 +463,9 @@ class Strings {
     lateinit var stSpent: (String) -> String
     lateinit var stReset: String
     lateinit var stResetAsk: String
+    lateinit var nbDazed: String
+    lateinit var phSpeak: String
+    lateinit var phNoVoice: String
 }
 
 val KoStrings = Strings().apply {
@@ -879,6 +882,9 @@ val KoStrings = Strings().apply {
     stReset = "🗑️ 전부 지우기"
     stResetAsk = "정말 전부 지울까요?"
 
+    nbDazed = "헤롱헤롱~ 😵‍💫"
+    phSpeak = "🔊 들려주기"
+    phNoVoice = "이 휴대폰에 이 언어 음성이 없어요. 휴대폰 설정 → 음성(텍스트 음성 변환)에서 받을 수 있어요."
 }
 
 val EnStrings = Strings().apply {
@@ -1295,6 +1301,9 @@ val EnStrings = Strings().apply {
     stReset = "🗑️ Clear all"
     stResetAsk = "Really clear everything?"
 
+    nbDazed = "Dizzy~ 😵‍💫"
+    phSpeak = "🔊 Play sound"
+    phNoVoice = "This phone has no voice for this language. You can download one in phone Settings → Text-to-speech."
 }
 
 val JaStrings = Strings().apply {
@@ -1711,6 +1720,9 @@ val JaStrings = Strings().apply {
     stReset = "🗑️ 全部消す"
     stResetAsk = "本当に全部消しますか？"
 
+    nbDazed = "フラフラ〜 😵‍💫"
+    phSpeak = "🔊 読み上げる"
+    phNoVoice = "このスマホにはこの言語の音声がありません。スマホの設定 → テキスト読み上げで追加できます。"
 }
 
 val ZhStrings = Strings().apply {
@@ -2127,6 +2139,9 @@ val ZhStrings = Strings().apply {
     stReset = "🗑️ 全部清空"
     stResetAsk = "确定全部清空吗？"
 
+    nbDazed = "晕乎乎~ 😵‍💫"
+    phSpeak = "🔊 朗读"
+    phNoVoice = "这部手机没有这种语言的语音。可以在手机设置 → 文字转语音里下载。"
 }
 
 val ThStrings = Strings().apply {
@@ -2543,6 +2558,9 @@ val ThStrings = Strings().apply {
     stReset = "🗑️ ล้างทั้งหมด"
     stResetAsk = "ล้างทั้งหมดจริงไหม?"
 
+    nbDazed = "มึนตึ้บ~ 😵‍💫"
+    phSpeak = "🔊 เปิดเสียง"
+    phNoVoice = "มือถือเครื่องนี้ไม่มีเสียงภาษานี้ ดาวน์โหลดได้ที่ ตั้งค่า → การอ่านออกเสียงข้อความ"
 }
 
 val ViStrings = Strings().apply {
@@ -2959,6 +2977,9 @@ val ViStrings = Strings().apply {
     stReset = "🗑️ Xóa hết"
     stResetAsk = "Xóa hết thật chứ?"
 
+    nbDazed = "Choáng váng~ 😵‍💫"
+    phSpeak = "🔊 Phát âm"
+    phNoVoice = "Điện thoại này chưa có giọng đọc cho ngôn ngữ này. Có thể tải trong Cài đặt → Chuyển văn bản thành giọng nói."
 }
 
 fun stringsFor(lang: Lang): Strings = when (lang) {

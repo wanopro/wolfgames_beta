@@ -431,4 +431,7 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     stSpent = { p0 -> join2(a.stSpent(part(p0, 0)), b.stSpent(part(p0, 1))) }
     stReset = join2(a.stReset, b.stReset)
     stResetAsk = join2(a.stResetAsk, b.stResetAsk)
+    nbDazed = join2(a.nbDazed, b.nbDazed)
+    phSpeak = join2(a.phSpeak, b.phSpeak)
+    phNoVoice = join2(a.phNoVoice, b.phNoVoice)
 }

@@ -4,6 +4,22 @@ import { STRINGS } from './i18n.js';
 
 export const PH_ICONS = ['🚻', '👉', '🧾', '💰', '🌶️', '🌿', '🧊', '💧', '🍺', '🥡', '💳', '🏷️', '📄', '📸', '📶', '💊', '🆘', '🥜'];
 const KEY = 'wg-ph-to';
+// 🔊 읽어주기: 휴대폰(브라우저)에 들어 있는 음성 사용 — 그 언어 음성이 깔려 있으면 인터넷 없이도 됨
+const BCP = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', zh: 'zh-CN', th: 'th-TH', vi: 'vi-VN' };
+const synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
+export function voiceFor(code) {
+  if (!synth) return null;
+  const vs = synth.getVoices(), want = BCP[code].toLowerCase(), pre = code;
+  return vs.find((v) => v.lang.toLowerCase().replace('_', '-') === want) || vs.find((v) => v.lang.toLowerCase().startsWith(pre)) || null;
+}
+export function speak(text, code) {
+  if (!synth) return false;
+  const v = voiceFor(code);
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text); u.lang = BCP[code]; u.rate = 0.9; if (v) u.voice = v;
+  synth.speak(u);
+  return !!v || synth.getVoices().length === 0; // 목록을 아직 못 받았으면 일단 시도
+}
 const main = (x) => String(x).split(SEP)[0];
 function defaultTo() {
   try { const v = localStorage.getItem(KEY); if (v && STRINGS[v]) return v; } catch (_) { /* 무시 */ }
@@ -24,16 +40,18 @@ export function phraseScreen(root, back) {
   };
   const show = (i) => {
     const theirs = STRINGS[to].phrases.split('|'), n = theirs.length;
-    const wrap = h('div', { class: 'qrfull phfull' });
+    const wrap = h('div', { class: 'qrfull phfull' }), note = h('div', { class: 'phnote' });
     const paint = () => {
-      wrap.replaceChildren(
+      wrap.replaceChildren(...[
         h('div', { class: 'phbig-ic' }, PH_ICONS[i]),
         h('div', { class: 'phbig' }, theirs[i]),
         to !== lang.current ? h('div', { class: 'phsmall' }, mine[i]) : null,
+        synth ? btn(s.phSpeak, () => { vibe.tap(); if (!speak(theirs[i], to)) note.textContent = s.phNoVoice; }, 'phspeak') : null,
+        note,
         h('div', { class: 'qrbar' },
-          btn('‹', () => { i = (i + n - 1) % n; vibe.tap(); paint(); }, 'qrbtn2'),
-          btn(main(s.qrClose), () => wrap.remove(), 'qrbtn'),
-          btn('›', () => { i = (i + 1) % n; vibe.tap(); paint(); }, 'qrbtn2')));
+          btn('‹', () => { i = (i + n - 1) % n; note.textContent = ''; vibe.tap(); paint(); }, 'qrbtn2'),
+          btn(main(s.qrClose), () => { if (synth) synth.cancel(); wrap.remove(); }, 'qrbtn'),
+          btn('›', () => { i = (i + 1) % n; note.textContent = ''; vibe.tap(); paint(); }, 'qrbtn2'))].filter(Boolean));
     };
     paint(); root.append(wrap);
   };

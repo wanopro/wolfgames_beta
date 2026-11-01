@@ -2,6 +2,7 @@
 import { C, S, h, btn, top, setupPanel, liveCanvas, vibe, resultOverlay, SEP, cat } from './core.js';
 import { choice } from './games-quick.js';
 import { bombArt, wolfFace } from './art.js';
+import { dazedWolf } from './dazed.js';
 
 const ease = (u) => 1 - Math.pow(1 - Math.min(1, Math.max(0, u)), 3);
 const font = (c, size, w = 900) => { c.font = `${w} ${size}px -apple-system, "Noto Sans KR", "Noto Sans Thai", sans-serif`; c.textAlign = 'center'; c.textBaseline = 'middle'; };
@@ -42,7 +43,8 @@ export function numberBomb(root, back) {
         if (!n || n < g.lo || n > g.hi) { g.msg = s.nbOut; g.msgCls = 'warn'; render(); return; }
         if (n === g.bomb) {
           g.boomAt = now(); g.lo = g.hi = n; vibe.strong(); render();
-          setTimeout(() => resultOverlay(root.querySelector('.body') || root, cat(s.nbBoom, ` ${n}`), s.shotWord, s.playAgain, () => { cv && cv.stop(); play(); }, s.again, setup), 1200);
+          setTimeout(() => { msgEl.textContent = cat(s.nbBoom, ` ${n}`); msgEl.className = 'nb-msg down'; histEl.replaceChildren(h('span', { class: 'nb-shot' }, s.shotWord)); typedEl.remove();
+            keys.replaceWith(h('div', { class: 'nb-end' }, btn(s.playAgain, () => { cv && cv.stop(); play(); }), btn(s.again, setup, 'btn alt'))); }, 900);
           return;
         }
         if (n < g.bomb) { g.lo = n + 1; g.msg = cat(s.nbUp, ' · ', s.nbPass); g.msgCls = 'up'; g.last.push([n, 'up']); }
@@ -63,6 +65,14 @@ export function numberBomb(root, back) {
         return;
       }
       const u = t - g.boomAt;
+      // 💥 다음 연기 속에서 그을린 늑대가 헤롱헤롱
+      if (u > 0.55) {
+        const p = ease((u - 0.55) / 0.35), R = Math.min(W * 0.27, H * 0.3);
+        c.save(); c.globalAlpha = p; c.translate(cx, cy); c.scale(0.7 + 0.3 * p, 0.7 + 0.3 * p); dazedWolf(c, 0, 0, R, t); c.restore();
+        c.globalAlpha = Math.max(0, 1 - (u - 0.55) / 0.5); c.beginPath(); c.arc(cx, cy, R * 1.5, 0, 7); c.fillStyle = '#9097A3'; c.fill(); c.globalAlpha = 1;
+        if (u > 1) txt(c, s.nbDazed, cx + Math.sin(t * 3) * 6, Math.min(H - 14, cy + R * 1.05 + 14), 18, '#FFD740');
+        return;
+      }
       for (let k = 0; k < 18; k++) {
         const a = k / 18 * Math.PI * 2, d = ease(u / 0.6) * Math.min(W, H) * (0.3 + 0.2 * (k % 3));
         c.globalAlpha = Math.max(0, 1 - u / 1.4); c.beginPath(); c.arc(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 10 - (k % 3) * 2, 0, 7); c.fillStyle = ['#FFD740', '#FF7043', '#FF3D5A'][k % 3]; c.fill();

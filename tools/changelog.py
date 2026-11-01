@@ -5,12 +5,12 @@
 CHANGELOG = [
     dict(ver='1.7-beta', date='2026-11-01', items=[
         ('🔢', dict(
-            ko='🔢 숫자 폭탄 추가 (운빨게임): 숨은 폭탄 숫자를 피해 돌아가면서 숫자 입력 — ⬆️ UP · ⬇️ DOWN으로 범위가 좁아지고, 폭탄 숫자를 누르면 펑!',
-            en='🔢 New Number Bomb (Luck Games): take turns entering numbers to dodge the hidden bomb — ⬆️ UP · ⬇️ DOWN shrink the range; hit the bomb and BOOM!',
-            ja='🔢 数字爆弾追加（運ゲーム）：隠れた爆弾の数字をよけながら順番に入力 — ⬆️ UP・⬇️ DOWNで範囲が狭まり、爆弾の数字でドカン！',
-            zh='🔢 新增数字炸弹（运气游戏）：轮流输入数字躲开隐藏的炸弹 — ⬆️ UP · ⬇️ DOWN 缩小范围，按到炸弹就砰！',
-            th='🔢 เพิ่มระเบิดตัวเลข (เกมดวง): ผลัดกันใส่เลขหลบเลขระเบิด ⬆️ UP · ⬇️ DOWN ช่วงจะแคบลง กดโดนระเบิดตูม!',
-            vi='🔢 Thêm Bom số (Trò may rủi): lần lượt nhập số để né số bom ẩn — ⬆️ UP · ⬇️ DOWN thu hẹp khoảng, chạm số bom là BÙM!',
+            ko='🔢 숫자 폭탄 추가 (운빨게임): 숨은 폭탄 숫자를 피해 돌아가면서 숫자 입력 — ⬆️ UP · ⬇️ DOWN으로 범위가 좁아지고, 폭탄 숫자를 누르면 펑! 그을린 늑대가 헤롱헤롱 😵‍💫',
+            en='🔢 New Number Bomb (Luck Games): take turns entering numbers to dodge the hidden bomb — ⬆️ UP · ⬇️ DOWN shrink the range; hit the bomb and BOOM! A singed wolf goes dizzy 😵‍💫',
+            ja='🔢 数字爆弾追加（運ゲーム）：隠れた爆弾の数字をよけながら順番に入力 — ⬆️ UP・⬇️ DOWNで範囲が狭まり、爆弾の数字でドカン！焦げたオオカミがフラフラ 😵‍💫',
+            zh='🔢 新增数字炸弹（运气游戏）：轮流输入数字躲开隐藏的炸弹 — ⬆️ UP · ⬇️ DOWN 缩小范围，按到炸弹就砰！烤焦的小狼晕乎乎 😵‍💫',
+            th='🔢 เพิ่มระเบิดตัวเลข (เกมดวง): ผลัดกันใส่เลขหลบเลขระเบิด ⬆️ UP · ⬇️ DOWN ช่วงจะแคบลง กดโดนระเบิดตูม! หมาป่าไหม้เกรียมมึนตึ้บ 😵‍💫',
+            vi='🔢 Thêm Bom số (Trò may rủi): lần lượt nhập số để né số bom ẩn — ⬆️ UP · ⬇️ DOWN thu hẹp khoảng, chạm số bom là BÙM! Sói cháy xém choáng váng 😵‍💫',
         )),
         ('🎈', dict(
             ko='🎈 풍선 불기 추가 (운빨게임): 폰을 돌리면서 1~3번씩 터치해 늑대 풍선에 바람을 넣고, 터뜨린 사람이 원샷',
@@ -21,12 +21,12 @@ CHANGELOG = [
             vi='🎈 Thêm Thổi bóng bay (Trò may rủi): chuyền điện thoại, mỗi người chạm 1–3 lần bơm bóng sói — ai làm nổ thì cạn ly',
         )),
         ('🗣️', dict(
-            ko='🗣️ 회화 카드 (메인 화면): 화장실 · 계산 · 맵지 않게 · 고수 빼기 등 자주 쓰는 말 18개를 고른 나라 말 큰 글씨로 (인터넷 없어도 돼요)',
-            en='🗣️ Phrase Cards (home screen): 18 handy phrases — restroom, check, not spicy, no cilantro… — shown big in the language you pick (works offline)',
-            ja='🗣️ 会話カード（ホーム）：トイレ・お会計・辛くしない・パクチー抜きなどよく使う18文を選んだ言語で大きく表示（ネットなしでOK）',
-            zh='🗣️ 会话卡片（主页）：洗手间、买单、不要辣、不要香菜等18句常用语，用选好的语言大字显示（没网也能用）',
-            th='🗣️ การ์ดประโยค (หน้าหลัก): 18 ประโยคที่ใช้บ่อย ห้องน้ำ เช็คบิล ไม่เผ็ด ไม่ใส่ผักชี ฯลฯ แสดงตัวใหญ่ในภาษาที่เลือก (ไม่มีเน็ตก็ได้)',
-            vi='🗣️ Thẻ câu nói (màn hình chính): 18 câu hay dùng — nhà vệ sinh, tính tiền, không cay, không rau mùi… — hiện chữ to bằng ngôn ngữ đã chọn (không cần mạng)',
+            ko='🗣️ 회화 카드 (메인 화면): 화장실 · 계산 · 맵지 않게 · 고수 빼기 등 자주 쓰는 말 18개를 고른 나라 말 큰 글씨로, 🔊 버튼으로 소리 내서 읽어줘요',
+            en='🗣️ Phrase Cards (home screen): 18 handy phrases — restroom, check, not spicy, no cilantro… — shown big in the language you pick, and 🔊 reads them aloud',
+            ja='🗣️ 会話カード（ホーム）：トイレ・お会計・辛くしない・パクチー抜きなどよく使う18文を選んだ言語で大きく表示、🔊で読み上げ',
+            zh='🗣️ 会话卡片（主页）：洗手间、买单、不要辣、不要香菜等18句常用语，用选好的语言大字显示，🔊 可朗读',
+            th='🗣️ การ์ดประโยค (หน้าหลัก): 18 ประโยคที่ใช้บ่อย ห้องน้ำ เช็คบิล ไม่เผ็ด ไม่ใส่ผักชี ฯลฯ แสดงตัวใหญ่ในภาษาที่เลือก และ 🔊 อ่านออกเสียงได้',
+            vi='🗣️ Thẻ câu nói (màn hình chính): 18 câu hay dùng — nhà vệ sinh, tính tiền, không cay, không rau mùi… — hiện chữ to bằng ngôn ngữ đã chọn, 🔊 đọc thành tiếng',
         )),
         ('🧾', dict(
             ko='🧾 여행 정산 (메인 화면): 누가 얼마 냈는지만 넣으면 "누가 누구한테 얼마" 보내면 되는지 알려줘요',
@@ -35,6 +35,14 @@ CHANGELOG = [
             zh='🧾 旅行结算（主页）：只要输入谁付了多少，就会告诉你“谁该转给谁多少”',
             th='🧾 แบ่งจ่ายทริป (หน้าหลัก): ใส่ว่าใครจ่ายเท่าไหร่ จะบอกว่า "ใครต้องโอนให้ใครเท่าไหร่"',
             vi='🧾 Chia tiền chuyến đi (màn hình chính): nhập ai đã trả bao nhiêu, sẽ biết "ai chuyển cho ai bao nhiêu"',
+        )),
+        ('☝️', dict(
+            ko='☝️ 손가락선택을 🍀 운빨게임으로 옮겼어요 (손가락게임 칸은 없어졌어요)',
+            en='☝️ Finger Pick moved into 🍀 Luck Games (the Finger Games category is gone)',
+            ja='☝️ 指選びを🍀 運ゲームに移動しました（指ゲームの項目はなくなりました）',
+            zh='☝️ 手指选人移到了 🍀 运气游戏（手指游戏分类已取消）',
+            th='☝️ ย้ายนิ้วเลือกคนไปไว้ใน 🍀 เกมดวง (หมวดเกมนิ้วไม่มีแล้ว)',
+            vi='☝️ Chọn ngón tay đã chuyển vào 🍀 Trò may rủi (mục Trò ngón tay đã bỏ)',
         )),
     ]),
     dict(ver='1.6', date='2026-10-29', items=[

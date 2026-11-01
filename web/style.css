@@ -315,3 +315,8 @@ canvas { display: block; touch-action: none; }
 .stex { display: flex; flex-wrap: wrap; align-items: center; background: var(--surface); border-radius: 12px; padding: 8px 4px 8px 12px; }
 .stex-t { flex: 1; font-size: 16px; }
 .stex-s { width: 100%; order: 3; color: var(--sub); font-size: 13px; }
+.nb-end { display: flex; flex-direction: column; gap: 8px; }
+.nb-shot { background: transparent !important; color: #FF3D5A; font-size: 26px !important; font-weight: 900; }
+.phspeak { margin-top: 8px; padding: 12px 26px; border-radius: 26px; background: #1565C0; color: #fff; font-size: 18px; font-weight: 800; border: 0; }
+.phspeak:has(.dual) { line-height: 1.2; }
+.phnote { color: #C62828; font-size: 14px; text-align: center; max-width: 420px; min-height: 18px; }

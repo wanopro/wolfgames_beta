@@ -55,6 +55,8 @@ import com.wolfgames.app.ui.Text
 import com.wolfgames.app.ui.Vibe
 import com.wolfgames.app.ui.WG
 import com.wolfgames.app.ui.bombArt
+import com.wolfgames.app.ui.dazedWolf
+import com.wolfgames.app.ui.BigButton
 import com.wolfgames.app.ui.coinWolfFace
 import com.wolfgames.app.ui.text
 import kotlin.math.PI
@@ -108,14 +110,18 @@ fun NumberBombScreen(onBack: () -> Unit) {
     val s = LocalStrings.current; val vibe = LocalVibe.current; val ctx = LocalContext.current
     val prefs = remember { ctx.getSharedPreferences("wolfgames", Context.MODE_PRIVATE) }
     var maxI by remember { mutableIntStateOf(NB_MAX.indexOf(prefs.getInt("nb_max", 100)).coerceAtLeast(0)) }
-    SetupThen17(s.nbTitle, onBack, { start ->
-        SetupPanel(s.nbDesc, start) { ChoiceRow(s.nbMax, NB_MAX.map { "1 ~ $it" }, maxI) { maxI = it; prefs.edit().putInt("nb_max", NB_MAX[it]).apply() } }
-    }) { restart -> NumberBombGame(NB_MAX[maxI], s, vibe, restart) }
+    var toSetup by remember { mutableIntStateOf(0) }
+    androidx.compose.runtime.key(toSetup) {
+        SetupThen17(s.nbTitle, onBack, { start ->
+            SetupPanel(s.nbDesc, start) { ChoiceRow(s.nbMax, NB_MAX.map { "1 ~ $it" }, maxI) { maxI = it; prefs.edit().putInt("nb_max", NB_MAX[it]).apply() } }
+        }) { restart -> NumberBombGame(NB_MAX[maxI], s, vibe, restart) { com.wolfgames.app.DebugOpen.autostart = false; toSetup++ } }
+    }
 }
 
 @Composable
-private fun NumberBombGame(max: Int, s: Strings, vibe: Vibe, restart: () -> Unit) {
-    val bomb = remember { 1 + Random.nextInt(max) }
+private fun NumberBombGame(max: Int, s: Strings, vibe: Vibe, restart: () -> Unit, toSetup: () -> Unit) {
+    // 점검용(adb 로 바로 열 때만): 폭탄 숫자를 1로 고정해서 터지는 화면을 확인
+    val bomb = remember { if (com.wolfgames.app.DebugOpen.autostart && com.wolfgames.app.DebugOpen.screen == "NumberBomb") 1 else 1 + Random.nextInt(max) }
     var lo by remember { mutableIntStateOf(1) }
     var hi by remember { mutableIntStateOf(max) }
     var typed by remember { mutableStateOf("") }
@@ -127,7 +133,7 @@ private fun NumberBombGame(max: Int, s: Strings, vibe: Vibe, restart: () -> Unit
     val hist = remember { mutableStateListOf<Pair<Int, Boolean>>() }
     val t0 = remember { System.nanoTime() }
     val now = { (System.nanoTime() - t0) / 1e9f }
-    LaunchedEffect(boomAt) { if (boomAt > 0) { kotlinx.coroutines.delay(1200); showRes = true } }
+    LaunchedEffect(boomAt) { if (boomAt > 0) { kotlinx.coroutines.delay(900); msg = cat(s.nbBoom, " $bomb"); msgCol = Color(0xFFFF8A80); showRes = true } }
     fun press(k: String) {
         if (boomAt > 0) return
         vibe.tap()
@@ -144,15 +150,22 @@ private fun NumberBombGame(max: Int, s: Strings, vibe: Vibe, restart: () -> Unit
             else -> if (typed.length < max.toString().length) typed = (typed + k).trimStart('0')
         }
     }
-    Box(Modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize().navigationBarsPadding().padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Anim17(Modifier.fillMaxWidth().weight(1f), "nb") { c, w, h, t ->
-                val fuse = (hi - lo + 1).toFloat() / max; val cx = w / 2; val cy = h * 0.58f; val r = min(w, h) * 0.3f
-                if (boomAt == 0f) {
-                    val k = t - shakeAt; val sh = if (k < 0.3f) sin(k * 60) * 4 * (1 - k / 0.3f) else 0f
-                    c.bombArt(cx + sh, cy, r, max(0.05f, fuse), t)
+    Column(Modifier.fillMaxSize().navigationBarsPadding().padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Anim17(Modifier.fillMaxWidth().weight(1f), "nb") { c, w, h, t ->
+            val fuse = (hi - lo + 1).toFloat() / max; val cx = w / 2; val cy = h * 0.58f; val r = min(w, h) * 0.3f
+            if (boomAt == 0f) {
+                val k = t - shakeAt; val sh = if (k < 0.3f) sin(k * 60) * 4 * (1 - k / 0.3f) else 0f
+                c.bombArt(cx + sh, cy, r, max(0.05f, fuse), t)
+            } else {
+                val u = t - boomAt
+                if (u > 0.55f) {
+                    // 💥 다음 연기 속에서 그을린 늑대가 헤롱헤롱
+                    val p = ease17((u - 0.55f) / 0.35f); val rw = min(w * 0.27f, h * 0.3f)
+                    c.save(); c.globalAlpha = p; c.translate(cx, cy); c.scale(0.7f + 0.3f * p, 0.7f + 0.3f * p); c.dazedWolf(0f, 0f, rw, t); c.restore()
+                    c.globalAlpha = max(0f, 1 - (u - 0.55f) / 0.5f); c.beginPath(); c.arc(cx, cy, rw * 1.5f, 0f, TAU); c.fillStyle = "#9097A3"; c.fill(); c.globalAlpha = 1f
+                    if (u > 1f) c.text(s.nbDazed, cx + sin(t * 3) * 6, min(h - 14, cy + rw * 1.05f + 14), 18f, "#FFD740")
                 } else {
-                    val u = t - boomAt; val cols = listOf("#FFD740", "#FF7043", "#FF3D5A")
+                    val cols = listOf("#FFD740", "#FF7043", "#FF3D5A")
                     for (k in 0 until 18) {
                         val a = k / 18f * 2 * PI.toFloat(); val d = ease17(u / 0.6f) * min(w, h) * (0.3f + 0.2f * (k % 3))
                         c.globalAlpha = max(0f, 1 - u / 1.4f); c.beginPath(); c.arc(cx + cos(a) * d, cy + sin(a) * d, 10f - (k % 3) * 2, 0f, TAU); c.fillStyle = cols[k % 3]; c.fill()
@@ -161,24 +174,30 @@ private fun NumberBombGame(max: Int, s: Strings, vibe: Vibe, restart: () -> Unit
                     c.text("💥", cx, cy, min(w, h) * 0.5f * (0.6f + 0.4f * ease17(u / 0.25f)), "#fff")
                 }
             }
-            Text("$lo ~ $hi", color = WG.Accent, fontSize = 44.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-            Text(msg, color = msgCol, fontSize = 17.sp, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally)) {
-                hist.takeLast(8).forEach { (n, up) -> Text("$n${if (up) "⬆️" else "⬇️"}", color = WG.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold, modifier = Modifier.clip(RoundedCornerShape(10.dp)).background(WG.Surface).padding(horizontal = 8.dp, vertical = 2.dp)) }
-            }
-            Text(typed.ifEmpty { "—" }, color = WG.Text, fontSize = 34.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(WG.Surface).padding(6.dp))
-            for (row in listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("⌫", "0", "ok"))) {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    row.forEach { k ->
-                        val ok = k == "ok"
-                        Box(Modifier.weight(1f).heightIn(min = 54.dp).clip(RoundedCornerShape(14.dp)).background(if (ok) WG.Accent else WG.Surface2).clickable { press(k) }, contentAlignment = Alignment.Center) {
-                            Text(if (ok) s.nbOk else k, color = if (ok) Color.Black else WG.Text, fontSize = if (ok) 18.sp else 24.sp, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center)
-                        }
+        }
+        Text("$lo ~ $hi", color = WG.Accent, fontSize = 44.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+        Text(msg, color = msgCol, fontSize = 17.sp, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+        if (showRes) {
+            // 결과: 창으로 덮지 않고 키패드 자리에 (늑대가 가려지지 않게)
+            Text(s.shotWord, color = Color(0xFFFF3D5A), fontSize = 26.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+            BigButton(s.playAgain, Modifier.fillMaxWidth(), onClick = restart)
+            BigButton(s.again, Modifier.fillMaxWidth(), color = WG.Surface2, contentColor = WG.Text, onClick = toSetup)
+            return@Column
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally)) {
+            hist.takeLast(8).forEach { (n, up) -> Text("$n${if (up) "⬆️" else "⬇️"}", color = WG.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold, modifier = Modifier.clip(RoundedCornerShape(10.dp)).background(WG.Surface).padding(horizontal = 8.dp, vertical = 2.dp)) }
+        }
+        Text(typed.ifEmpty { "—" }, color = WG.Text, fontSize = 34.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(WG.Surface).padding(6.dp))
+        for (row in listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("⌫", "0", "ok"))) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                row.forEach { k ->
+                    val ok = k == "ok"
+                    Box(Modifier.weight(1f).heightIn(min = 54.dp).clip(RoundedCornerShape(14.dp)).background(if (ok) WG.Accent else WG.Surface2).clickable { press(k) }, contentAlignment = Alignment.Center) {
+                        Text(if (ok) s.nbOk else k, color = if (ok) Color.Black else WG.Text, fontSize = if (ok) 18.sp else 24.sp, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center)
                     }
                 }
             }
         }
-        if (showRes) ResultOverlay(cat(s.nbBoom, " $bomb"), s.shotWord, s.playAgain, onPrimary = restart)
     }
 }
 
