@@ -436,4 +436,5 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     phNoVoice = join2(a.phNoVoice, b.phNoVoice)
     phFun = join2(a.phFun, b.phFun)
     phSwear = join2(a.phSwear, b.phSwear)
+    phCats = zipList(a.phCats, b.phCats, '|')
 }

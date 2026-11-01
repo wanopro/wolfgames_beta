@@ -468,6 +468,7 @@ class Strings {
     lateinit var phNoVoice: String
     lateinit var phFun: String
     lateinit var phSwear: String
+    lateinit var phCats: String
 }
 
 val KoStrings = Strings().apply {
@@ -865,7 +866,7 @@ val KoStrings = Strings().apply {
     phTitle = "회화 카드"
     phDesc = "보여줄 나라 말을 고르고, 문장을 누르면 크게 보여줘요. 인터넷 없어도 돼요."
     phTo = "보여줄 언어"
-    phrases = "화장실 어디예요?|이거 주세요|계산해 주세요|얼마예요?|맵지 않게 해 주세요|고수는 빼 주세요|얼음은 빼 주세요|물 좀 주세요|맥주 하나 더 주세요|포장해 주세요|카드 돼요?|조금 깎아 주세요|영수증 주세요|사진 좀 찍어 주실래요?|와이파이 비밀번호가 뭐예요?|약국 어디예요?|도와주세요!|땅콩 알레르기가 있어요|건배! 원샷!|오늘 밤은 안 끝나!|와, 진짜 잘생기셨다/예쁘시다!|나 안 취했어! (취함)|사장님, 이건 서비스죠?|우리 친구 해요!|젠장!|헐, 대박!|아 씨…|이 바보야!|미쳤다 ㅋㅋ 개웃겨"
+    phrases = "화장실 어디예요?|이거 주세요|계산해 주세요|얼마예요?|맵지 않게 해 주세요|고수는 빼 주세요|얼음은 빼 주세요|물 좀 주세요|맥주 하나 더 주세요|포장해 주세요|카드 돼요?|조금 깎아 주세요|영수증 주세요|사진 좀 찍어 주실래요?|와이파이 비밀번호가 뭐예요?|약국 어디예요?|도와주세요!|땅콩 알레르기가 있어요|건배! 원샷!|오늘 밤은 안 끝나!|와, 진짜 잘생기셨다/예쁘시다!|나 안 취했어! (취함)|사장님, 이건 서비스죠?|우리 친구 해요!|젠장!|헐, 대박!|아 씨…|이 바보야!|미쳤다 ㅋㅋ 개웃겨|안녕하세요|감사합니다|실례합니다|천천히 말해 주세요|이 주소로 가 주세요|공항으로 가 주세요|여기서 세워 주세요|얼마나 걸려요?|체크인할게요|짐 좀 맡아 주세요|수건 좀 더 주세요|에어컨이 안 돼요"
     stTitle = "여행 정산"
     stDesc = "누가 얼마 냈는지만 넣으면, 마지막에 누가 누구한테 얼마 보내면 되는지 알려줘요. 이 휴대폰에만 저장돼요."
     stPeople = "같이 간 사람"
@@ -889,6 +890,7 @@ val KoStrings = Strings().apply {
     phNoVoice = "이 휴대폰에 이 언어 음성이 없어요. 휴대폰 설정 → 음성(텍스트 음성 변환)에서 받을 수 있어요."
     phFun = "😆 재미있는 말"
     phSwear = "🤬 장난 욕 (친한 사이에만!)"
+    phCats = "👋 인사|🚕 교통|🍜 식당|🏨 숙소|🍻 술집|🛍️ 쇼핑·도움|🤬 장난 욕"
 }
 
 val EnStrings = Strings().apply {
@@ -1286,7 +1288,7 @@ val EnStrings = Strings().apply {
     phTitle = "Phrase Cards"
     phDesc = "Pick the language to show, then tap a phrase to show it big. Works offline."
     phTo = "Show in"
-    phrases = "Where is the restroom?|This one, please|Check, please|How much is it?|Not spicy, please|No cilantro, please|No ice, please|Some water, please|One more beer, please|To go, please|Can I pay by card?|Can you give me a discount?|Receipt, please|Could you take a photo of us?|What is the Wi-Fi password?|Where is the pharmacy?|Help!|I am allergic to peanuts|Cheers! Bottoms up!|The night is still young!|Wow, you're so good-looking!|I'm not drunk! (I'm drunk)|This one's on the house, right?|Let's be friends!|Damn it!|Holy crap!|Oh shit…|You idiot!|LOL, that's insane!"
+    phrases = "Where is the restroom?|This one, please|Check, please|How much is it?|Not spicy, please|No cilantro, please|No ice, please|Some water, please|One more beer, please|To go, please|Can I pay by card?|Can you give me a discount?|Receipt, please|Could you take a photo of us?|What is the Wi-Fi password?|Where is the pharmacy?|Help!|I am allergic to peanuts|Cheers! Bottoms up!|The night is still young!|Wow, you're so good-looking!|I'm not drunk! (I'm drunk)|This one's on the house, right?|Let's be friends!|Damn it!|Holy crap!|Oh shit…|You idiot!|LOL, that's insane!|Hello|Thank you|Excuse me|Please speak slowly|Please take me to this address|To the airport, please|Please stop here|How long does it take?|I'd like to check in|Can you keep my luggage?|More towels, please|The air conditioner isn't working"
     stTitle = "Trip Split"
     stDesc = "Just enter who paid what — it tells you who should send how much to whom. Saved only on this phone."
     stPeople = "Travelers"
@@ -1310,6 +1312,7 @@ val EnStrings = Strings().apply {
     phNoVoice = "This phone has no voice for this language. You can download one in phone Settings → Text-to-speech."
     phFun = "😆 Fun phrases"
     phSwear = "🤬 Playful swears (close friends only!)"
+    phCats = "👋 Hello|🚕 Getting around|🍜 Restaurant|🏨 Hotel|🍻 Bar|🛍️ Shopping & help|🤬 Swears"
 }
 
 val JaStrings = Strings().apply {
@@ -1707,7 +1710,7 @@ val JaStrings = Strings().apply {
     phTitle = "会話カード"
     phDesc = "見せる言語を選んで、文をタップすると大きく表示します。ネットなしでOK。"
     phTo = "見せる言語"
-    phrases = "トイレはどこですか？|これをください|お会計お願いします|いくらですか？|辛くしないでください|パクチー抜きでお願いします|氷なしでお願いします|お水をください|ビールもう一杯ください|持ち帰りでお願いします|カードは使えますか？|少し安くしてください|領収書をください|写真を撮ってもらえますか？|Wi-Fiのパスワードは何ですか？|薬局はどこですか？|助けてください！|ピーナッツアレルギーがあります|乾杯！一気！|夜はまだこれから！|わあ、めっちゃかっこいい／かわいい！|酔ってないよ！（酔ってる）|これ、サービスですよね？|友だちになろう！|くそっ！|マジかよ！|ちくしょう…|このバカ！|ヤバい、ウケる！"
+    phrases = "トイレはどこですか？|これをください|お会計お願いします|いくらですか？|辛くしないでください|パクチー抜きでお願いします|氷なしでお願いします|お水をください|ビールもう一杯ください|持ち帰りでお願いします|カードは使えますか？|少し安くしてください|領収書をください|写真を撮ってもらえますか？|Wi-Fiのパスワードは何ですか？|薬局はどこですか？|助けてください！|ピーナッツアレルギーがあります|乾杯！一気！|夜はまだこれから！|わあ、めっちゃかっこいい／かわいい！|酔ってないよ！（酔ってる）|これ、サービスですよね？|友だちになろう！|くそっ！|マジかよ！|ちくしょう…|このバカ！|ヤバい、ウケる！|こんにちは|ありがとうございます|すみません|ゆっくり話してください|この住所までお願いします|空港までお願いします|ここで止めてください|どのくらいかかりますか？|チェックインお願いします|荷物を預かってもらえますか？|タオルをもう少しください|エアコンが動きません"
     stTitle = "旅行の精算"
     stDesc = "誰がいくら払ったかを入れるだけで、最後に誰が誰にいくら送ればいいか教えてくれます。このスマホだけに保存。"
     stPeople = "一緒に行く人"
@@ -1731,6 +1734,7 @@ val JaStrings = Strings().apply {
     phNoVoice = "このスマホにはこの言語の音声がありません。スマホの設定 → テキスト読み上げで追加できます。"
     phFun = "😆 おもしろフレーズ"
     phSwear = "🤬 ふざけた悪口（仲良しだけ！）"
+    phCats = "👋 あいさつ|🚕 交通|🍜 食堂|🏨 宿|🍻 飲み屋|🛍️ 買い物・助け|🤬 悪口"
 }
 
 val ZhStrings = Strings().apply {
@@ -2128,7 +2132,7 @@ val ZhStrings = Strings().apply {
     phTitle = "会话卡片"
     phDesc = "选好要给对方看的语言，点句子就会放大显示。没网也能用。"
     phTo = "显示语言"
-    phrases = "洗手间在哪里？|我要这个|买单|多少钱？|不要辣|不要香菜|不要加冰|请给我一杯水|再来一瓶啤酒|打包|可以刷卡吗？|便宜一点吧|请给我收据|可以帮我们拍张照吗？|Wi-Fi密码是多少？|药店在哪里？|救命！|我对花生过敏|干杯！一口闷！|今晚不醉不归！|哇，你长得真好看！|我没醉！（其实醉了）|老板，这个是送的吧？|我们做朋友吧！|该死！|我去！|靠……|你个笨蛋！|笑死我了！"
+    phrases = "洗手间在哪里？|我要这个|买单|多少钱？|不要辣|不要香菜|不要加冰|请给我一杯水|再来一瓶啤酒|打包|可以刷卡吗？|便宜一点吧|请给我收据|可以帮我们拍张照吗？|Wi-Fi密码是多少？|药店在哪里？|救命！|我对花生过敏|干杯！一口闷！|今晚不醉不归！|哇，你长得真好看！|我没醉！（其实醉了）|老板，这个是送的吧？|我们做朋友吧！|该死！|我去！|靠……|你个笨蛋！|笑死我了！|你好|谢谢|不好意思|请说慢一点|请去这个地址|请去机场|请在这里停车|要多长时间？|我要办理入住|可以寄存行李吗？|请再给我几条毛巾|空调坏了"
     stTitle = "旅行结算"
     stDesc = "只要输入谁付了多少钱，最后会告诉你谁该转给谁多少。只保存在这部手机里。"
     stPeople = "同行的人"
@@ -2152,6 +2156,7 @@ val ZhStrings = Strings().apply {
     phNoVoice = "这部手机没有这种语言的语音。可以在手机设置 → 文字转语音里下载。"
     phFun = "😆 搞笑用语"
     phSwear = "🤬 开玩笑的脏话（只对好朋友！）"
+    phCats = "👋 问候|🚕 交通|🍜 餐厅|🏨 住宿|🍻 酒吧|🛍️ 购物·求助|🤬 脏话"
 }
 
 val ThStrings = Strings().apply {
@@ -2549,7 +2554,7 @@ val ThStrings = Strings().apply {
     phTitle = "การ์ดประโยค"
     phDesc = "เลือกภาษาที่จะให้ดู แล้วแตะประโยคเพื่อแสดงตัวใหญ่ ไม่มีเน็ตก็ใช้ได้"
     phTo = "ภาษาที่จะให้ดู"
-    phrases = "ห้องน้ำอยู่ที่ไหน|เอาอันนี้|เช็คบิลด้วย|ราคาเท่าไหร่|ไม่เอาเผ็ด|ไม่ใส่ผักชี|ไม่ใส่น้ำแข็ง|ขอน้ำเปล่าหน่อย|ขอเบียร์อีกขวด|ใส่ถุงกลับบ้าน|จ่ายบัตรได้ไหม|ลดหน่อยได้ไหม|ขอใบเสร็จด้วย|ช่วยถ่ายรูปให้หน่อยได้ไหม|รหัสไวไฟคืออะไร|ร้านขายยาอยู่ที่ไหน|ช่วยด้วย!|แพ้ถั่วลิสง|ชนแก้ว! หมดแก้ว!|คืนนี้ยังอีกยาว!|ว้าว หน้าตาดีมากเลย!|ยังไม่เมา! (เมาแล้ว)|อันนี้แถมใช่ไหม?|มาเป็นเพื่อนกันนะ!|ให้ตายสิ!|เชี่ย! สุดยอด!|ชิบหายแล้ว…|ไอ้บ้า!|ขำฉิบหาย!"
+    phrases = "ห้องน้ำอยู่ที่ไหน|เอาอันนี้|เช็คบิลด้วย|ราคาเท่าไหร่|ไม่เอาเผ็ด|ไม่ใส่ผักชี|ไม่ใส่น้ำแข็ง|ขอน้ำเปล่าหน่อย|ขอเบียร์อีกขวด|ใส่ถุงกลับบ้าน|จ่ายบัตรได้ไหม|ลดหน่อยได้ไหม|ขอใบเสร็จด้วย|ช่วยถ่ายรูปให้หน่อยได้ไหม|รหัสไวไฟคืออะไร|ร้านขายยาอยู่ที่ไหน|ช่วยด้วย!|แพ้ถั่วลิสง|ชนแก้ว! หมดแก้ว!|คืนนี้ยังอีกยาว!|ว้าว หน้าตาดีมากเลย!|ยังไม่เมา! (เมาแล้ว)|อันนี้แถมใช่ไหม?|มาเป็นเพื่อนกันนะ!|ให้ตายสิ!|เชี่ย! สุดยอด!|ชิบหายแล้ว…|ไอ้บ้า!|ขำฉิบหาย!|สวัสดี|ขอบคุณ|ขอโทษนะ|พูดช้าๆ หน่อยได้ไหม|ไปที่อยู่นี้|ไปสนามบิน|จอดตรงนี้|ใช้เวลานานเท่าไหร่|ขอเช็คอิน|ฝากกระเป๋าได้ไหม|ขอผ้าเช็ดตัวเพิ่ม|แอร์เสีย"
     stTitle = "แบ่งจ่ายทริป"
     stDesc = "แค่ใส่ว่าใครจ่ายไปเท่าไหร่ ตอนท้ายจะบอกว่าใครต้องโอนให้ใครเท่าไหร่ เก็บไว้ในมือถือเครื่องนี้เท่านั้น"
     stPeople = "คนที่ไปด้วยกัน"
@@ -2573,6 +2578,7 @@ val ThStrings = Strings().apply {
     phNoVoice = "มือถือเครื่องนี้ไม่มีเสียงภาษานี้ ดาวน์โหลดได้ที่ ตั้งค่า → การอ่านออกเสียงข้อความ"
     phFun = "😆 ประโยคฮาๆ"
     phSwear = "🤬 คำด่าขำๆ (เฉพาะเพื่อนสนิท!)"
+    phCats = "👋 ทักทาย|🚕 เดินทาง|🍜 ร้านอาหาร|🏨 ที่พัก|🍻 บาร์|🛍️ ช้อปปิ้ง·ขอความช่วยเหลือ|🤬 คำด่า"
 }
 
 val ViStrings = Strings().apply {
@@ -2970,7 +2976,7 @@ val ViStrings = Strings().apply {
     phTitle = "Thẻ câu nói"
     phDesc = "Chọn ngôn ngữ muốn đưa xem, chạm câu để hiện chữ to. Không cần mạng."
     phTo = "Hiển thị bằng"
-    phrases = "Nhà vệ sinh ở đâu ạ?|Cho tôi cái này|Tính tiền ạ|Bao nhiêu tiền?|Đừng cho cay ạ|Không cho rau mùi ạ|Không đá ạ|Cho tôi xin nước|Cho thêm một bia nữa|Cho mang về ạ|Trả bằng thẻ được không?|Bớt chút được không?|Cho tôi hóa đơn|Chụp giúp tôi tấm ảnh được không?|Mật khẩu Wi-Fi là gì?|Nhà thuốc ở đâu ạ?|Cứu tôi với!|Tôi bị dị ứng đậu phộng|Dô! 100% nào!|Đêm nay còn dài!|Wow, bạn đẹp quá!|Tôi chưa say! (say rồi)|Cái này là tặng phải không ạ?|Làm bạn nhé!|Chết tiệt!|Vãi thật!|Đù…|Đồ ngốc!|Buồn cười vãi!"
+    phrases = "Nhà vệ sinh ở đâu ạ?|Cho tôi cái này|Tính tiền ạ|Bao nhiêu tiền?|Đừng cho cay ạ|Không cho rau mùi ạ|Không đá ạ|Cho tôi xin nước|Cho thêm một bia nữa|Cho mang về ạ|Trả bằng thẻ được không?|Bớt chút được không?|Cho tôi hóa đơn|Chụp giúp tôi tấm ảnh được không?|Mật khẩu Wi-Fi là gì?|Nhà thuốc ở đâu ạ?|Cứu tôi với!|Tôi bị dị ứng đậu phộng|Dô! 100% nào!|Đêm nay còn dài!|Wow, bạn đẹp quá!|Tôi chưa say! (say rồi)|Cái này là tặng phải không ạ?|Làm bạn nhé!|Chết tiệt!|Vãi thật!|Đù…|Đồ ngốc!|Buồn cười vãi!|Xin chào|Cảm ơn|Xin lỗi|Làm ơn nói chậm thôi|Cho tôi đến địa chỉ này|Cho tôi ra sân bay|Dừng ở đây ạ|Mất bao lâu ạ?|Tôi muốn nhận phòng|Gửi hành lý được không?|Cho thêm khăn tắm ạ|Máy lạnh bị hỏng"
     stTitle = "Chia tiền chuyến đi"
     stDesc = "Chỉ cần nhập ai đã trả bao nhiêu — cuối cùng sẽ biết ai cần chuyển cho ai bao nhiêu. Chỉ lưu trên điện thoại này."
     stPeople = "Người đi cùng"
@@ -2994,6 +3000,7 @@ val ViStrings = Strings().apply {
     phNoVoice = "Điện thoại này chưa có giọng đọc cho ngôn ngữ này. Có thể tải trong Cài đặt → Chuyển văn bản thành giọng nói."
     phFun = "😆 Câu vui"
     phSwear = "🤬 Chửi vui (chỉ với bạn thân!)"
+    phCats = "👋 Chào hỏi|🚕 Đi lại|🍜 Nhà hàng|🏨 Khách sạn|🍻 Quán nhậu|🛍️ Mua sắm·Giúp đỡ|🤬 Chửi vui"
 }
 
 fun stringsFor(lang: Lang): Strings = when (lang) {

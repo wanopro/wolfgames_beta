@@ -52,10 +52,10 @@ import com.wolfgames.app.ui.WG
 /** 🔊 읽어주기용 나라 말 */
 fun ttsLocale(l: Lang): Locale = when (l) { Lang.KO -> Locale.KOREA; Lang.EN -> Locale.US; Lang.JA -> Locale.JAPAN; Lang.ZH -> Locale.SIMPLIFIED_CHINESE; Lang.TH -> Locale("th", "TH"); Lang.VI -> Locale("vi", "VN") }
 
-val PH_ICONS = listOf("🚻", "👉", "🧾", "💰", "🌶️", "🌿", "🧊", "💧", "🍺", "🥡", "💳", "🏷️", "📄", "📸", "📶", "💊", "🆘", "🥜", "🍻", "🌙", "😍", "🥴", "🎁", "🤝", "🤬", "😱", "😤", "🤪", "🤣")
-/** 목록 사이 제목: 이 번호부터 재미있는 말 / 장난 욕 */
-const val PH_FUN_AT = 18
-const val PH_SWEAR_AT = 24
+val PH_ICONS = listOf("🚻", "👉", "🧾", "💰", "🌶️", "🌿", "🧊", "💧", "🍺", "🥡", "💳", "🏷️", "📄", "📸", "📶", "💊", "🆘", "🥜", "🍻", "🌙", "😍", "🥴", "🎁", "🤝", "🤬", "😱", "😤", "🤪", "🤣",
+    "👋", "🙏", "🙇", "🐢", "📍", "✈️", "🛑", "⏱️", "🛎️", "🧳", "🧺", "❄️")
+/** 카테고리별 문장 번호 (phCats 순서: 인사 · 교통 · 식당 · 숙소 · 술집 · 쇼핑·도움 · 장난 욕) — 웹 PH_CATS 와 같음 */
+val PH_CATS = listOf(listOf(29, 30, 31, 32), listOf(33, 34, 35, 36), listOf(1, 2, 4, 5, 6, 7, 9, 10, 12, 17), listOf(37, 38, 39, 40, 14), listOf(8, 18, 19, 20, 21, 22, 23), listOf(3, 11, 13, 0, 15, 16), listOf(24, 25, 26, 27, 28))
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -64,6 +64,8 @@ fun PhraseScreen(onBack: () -> Unit, mine: Lang, second: Lang?) {
     val prefs = remember { ctx.getSharedPreferences("wolfgames", Context.MODE_PRIVATE) }
     var to by remember { mutableStateOf(Lang.entries.firstOrNull { it.code == prefs.getString("ph_to", null) } ?: second ?: if (mine == Lang.EN) Lang.KO else Lang.EN) }
     var open by remember { mutableIntStateOf(-1) }
+    var cat by remember { mutableIntStateOf(prefs.getInt("ph_cat", 0).coerceIn(0, PH_CATS.size - 1)) }
+    val ids = PH_CATS[cat]
     var note by remember { mutableStateOf("") }
     // 휴대폰에 들어 있는 음성(TTS) — 그 언어 음성이 깔려 있으면 인터넷 없이도 됨
     var ttsReady by remember { mutableStateOf(false) }
@@ -94,9 +96,9 @@ fun PhraseScreen(onBack: () -> Unit, mine: Lang, second: Lang?) {
             if (note.isNotEmpty()) Text(note, color = Color(0xFFC62828), fontSize = 14.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 8.dp).widthIn(max = 420.dp))
             Spacer(Modifier.weight(1f))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                BigButton("‹", Modifier.weight(1f), color = Color(0xFFEEEEEE), contentColor = Color(0xFF222222)) { open = (open + theirs.size - 1) % theirs.size; note = "" }
+                BigButton("‹", Modifier.weight(1f), color = Color(0xFFEEEEEE), contentColor = Color(0xFF222222)) { open = ids[(ids.indexOf(open) + ids.size - 1) % ids.size]; note = "" }
                 BigButton(part(s.qrClose, 0), Modifier.weight(1f), color = Color(0xFF111111), contentColor = Color.White) { open = -1; tts[0]?.stop(); note = "" }
-                BigButton("›", Modifier.weight(1f), color = Color(0xFFEEEEEE), contentColor = Color(0xFF222222)) { open = (open + 1) % theirs.size; note = "" }
+                BigButton("›", Modifier.weight(1f), color = Color(0xFFEEEEEE), contentColor = Color(0xFF222222)) { open = ids[(ids.indexOf(open) + 1) % ids.size]; note = "" }
             }
         }
         return
@@ -113,8 +115,14 @@ fun PhraseScreen(onBack: () -> Unit, mine: Lang, second: Lang?) {
                     }
                 }
             }
-            my.forEachIndexed { i, m ->
-                if (i == PH_FUN_AT || i == PH_SWEAR_AT) Text(if (i == PH_FUN_AT) s.phFun else s.phSwear, color = WG.Accent, fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier.padding(top = 10.dp))
+            FlowRow(Modifier.padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                s.phCats.split('|').forEachIndexed { k, c ->
+                    val on = k == cat
+                    Text(c, color = if (on) Color.Black else WG.Text, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.clip(RoundedCornerShape(20.dp)).background(if (on) WG.Accent else WG.Surface).clickable { vibe.tap(); cat = k; prefs.edit().putInt("ph_cat", k).apply() }.padding(horizontal = 12.dp, vertical = 6.dp))
+                }
+            }
+            ids.forEach { i -> val m = my[i]
                 Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(WG.Surface).clickable { vibe.tap(); open = i }.padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(PH_ICONS.getOrElse(i) { "💬" }, fontSize = 26.sp); Spacer(Modifier.width(12.dp))
                     Column {

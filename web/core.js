@@ -38,7 +38,7 @@ export const lang = {
 // ---------- 두 언어 같이 보기 ----------
 // 문구를 "메인 SEP 보조" 로 묶어서 넘기고, 화면에 그릴 때 둘로 나눔 (같은 글씨 크기, 보조만 살짝 흐리게)
 export const SEP = '\u2063';
-const LISTS = { kcNames: '|', kcDescs: '|', plinkoSlots: '|', phrases: '|', colorNames: ',', animalNames: ',' };
+const LISTS = { kcNames: '|', kcDescs: '|', plinkoSlots: '|', phrases: '|', phCats: '|', colorNames: ',', animalNames: ',' };
 const lead = (p, r) => { let i = 0; while (i < p.length && i < r.length && p[i] === r[i] && !/[\p{L}\p{N}]/u.test(p[i])) i++; return i; };
 export const join2 = (p, r) => { if (p === r || r == null) return p; const i = lead(p, r); return p + SEP + r.slice(i).trimStart(); };
 const part = (v, k) => (typeof v === 'string' && v.includes(SEP) ? v.split(SEP)[k] : v);

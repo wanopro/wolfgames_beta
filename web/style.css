@@ -321,3 +321,6 @@ canvas { display: block; touch-action: none; }
 .phspeak:has(.dual) { line-height: 1.2; }
 .phnote { color: #C62828; font-size: 14px; text-align: center; max-width: 420px; min-height: 18px; }
 .phhead { color: var(--accent); font-size: 15px; font-weight: 800; margin-top: 10px; }
+.phcats { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 0 2px; }
+.phcats::-webkit-scrollbar { display: none; }
+.phcats .chip { margin-top: 0; flex: none; font-weight: 800; }

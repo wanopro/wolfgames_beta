@@ -2,9 +2,11 @@
 import { S, h, btn, top, vibe, lang, LANGS, SEP } from './core.js';
 import { STRINGS } from './i18n.js';
 
-export const PH_ICONS = ['🚻', '👉', '🧾', '💰', '🌶️', '🌿', '🧊', '💧', '🍺', '🥡', '💳', '🏷️', '📄', '📸', '📶', '💊', '🆘', '🥜', '🍻', '🌙', '😍', '🥴', '🎁', '🤝', '🤬', '😱', '😤', '🤪', '🤣'];
-// 목록 사이 제목: 이 번호부터 재미있는 말 / 장난 욕
-export const PH_FUN_AT = 18, PH_SWEAR_AT = 24;
+export const PH_ICONS = ['🚻', '👉', '🧾', '💰', '🌶️', '🌿', '🧊', '💧', '🍺', '🥡', '💳', '🏷️', '📄', '📸', '📶', '💊', '🆘', '🥜', '🍻', '🌙', '😍', '🥴', '🎁', '🤝', '🤬', '😱', '😤', '🤪', '🤣',
+  '👋', '🙏', '🙇', '🐢', '📍', '✈️', '🛑', '⏱️', '🛎️', '🧳', '🧺', '❄️'];
+// 카테고리별 문장 번호 (phCats 순서: 인사 · 교통 · 식당 · 숙소 · 술집 · 쇼핑·도움 · 장난 욕)
+export const PH_CATS = [[29, 30, 31, 32], [33, 34, 35, 36], [1, 2, 4, 5, 6, 7, 9, 10, 12, 17], [37, 38, 39, 40, 14], [8, 18, 19, 20, 21, 22, 23], [3, 11, 13, 0, 15, 16], [24, 25, 26, 27, 28]];
+const CAT_KEY = 'wg-ph-cat';
 const KEY = 'wg-ph-to';
 // 🔊 읽어주기: 휴대폰(브라우저)에 들어 있는 음성 사용 — 그 언어 음성이 깔려 있으면 인터넷 없이도 됨
 const BCP = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', zh: 'zh-CN', th: 'th-TH', vi: 'vi-VN' };
@@ -35,13 +37,17 @@ export function phraseScreen(root, back) {
   const mine = STRINGS[lang.current].phrases.split('|');
   const list = h('div', { style: 'display:flex;flex-direction:column;gap:8px' });
   const chips = h('div', { class: 'phlangs' });
+  const cats = h('div', { class: 'phcats' });
+  let cat = 0; try { const v = +localStorage.getItem(CAT_KEY); if (v >= 0 && v < PH_CATS.length) cat = v; } catch (_) { /* 무시 */ }
+  const catNames = s.phCats.split('|');
   const draw = () => {
     const theirs = STRINGS[to].phrases.split('|');
     chips.replaceChildren(...LANGS.map((L) => btn([h('span', { class: 'flag' }, L.flag), L.label], () => { to = L.code; try { localStorage.setItem(KEY, to); } catch (_) { /* 무시 */ } vibe.tap(); draw(); }, 'chip' + (L.code === to ? ' on' : ''))));
-    list.replaceChildren(...mine.flatMap((m, i) => [i === PH_FUN_AT ? h('div', { class: 'phhead' }, s.phFun) : null, i === PH_SWEAR_AT ? h('div', { class: 'phhead' }, s.phSwear) : null, btn([h('span', { class: 'phic' }, PH_ICONS[i]), h('div', { class: 'phtx' }, h('b', {}, m), to !== lang.current ? h('span', {}, theirs[i]) : null)], () => { vibe.tap(); show(i); }, 'phrow')]).filter(Boolean));
+    cats.replaceChildren(...catNames.map((c, k) => btn(c, () => { cat = k; try { localStorage.setItem(CAT_KEY, String(k)); } catch (_) { /* 무시 */ } vibe.tap(); draw(); }, 'chip' + (k === cat ? ' on' : ''))));
+    list.replaceChildren(...PH_CATS[cat].map((i) => [mine[i], i]).flatMap(([m, i]) => [btn([h('span', { class: 'phic' }, PH_ICONS[i]), h('div', { class: 'phtx' }, h('b', {}, m), to !== lang.current ? h('span', {}, theirs[i]) : null)], () => { vibe.tap(); show(PH_CATS[cat].indexOf(i)); }, 'phrow')]));
   };
-  const show = (i) => {
-    const theirs = STRINGS[to].phrases.split('|'), n = theirs.length;
+  const show = (k) => {
+    const theirs = STRINGS[to].phrases.split('|'), ids = PH_CATS[cat], n = ids.length; let i = ids[k];
     const wrap = h('div', { class: 'qrfull phfull' }), note = h('div', { class: 'phnote' });
     const paint = () => {
       wrap.replaceChildren(...[
@@ -51,14 +57,14 @@ export function phraseScreen(root, back) {
         synth ? btn(s.phSpeak, () => { vibe.tap(); if (!speak(theirs[i], to)) note.textContent = s.phNoVoice; }, 'phspeak') : null,
         note,
         h('div', { class: 'qrbar' },
-          btn('‹', () => { i = (i + n - 1) % n; note.textContent = ''; vibe.tap(); paint(); }, 'qrbtn2'),
+          btn('‹', () => { k = (k + n - 1) % n; i = ids[k]; note.textContent = ''; vibe.tap(); paint(); }, 'qrbtn2'),
           btn(main(s.qrClose), () => { if (synth) synth.cancel(); wrap.remove(); }, 'qrbtn'),
-          btn('›', () => { i = (i + 1) % n; note.textContent = ''; vibe.tap(); paint(); }, 'qrbtn2'))].filter(Boolean));
+          btn('›', () => { k = (k + 1) % n; i = ids[k]; note.textContent = ''; vibe.tap(); paint(); }, 'qrbtn2'))].filter(Boolean));
     };
     paint(); root.append(wrap);
   };
   draw();
   root.append(top(`🗣️ ${s.phTitle}`, back), h('div', { class: 'scroll', style: 'gap:10px' },
     h('div', { class: 'desc' }, s.phDesc),
-    h('div', { class: 'lbl', style: 'color:var(--sub);font-size:14px' }, s.phTo), chips, list));
+    h('div', { class: 'lbl', style: 'color:var(--sub);font-size:14px' }, s.phTo), chips, cats, list));
 }
