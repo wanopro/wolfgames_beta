@@ -2,7 +2,9 @@
 import { S, h, btn, top, vibe, lang, LANGS, SEP } from './core.js';
 import { STRINGS } from './i18n.js';
 
-export const PH_ICONS = ['🚻', '👉', '🧾', '💰', '🌶️', '🌿', '🧊', '💧', '🍺', '🥡', '💳', '🏷️', '📄', '📸', '📶', '💊', '🆘', '🥜'];
+export const PH_ICONS = ['🚻', '👉', '🧾', '💰', '🌶️', '🌿', '🧊', '💧', '🍺', '🥡', '💳', '🏷️', '📄', '📸', '📶', '💊', '🆘', '🥜', '🍻', '🌙', '😍', '🥴', '🎁', '🤝', '🤬', '😱', '😤', '🤪', '🤣'];
+// 목록 사이 제목: 이 번호부터 재미있는 말 / 장난 욕
+export const PH_FUN_AT = 18, PH_SWEAR_AT = 24;
 const KEY = 'wg-ph-to';
 // 🔊 읽어주기: 휴대폰(브라우저)에 들어 있는 음성 사용 — 그 언어 음성이 깔려 있으면 인터넷 없이도 됨
 const BCP = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', zh: 'zh-CN', th: 'th-TH', vi: 'vi-VN' };
@@ -36,7 +38,7 @@ export function phraseScreen(root, back) {
   const draw = () => {
     const theirs = STRINGS[to].phrases.split('|');
     chips.replaceChildren(...LANGS.map((L) => btn([h('span', { class: 'flag' }, L.flag), L.label], () => { to = L.code; try { localStorage.setItem(KEY, to); } catch (_) { /* 무시 */ } vibe.tap(); draw(); }, 'chip' + (L.code === to ? ' on' : ''))));
-    list.replaceChildren(...mine.map((m, i) => btn([h('span', { class: 'phic' }, PH_ICONS[i]), h('div', { class: 'phtx' }, h('b', {}, m), to !== lang.current ? h('span', {}, theirs[i]) : null)], () => { vibe.tap(); show(i); }, 'phrow')));
+    list.replaceChildren(...mine.flatMap((m, i) => [i === PH_FUN_AT ? h('div', { class: 'phhead' }, s.phFun) : null, i === PH_SWEAR_AT ? h('div', { class: 'phhead' }, s.phSwear) : null, btn([h('span', { class: 'phic' }, PH_ICONS[i]), h('div', { class: 'phtx' }, h('b', {}, m), to !== lang.current ? h('span', {}, theirs[i]) : null)], () => { vibe.tap(); show(i); }, 'phrow')]).filter(Boolean));
   };
   const show = (i) => {
     const theirs = STRINGS[to].phrases.split('|'), n = theirs.length;

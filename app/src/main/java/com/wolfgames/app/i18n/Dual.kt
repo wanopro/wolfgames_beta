@@ -434,4 +434,6 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     nbDazed = join2(a.nbDazed, b.nbDazed)
     phSpeak = join2(a.phSpeak, b.phSpeak)
     phNoVoice = join2(a.phNoVoice, b.phNoVoice)
+    phFun = join2(a.phFun, b.phFun)
+    phSwear = join2(a.phSwear, b.phSwear)
 }

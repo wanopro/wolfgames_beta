@@ -39,13 +39,16 @@ S = {
  'phTitle': ['회화 카드', 'Phrase Cards', '会話カード', '会话卡片', 'การ์ดประโยค', 'Thẻ câu nói'],
  'phDesc': ['보여줄 나라 말을 고르고, 문장을 누르면 크게 보여줘요. 인터넷 없어도 돼요.', 'Pick the language to show, then tap a phrase to show it big. Works offline.', '見せる言語を選んで、文をタップすると大きく表示します。ネットなしでOK。', '选好要给对方看的语言，点句子就会放大显示。没网也能用。', 'เลือกภาษาที่จะให้ดู แล้วแตะประโยคเพื่อแสดงตัวใหญ่ ไม่มีเน็ตก็ใช้ได้', 'Chọn ngôn ngữ muốn đưa xem, chạm câu để hiện chữ to. Không cần mạng.'],
  'phTo': ['보여줄 언어', 'Show in', '見せる言語', '显示语言', 'ภาษาที่จะให้ดู', 'Hiển thị bằng'],
+ 'phFun': ['😆 재미있는 말', '😆 Fun phrases', '😆 おもしろフレーズ', '😆 搞笑用语', '😆 ประโยคฮาๆ', '😆 Câu vui'],
+ 'phSwear': ['🤬 장난 욕 (친한 사이에만!)', '🤬 Playful swears (close friends only!)', '🤬 ふざけた悪口（仲良しだけ！）', '🤬 开玩笑的脏话（只对好朋友！）', '🤬 คำด่าขำๆ (เฉพาะเพื่อนสนิท!)', '🤬 Chửi vui (chỉ với bạn thân!)'],
  'phrases': [
-  '화장실 어디예요?|이거 주세요|계산해 주세요|얼마예요?|맵지 않게 해 주세요|고수는 빼 주세요|얼음은 빼 주세요|물 좀 주세요|맥주 하나 더 주세요|포장해 주세요|카드 돼요?|조금 깎아 주세요|영수증 주세요|사진 좀 찍어 주실래요?|와이파이 비밀번호가 뭐예요?|약국 어디예요?|도와주세요!|땅콩 알레르기가 있어요',
-  'Where is the restroom?|This one, please|Check, please|How much is it?|Not spicy, please|No cilantro, please|No ice, please|Some water, please|One more beer, please|To go, please|Can I pay by card?|Can you give me a discount?|Receipt, please|Could you take a photo of us?|What is the Wi-Fi password?|Where is the pharmacy?|Help!|I am allergic to peanuts',
-  'トイレはどこですか？|これをください|お会計お願いします|いくらですか？|辛くしないでください|パクチー抜きでお願いします|氷なしでお願いします|お水をください|ビールもう一杯ください|持ち帰りでお願いします|カードは使えますか？|少し安くしてください|領収書をください|写真を撮ってもらえますか？|Wi-Fiのパスワードは何ですか？|薬局はどこですか？|助けてください！|ピーナッツアレルギーがあります',
-  '洗手间在哪里？|我要这个|买单|多少钱？|不要辣|不要香菜|不要加冰|请给我一杯水|再来一瓶啤酒|打包|可以刷卡吗？|便宜一点吧|请给我收据|可以帮我们拍张照吗？|Wi-Fi密码是多少？|药店在哪里？|救命！|我对花生过敏',
-  'ห้องน้ำอยู่ที่ไหน|เอาอันนี้|เช็คบิลด้วย|ราคาเท่าไหร่|ไม่เอาเผ็ด|ไม่ใส่ผักชี|ไม่ใส่น้ำแข็ง|ขอน้ำเปล่าหน่อย|ขอเบียร์อีกขวด|ใส่ถุงกลับบ้าน|จ่ายบัตรได้ไหม|ลดหน่อยได้ไหม|ขอใบเสร็จด้วย|ช่วยถ่ายรูปให้หน่อยได้ไหม|รหัสไวไฟคืออะไร|ร้านขายยาอยู่ที่ไหน|ช่วยด้วย!|แพ้ถั่วลิสง',
-  'Nhà vệ sinh ở đâu ạ?|Cho tôi cái này|Tính tiền ạ|Bao nhiêu tiền?|Đừng cho cay ạ|Không cho rau mùi ạ|Không đá ạ|Cho tôi xin nước|Cho thêm một bia nữa|Cho mang về ạ|Trả bằng thẻ được không?|Bớt chút được không?|Cho tôi hóa đơn|Chụp giúp tôi tấm ảnh được không?|Mật khẩu Wi-Fi là gì?|Nhà thuốc ở đâu ạ?|Cứu tôi với!|Tôi bị dị ứng đậu phộng'],
+  '화장실 어디예요?|이거 주세요|계산해 주세요|얼마예요?|맵지 않게 해 주세요|고수는 빼 주세요|얼음은 빼 주세요|물 좀 주세요|맥주 하나 더 주세요|포장해 주세요|카드 돼요?|조금 깎아 주세요|영수증 주세요|사진 좀 찍어 주실래요?|와이파이 비밀번호가 뭐예요?|약국 어디예요?|도와주세요!|땅콩 알레르기가 있어요|건배! 원샷!|오늘 밤은 안 끝나!|와, 진짜 잘생기셨다/예쁘시다!|나 안 취했어! (취함)|사장님, 이건 서비스죠?|우리 친구 해요!|젠장!|헐, 대박!|아 씨…|이 바보야!|미쳤다 ㅋㅋ 개웃겨',
+  "Where is the restroom?|This one, please|Check, please|How much is it?|Not spicy, please|No cilantro, please|No ice, please|Some water, please|One more beer, please|To go, please|Can I pay by card?|Can you give me a discount?|Receipt, please|Could you take a photo of us?|What is the Wi-Fi password?|Where is the pharmacy?|Help!|I am allergic to peanuts|Cheers! Bottoms up!|The night is still young!|Wow, you're so good-looking!|I'm not drunk! (I'm drunk)|This one's on the house, right?|Let's be friends!|Damn it!|Holy crap!|Oh shit…|You idiot!|LOL, that's insane!",
+  'トイレはどこですか？|これをください|お会計お願いします|いくらですか？|辛くしないでください|パクチー抜きでお願いします|氷なしでお願いします|お水をください|ビールもう一杯ください|持ち帰りでお願いします|カードは使えますか？|少し安くしてください|領収書をください|写真を撮ってもらえますか？|Wi-Fiのパスワードは何ですか？|薬局はどこですか？|助けてください！|ピーナッツアレルギーがあります|乾杯！一気！|夜はまだこれから！|わあ、めっちゃかっこいい／かわいい！|酔ってないよ！（酔ってる）|これ、サービスですよね？|友だちになろう！|くそっ！|マジかよ！|ちくしょう…|このバカ！|ヤバい、ウケる！',
+  '洗手间在哪里？|我要这个|买单|多少钱？|不要辣|不要香菜|不要加冰|请给我一杯水|再来一瓶啤酒|打包|可以刷卡吗？|便宜一点吧|请给我收据|可以帮我们拍张照吗？|Wi-Fi密码是多少？|药店在哪里？|救命！|我对花生过敏|干杯！一口闷！|今晚不醉不归！|哇，你长得真好看！|我没醉！（其实醉了）|老板，这个是送的吧？|我们做朋友吧！|该死！|我去！|靠……|你个笨蛋！|笑死我了！',
+  'ห้องน้ำอยู่ที่ไหน|เอาอันนี้|เช็คบิลด้วย|ราคาเท่าไหร่|ไม่เอาเผ็ด|ไม่ใส่ผักชี|ไม่ใส่น้ำแข็ง|ขอน้ำเปล่าหน่อย|ขอเบียร์อีกขวด|ใส่ถุงกลับบ้าน|จ่ายบัตรได้ไหม|ลดหน่อยได้ไหม|ขอใบเสร็จด้วย|ช่วยถ่ายรูปให้หน่อยได้ไหม|รหัสไวไฟคืออะไร|ร้านขายยาอยู่ที่ไหน|ช่วยด้วย!|แพ้ถั่วลิสง|ชนแก้ว! หมดแก้ว!|คืนนี้ยังอีกยาว!|ว้าว หน้าตาดีมากเลย!|ยังไม่เมา! (เมาแล้ว)|อันนี้แถมใช่ไหม?|มาเป็นเพื่อนกันนะ!|ให้ตายสิ!|เชี่ย! สุดยอด!|ชิบหายแล้ว…|ไอ้บ้า!|ขำฉิบหาย!',
+  'Nhà vệ sinh ở đâu ạ?|Cho tôi cái này|Tính tiền ạ|Bao nhiêu tiền?|Đừng cho cay ạ|Không cho rau mùi ạ|Không đá ạ|Cho tôi xin nước|Cho thêm một bia nữa|Cho mang về ạ|Trả bằng thẻ được không?|Bớt chút được không?|Cho tôi hóa đơn|Chụp giúp tôi tấm ảnh được không?|Mật khẩu Wi-Fi là gì?|Nhà thuốc ở đâu ạ?|Cứu tôi với!|Tôi bị dị ứng đậu phộng|Dô! 100% nào!|Đêm nay còn dài!|Wow, bạn đẹp quá!|Tôi chưa say! (say rồi)|Cái này là tặng phải không ạ?|Làm bạn nhé!|Chết tiệt!|Vãi thật!|Đù…|Đồ ngốc!|Buồn cười vãi!',
+ ],
  # 🧾 여행 정산
  'stTitle': ['여행 정산', 'Trip Split', '旅行の精算', '旅行结算', 'แบ่งจ่ายทริป', 'Chia tiền chuyến đi'],
  'stDesc': ['누가 얼마 냈는지만 넣으면, 마지막에 누가 누구한테 얼마 보내면 되는지 알려줘요. 이 휴대폰에만 저장돼요.', 'Just enter who paid what — it tells you who should send how much to whom. Saved only on this phone.', '誰がいくら払ったかを入れるだけで、最後に誰が誰にいくら送ればいいか教えてくれます。このスマホだけに保存。', '只要输入谁付了多少钱，最后会告诉你谁该转给谁多少。只保存在这部手机里。', 'แค่ใส่ว่าใครจ่ายไปเท่าไหร่ ตอนท้ายจะบอกว่าใครต้องโอนให้ใครเท่าไหร่ เก็บไว้ในมือถือเครื่องนี้เท่านั้น', 'Chỉ cần nhập ai đã trả bao nhiêu — cuối cùng sẽ biết ai cần chuyển cho ai bao nhiêu. Chỉ lưu trên điện thoại này.'],
@@ -77,7 +80,7 @@ if __name__ == '__main__':
     kq = lambda v: json.dumps(v, ensure_ascii=False).replace('$', '\\$')
     for k, v in S.items():
         if not isinstance(v, tuple): assert len(v) == 6, k
-    assert all(len(x.split('|')) == 18 for x in S['phrases']), [len(x.split('|')) for x in S['phrases']]
+    assert all(len(x.split('|')) == 29 for x in S['phrases']), [len(x.split('|')) for x in S['phrases']]
     decl = ''.join(f'    lateinit var {k}: {v[1] if isinstance(v, tuple) else "String"}\n' for k, v in S.items() if f'lateinit var {k}:' not in src)
     i = src.index('\n}\n', src.index('class Strings {')); src = src[:i + 1] + decl + src[i + 1:]
     for li, L in enumerate(LANGS):

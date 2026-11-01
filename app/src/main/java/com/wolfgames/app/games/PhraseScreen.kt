@@ -52,7 +52,10 @@ import com.wolfgames.app.ui.WG
 /** 🔊 읽어주기용 나라 말 */
 fun ttsLocale(l: Lang): Locale = when (l) { Lang.KO -> Locale.KOREA; Lang.EN -> Locale.US; Lang.JA -> Locale.JAPAN; Lang.ZH -> Locale.SIMPLIFIED_CHINESE; Lang.TH -> Locale("th", "TH"); Lang.VI -> Locale("vi", "VN") }
 
-val PH_ICONS = listOf("🚻", "👉", "🧾", "💰", "🌶️", "🌿", "🧊", "💧", "🍺", "🥡", "💳", "🏷️", "📄", "📸", "📶", "💊", "🆘", "🥜")
+val PH_ICONS = listOf("🚻", "👉", "🧾", "💰", "🌶️", "🌿", "🧊", "💧", "🍺", "🥡", "💳", "🏷️", "📄", "📸", "📶", "💊", "🆘", "🥜", "🍻", "🌙", "😍", "🥴", "🎁", "🤝", "🤬", "😱", "😤", "🤪", "🤣")
+/** 목록 사이 제목: 이 번호부터 재미있는 말 / 장난 욕 */
+const val PH_FUN_AT = 18
+const val PH_SWEAR_AT = 24
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -111,6 +114,7 @@ fun PhraseScreen(onBack: () -> Unit, mine: Lang, second: Lang?) {
                 }
             }
             my.forEachIndexed { i, m ->
+                if (i == PH_FUN_AT || i == PH_SWEAR_AT) Text(if (i == PH_FUN_AT) s.phFun else s.phSwear, color = WG.Accent, fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier.padding(top = 10.dp))
                 Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(WG.Surface).clickable { vibe.tap(); open = i }.padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(PH_ICONS.getOrElse(i) { "💬" }, fontSize = 26.sp); Spacer(Modifier.width(12.dp))
                     Column {
