@@ -73,6 +73,10 @@ import com.wolfgames.app.games.PlinkoScreen
 import com.wolfgames.app.games.TicTacToeScreen
 import com.wolfgames.app.games.GomokuScreen
 import com.wolfgames.app.games.HotelScreen
+import com.wolfgames.app.games.NumberBombScreen
+import com.wolfgames.app.games.BalloonScreen
+import com.wolfgames.app.games.PhraseScreen
+import com.wolfgames.app.games.SettleScreen
 import com.wolfgames.app.i18n.dualStrings
 import com.wolfgames.app.games.FourGame
 import com.wolfgames.app.games.LadderGame
@@ -138,7 +142,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Phrase, Settle }
 
 @Composable
 fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String, String?) -> Unit) {
@@ -149,7 +153,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
             Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer -> Screen.QuickMenu
             Screen.Tug, Screen.Slap, Screen.Ttt, Screen.Gomoku -> Screen.BattleMenu
-            Screen.Coin, Screen.Plinko -> Screen.LuckMenu
+            Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon -> Screen.LuckMenu
             Screen.Kings -> Screen.CardMenu
             Screen.UpDown, Screen.HoChiMinh -> Screen.CardMenu
             Screen.Finger -> Screen.FingerMenu
@@ -187,6 +191,8 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("💣", s.bombTitle, s.bombSub, Screen.Bomb),
                 MenuItem("@coin", s.coinTitle, s.coinSub, Screen.Coin),
                 MenuItem("🔻", s.plinkoTitle, s.plinkoSub, Screen.Plinko),
+                MenuItem("🔢", s.nbTitle, s.nbSub, Screen.NumberBomb),
+                MenuItem("🎈", s.blTitle, s.blSub, Screen.Balloon),
             )) { screen = it }
             Screen.QuickMenu -> CategoryScreen("⚡ ${s.menuQuick}", back, listOf(
                 MenuItem("🟢", s.reactTitle, s.reactSub, Screen.Reaction),
@@ -220,6 +226,10 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.Plinko -> PlinkoScreen(onBack = back)
             Screen.Ttt -> TicTacToeScreen(onBack = back)
             Screen.Gomoku -> GomokuScreen(onBack = back)
+            Screen.NumberBomb -> NumberBombScreen(onBack = back)
+            Screen.Balloon -> BalloonScreen(onBack = back)
+            Screen.Phrase -> PhraseScreen(onBack = back, mine = currentLang, second = lang2)
+            Screen.Settle -> SettleScreen(onBack = back)
             Screen.Hotel -> HotelScreen(onBack = back, langCode = currentLang.code, secondCode = lang2?.code)
         }
     }
@@ -316,6 +326,26 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(m.hotelBtn, color = WG.Text, fontSize = 14.sp)
+                        }
+                        Row(
+                            Modifier
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(WG.Surface)
+                                .clickable { vibe.tap(); onSelect(Screen.Phrase) }
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(m.phraseBtn, color = WG.Text, fontSize = 14.sp)
+                        }
+                        Row(
+                            Modifier
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(WG.Surface)
+                                .clickable { vibe.tap(); onSelect(Screen.Settle) }
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(m.settleBtn, color = WG.Text, fontSize = 14.sp)
                         }
                     }
                 }

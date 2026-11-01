@@ -343,7 +343,7 @@ private const val CFUR_D = "#7C8593"
 private const val CCREAM = "#F1EEE8"
 private const val CPINK = "#F6AFC0"
 
-private fun Ctx.coinWolfFace(r: Float) {
+fun Ctx.coinWolfFace(r: Float) {
     for (s in SIDES) {
         beginPath(); moveTo(s * r * 0.2f, -r * 0.42f); lineTo(s * r * 0.62f, -r * 0.92f); lineTo(s * r * 0.72f, -r * 0.22f); closePath(); fillStyle = CFUR_D; fill()
         beginPath(); moveTo(s * r * 0.34f, -r * 0.42f); lineTo(s * r * 0.58f, -r * 0.74f); lineTo(s * r * 0.62f, -r * 0.32f); closePath(); fillStyle = CPINK; fill()
