@@ -63,7 +63,7 @@ S = {
  'stResetAsk': ['정말 전부 지울까요?', 'Really clear everything?', '本当に全部消しますか？', '确定全部清空吗？', 'ล้างทั้งหมดจริงไหม?', 'Xóa hết thật chứ?'],
 }
 MENU = {
- 'menuLuckSub': ['사다리게임 · 돌림판 · 폭탄돌리기 · 동전 던지기 · 플링코 · 숫자 폭탄 · 풍선 불기', 'Ladder Game · Roulette · Hot Bomb · Coin Toss · Plinko · Number Bomb · Balloon Pump', 'あみだくじ · ルーレット · 爆弾回し · コイントス · プリンコ · 数字爆弾 · 風船ふくらまし', '爬梯子 · 转盘 · 传炸弹 · 抛硬币 · 弹珠台 · 数字炸弹 · 吹气球', 'เกมบันได · วงล้อ · ส่งระเบิด · โยนเหรียญ · พลิงโก · ระเบิดตัวเลข · เป่าลูกโป่ง', 'Leo thang · Vòng quay · Chuyền bom · Tung đồng xu · Plinko · Bom số · Thổi bóng bay'],
+ 'menuLuckSub': ['사다리게임 · 돌림판 · 폭탄돌리기 · 동전 던지기 · 플링코 · 숫자 폭탄 · 풍선 불기 · 손가락선택', 'Ladder Game · Roulette · Hot Bomb · Coin Toss · Plinko · Number Bomb · Balloon Pump · Finger Pick', 'あみだくじ · ルーレット · 爆弾回し · コイントス · プリンコ · 数字爆弾 · 風船ふくらまし · 指えらび', '爬梯子 · 转盘 · 传炸弹 · 抛硬币 · 弹珠台 · 数字炸弹 · 吹气球 · 手指选人', 'เกมบันได · วงล้อ · ส่งระเบิด · โยนเหรียญ · พลิงโก · ระเบิดตัวเลข · เป่าลูกโป่ง · จิ้มนิ้วเลือกคน', 'Leo thang · Vòng quay · Chuyền bom · Tung đồng xu · Plinko · Bom số · Thổi bóng bay · Chọn ngón tay'],
  'menuBattleSub': ['삼목 · 4목 · 오목 · 연타 땅따먹기 · 슬랩 대결', 'Tic-Tac-Toe · Connect 4 · Gomoku · Tap Turf War · Slap Duel', '三目並べ · 4目並べ · 五目並べ · 連打陣取り · スラップ対決', '井字棋 · 四子棋 · 五子棋 · 狂点抢地盘 · 拍手背对决', 'โอเอ็กซ์ · เรียง 4 · โกะโมะกุ · แตะรัวยึดพื้นที่ · ดวลตบมือ', 'Cờ ba · Nối 4 · Cờ năm · Chạm nhanh giành đất · Đấu đập tay'],
 }
 if __name__ == '__main__':

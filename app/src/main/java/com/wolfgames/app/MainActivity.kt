@@ -153,10 +153,9 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
             Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer -> Screen.QuickMenu
             Screen.Tug, Screen.Slap, Screen.Ttt, Screen.Gomoku -> Screen.BattleMenu
-            Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon -> Screen.LuckMenu
+            Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon, Screen.Finger -> Screen.LuckMenu
             Screen.Kings -> Screen.CardMenu
             Screen.UpDown, Screen.HoChiMinh -> Screen.CardMenu
-            Screen.Finger -> Screen.FingerMenu
             Screen.Croc, Screen.Race, Screen.Pirate, Screen.Arrow -> Screen.WolfMenu
             Screen.Ladder, Screen.Roulette, Screen.Bomb -> Screen.LuckMenu
             Screen.Four -> Screen.BattleMenu
@@ -193,6 +192,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🔻", s.plinkoTitle, s.plinkoSub, Screen.Plinko),
                 MenuItem("🔢", s.nbTitle, s.nbSub, Screen.NumberBomb),
                 MenuItem("🎈", s.blTitle, s.blSub, Screen.Balloon),
+                MenuItem("☝️", s.fingerTitle, s.fingerSub, Screen.Finger),
             )) { screen = it }
             Screen.QuickMenu -> CategoryScreen("⚡ ${s.menuQuick}", back, listOf(
                 MenuItem("🟢", s.reactTitle, s.reactSub, Screen.Reaction),
@@ -353,7 +353,6 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
             Spacer(Modifier.height(8.dp))
             MenuCard("🎲", s.menuDice, s.menuDiceSub) { onSelect(Screen.DiceMenu) }
             MenuCard("🃏", s.menuCards, s.menuCardsSub) { onSelect(Screen.CardMenu) }
-            MenuCard("👆", s.menuFinger, s.menuFingerSub) { onSelect(Screen.FingerMenu) }
             MenuCard("⚡", s.menuQuick, s.menuQuickSub) { onSelect(Screen.QuickMenu) }
             MenuCard("🐺", s.menuWolf, s.menuWolfSub) { onSelect(Screen.WolfMenu) }
             MenuCard("🍀", s.menuLuck, s.menuLuckSub) { onSelect(Screen.LuckMenu) }

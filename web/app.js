@@ -74,7 +74,7 @@ const SCREENS = {
   phrase: phraseScreen,
   settle: settleScreen,
 };
-const PARENT = { roll: 'dice', shut: 'dice', five: 'dice', d789: 'dice', duel: 'dice', react: 'quick', color: 'quick', stop: 'quick', bomb: 'luck', updown: 'cards', hcm: 'cards', finger: 'fingers', teeth: 'wolves', race: 'wolves', pirate: 'wolves', arrow: 'wolves', ladder: 'luck', roulette: 'luck', four: 'battle', tug: 'battle', slap: 'battle', ttt: 'battle', gomoku: 'battle', plinko: 'luck', nbomb: 'luck', balloon: 'luck', beer: 'quick', coin: 'luck', kings: 'cards' };
+const PARENT = { roll: 'dice', shut: 'dice', five: 'dice', d789: 'dice', duel: 'dice', react: 'quick', color: 'quick', stop: 'quick', bomb: 'luck', updown: 'cards', hcm: 'cards', finger: 'luck', teeth: 'wolves', race: 'wolves', pirate: 'wolves', arrow: 'wolves', ladder: 'luck', roulette: 'luck', four: 'battle', tug: 'battle', slap: 'battle', ttt: 'battle', gomoku: 'battle', plinko: 'luck', nbomb: 'luck', balloon: 'luck', beer: 'quick', coin: 'luck', kings: 'cards' };
 
 // ---------- 화면 이동 (휴대폰 뒤로가기 버튼과 연동) ----------
 function show(name) {
@@ -116,7 +116,6 @@ function homeScreen(root) {
     h('div', { style: 'height:4px' }),
     card('🎲', s.menuDice, s.menuDiceSub, () => go('dice')),
     card('🃏', s.menuCards, s.menuCardsSub, () => go('cards')),
-    card('👆', s.menuFinger, s.menuFingerSub, () => go('fingers')),
     card('⚡', s.menuQuick, s.menuQuickSub, () => go('quick')),
     card('🐺', s.menuWolf, s.menuWolfSub, () => go('wolves')),
     card('🍀', s.menuLuck, s.menuLuckSub, () => go('luck')),
@@ -223,7 +222,8 @@ function luckMenu(root) {
     card(icon('coin'), s.coinTitle, s.coinSub, () => go('coin')),
     card('🔻', s.plinkoTitle, s.plinkoSub, () => go('plinko')),
     card('🔢', s.nbTitle, s.nbSub, () => go('nbomb')),
-    card('🎈', s.blTitle, s.blSub, () => go('balloon'))));
+    card('🎈', s.blTitle, s.blSub, () => go('balloon')),
+    card('☝️', s.fingerTitle, s.fingerSub, () => go('finger'))));
 }
 function battleMenu(root) {
   const s = S();

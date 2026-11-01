@@ -639,7 +639,7 @@ val KoStrings = Strings().apply {
     menuWolf = "늑대게임"
     menuWolfSub = "늑대이빨 · 늑대달리기 · 늑대 룰렛 · 늑대 돌리기"
     menuLuck = "운빨게임"
-    menuLuckSub = "사다리게임 · 돌림판 · 폭탄돌리기 · 동전 던지기 · 플링코 · 숫자 폭탄 · 풍선 불기"
+    menuLuckSub = "사다리게임 · 돌림판 · 폭탄돌리기 · 동전 던지기 · 플링코 · 숫자 폭탄 · 풍선 불기 · 손가락선택"
     menuBattle = "대결게임"
     menuBattleSub = "삼목 · 4목 · 오목 · 연타 땅따먹기 · 슬랩 대결"
     fingerTitle = "손가락선택"
@@ -878,6 +878,7 @@ val KoStrings = Strings().apply {
     stSpent = { "쓴 몫 $it" }
     stReset = "🗑️ 전부 지우기"
     stResetAsk = "정말 전부 지울까요?"
+
 }
 
 val EnStrings = Strings().apply {
@@ -1054,7 +1055,7 @@ val EnStrings = Strings().apply {
     menuWolf = "Wolf Games"
     menuWolfSub = "Wolf Teeth · Wolf Race · Wolf Roulette · Wolf Spin"
     menuLuck = "Luck Games"
-    menuLuckSub = "Ladder Game · Roulette · Hot Bomb · Coin Toss · Plinko · Number Bomb · Balloon Pump"
+    menuLuckSub = "Ladder Game · Roulette · Hot Bomb · Coin Toss · Plinko · Number Bomb · Balloon Pump · Finger Pick"
     menuBattle = "Versus Games"
     menuBattleSub = "Tic-Tac-Toe · Connect 4 · Gomoku · Tap Turf War · Slap Duel"
     fingerTitle = "Finger Pick"
@@ -1293,6 +1294,7 @@ val EnStrings = Strings().apply {
     stSpent = { "Share $it" }
     stReset = "🗑️ Clear all"
     stResetAsk = "Really clear everything?"
+
 }
 
 val JaStrings = Strings().apply {
@@ -1469,7 +1471,7 @@ val JaStrings = Strings().apply {
     menuWolf = "オオカミゲーム"
     menuWolfSub = "オオカミの歯 · ウルフレース · オオカミルーレット · オオカミ回し"
     menuLuck = "運ゲー"
-    menuLuckSub = "あみだくじ · ルーレット · 爆弾回し · コイントス · プリンコ · 数字爆弾 · 風船ふくらまし"
+    menuLuckSub = "あみだくじ · ルーレット · 爆弾回し · コイントス · プリンコ · 数字爆弾 · 風船ふくらまし · 指えらび"
     menuBattle = "対決ゲーム"
     menuBattleSub = "三目並べ · 4目並べ · 五目並べ · 連打陣取り · スラップ対決"
     fingerTitle = "指えらび"
@@ -1708,6 +1710,7 @@ val JaStrings = Strings().apply {
     stSpent = { "使った分 $it" }
     stReset = "🗑️ 全部消す"
     stResetAsk = "本当に全部消しますか？"
+
 }
 
 val ZhStrings = Strings().apply {
@@ -1884,7 +1887,7 @@ val ZhStrings = Strings().apply {
     menuWolf = "狼游戏"
     menuWolfSub = "狼牙齿 · 群狼赛跑 · 狼轮盘 · 转狼"
     menuLuck = "拼手气"
-    menuLuckSub = "爬梯子 · 转盘 · 传炸弹 · 抛硬币 · 弹珠台 · 数字炸弹 · 吹气球"
+    menuLuckSub = "爬梯子 · 转盘 · 传炸弹 · 抛硬币 · 弹珠台 · 数字炸弹 · 吹气球 · 手指选人"
     menuBattle = "对战游戏"
     menuBattleSub = "井字棋 · 四子棋 · 五子棋 · 狂点抢地盘 · 拍手背对决"
     fingerTitle = "手指选人"
@@ -2123,6 +2126,7 @@ val ZhStrings = Strings().apply {
     stSpent = { "应摊 $it" }
     stReset = "🗑️ 全部清空"
     stResetAsk = "确定全部清空吗？"
+
 }
 
 val ThStrings = Strings().apply {
@@ -2299,7 +2303,7 @@ val ThStrings = Strings().apply {
     menuWolf = "เกมหมาป่า"
     menuWolfSub = "ฟันหมาป่า · วิ่งแข่งหมาป่า · รูเล็ตหมาป่า · หมุนหมาป่า"
     menuLuck = "เกมดวง"
-    menuLuckSub = "เกมบันได · วงล้อ · ส่งระเบิด · โยนเหรียญ · พลิงโก · ระเบิดตัวเลข · เป่าลูกโป่ง"
+    menuLuckSub = "เกมบันได · วงล้อ · ส่งระเบิด · โยนเหรียญ · พลิงโก · ระเบิดตัวเลข · เป่าลูกโป่ง · จิ้มนิ้วเลือกคน"
     menuBattle = "เกมดวล"
     menuBattleSub = "โอเอ็กซ์ · เรียง 4 · โกะโมะกุ · แตะรัวยึดพื้นที่ · ดวลตบมือ"
     fingerTitle = "จิ้มนิ้วเลือกคน"
@@ -2538,6 +2542,7 @@ val ThStrings = Strings().apply {
     stSpent = { "ส่วนที่ใช้ $it" }
     stReset = "🗑️ ล้างทั้งหมด"
     stResetAsk = "ล้างทั้งหมดจริงไหม?"
+
 }
 
 val ViStrings = Strings().apply {
@@ -2714,7 +2719,7 @@ val ViStrings = Strings().apply {
     menuWolf = "Trò chơi sói"
     menuWolfSub = "Răng sói · Sói chạy đua · Sói may rủi · Quay sói"
     menuLuck = "Trò may rủi"
-    menuLuckSub = "Leo thang · Vòng quay · Chuyền bom · Tung đồng xu · Plinko · Bom số · Thổi bóng bay"
+    menuLuckSub = "Leo thang · Vòng quay · Chuyền bom · Tung đồng xu · Plinko · Bom số · Thổi bóng bay · Chọn ngón tay"
     menuBattle = "Trò đối kháng"
     menuBattleSub = "Cờ ba · Nối 4 · Cờ năm · Chạm nhanh giành đất · Đấu đập tay"
     fingerTitle = "Chọn ngón tay"
@@ -2953,6 +2958,7 @@ val ViStrings = Strings().apply {
     stSpent = { "Phần chi $it" }
     stReset = "🗑️ Xóa hết"
     stResetAsk = "Xóa hết thật chứ?"
+
 }
 
 fun stringsFor(lang: Lang): Strings = when (lang) {
