@@ -47,22 +47,19 @@ run() { # $1 = 이름 앞글자
   for i in 2 3 4 5 6; do tap $(gx $i) $(gy 2); sleep 0.2; [ $i -lt 6 ] && { tap $(gx $i) $(gy 12); sleep 0.2; }; done
   sleep 1; shot ${P}15_gomoku_win
 }
-# v1.7 새 화면 점검 (한국어 → 한국어+태국어)
-v17() { local P=$1
-  open Home; shot ${P}_home
-  open LuckMenu; shot ${P}_luck; adb shell input swipe $(px 500) $(py 800) $(px 500) $(py 200) 300; sleep 1; shot ${P}_luck2
-  # 숫자 폭탄: 50 → 25 → 범위 밖 숫자
-  open NumberBomb; shot ${P}_nb0
-  open NumberBomb true; sleep 1; tapExact "1"; tapExact "확인"; sleep 0.6; shot ${P}_nb1; sleep 1.6; shot ${P}_nb2
-  # 풍선: 3번, 그다음 30번 (반드시 터짐)
-  open Balloon true; sleep 1; for i in 1 2 3; do tap 500 450; sleep 0.15; done; shot ${P}_bl1
-  for i in $(seq 1 30); do tap 500 450; sleep 0.08; done; sleep 1.2; shot ${P}_bl2
-  # 회화 카드: 목록 → 세 번째 문장 크게
-  open Phrase; shot ${P}_ph0; tapText "계산해"; sleep 1; shot ${P}_ph1; tapText "들려주기"; sleep 1.5; shot ${P}_ph2
-  # 정산: 빈 화면
-  open Settle; shot ${P}_st0
+# v1.8 새 화면 점검 (한국어 → 한국어+태국어): 탑 쌓기 · 따라 하기 · 폭탄 선 자르기
+v18() { local P=$1
+  open QuickMenu; shot ${P}_quick
+  open LuckMenu; adb shell input swipe $(px 500) $(py 800) $(px 500) $(py 200) 300; sleep 1; shot ${P}_luck
+  open Tower; shot ${P}_ts0
+  open Tower true; sleep 1; for i in 1 2 3 4 5 6; do tap 500 500; sleep 0.45; done; shot ${P}_ts1
+  for i in $(seq 1 25); do tap 500 500; sleep 0.25; done; sleep 2; shot ${P}_ts2
+  open Simon true; sleep 1.1; shot ${P}_sm1; sleep 1; tap 300 400; tap 700 400; sleep 0.4; shot ${P}_sm2
+  open WireCut; shot ${P}_wc0
+  open WireCut true; sleep 1; tap 193 550; sleep 0.5; shot ${P}_wc1
+  for x in 316 439 561 684 807; do tap $x 550; sleep 0.4; done; sleep 1.6; shot ${P}_wc2
 }
-prefs ""; v17 k
-prefs th; v17 d
+prefs ""; v18 k
+prefs th; v18 d
 adb logcat -d -b crash > out/crash.txt
 echo done >> out/log.txt
