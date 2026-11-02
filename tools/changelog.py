@@ -3,6 +3,40 @@
 # 각 항목: (이모지, 6개 언어 문장)
 
 CHANGELOG = [
+    dict(ver='1.8-beta', date='2026-11-03', items=[
+        ('🏗️', dict(
+            ko='🏗️ 탑 쌓기 추가 (순발력게임): 좌우로 움직이는 블록을 터치해서 쌓고, 삐져나간 부분은 잘려요. 딱 맞으면 ✨PERFECT — 탑을 무너뜨린 사람이 마셔요',
+            en='🏗️ New Tower Stack (Quick Games): tap to drop the sliding block — overhangs get cut off, a perfect fit gets ✨PERFECT. Whoever topples the tower drinks',
+            ja='🏗️ タワー積み追加（反射神経ゲーム）：左右に動くブロックをタッチして積む。はみ出た部分は切れ、ぴったりなら✨PERFECT — 崩した人が飲む',
+            zh='🏗️ 新增叠高塔（反应游戏）：点击放下左右移动的方块，超出的部分会被切掉，完全对准就 ✨PERFECT — 把塔弄倒的人喝',
+            th='🏗️ เพิ่มต่อตึก (เกมความไว): แตะปล่อยบล็อกที่เลื่อนไปมา ส่วนที่ล้นจะถูกตัด ถ้าตรงเป๊ะได้ ✨PERFECT — ใครทำตึกพังต้องดื่ม',
+            vi='🏗️ Thêm Xếp tháp (Trò phản xạ): chạm để thả khối đang trượt — phần thò ra bị cắt, khớp hoàn hảo được ✨PERFECT. Ai làm đổ tháp thì uống',
+        )),
+        ('🔴', dict(
+            ko='🔴 따라 하기 추가 (순발력게임): 색 버튼 4개(●▲■★)가 소리와 함께 반짝인 순서를 돌아가며 똑같이 누르기 — 성공할 때마다 하나씩 늘어나고, 틀린 사람이 마셔요',
+            en='🔴 New Copy Me (Quick Games): 4 color buttons (●▲■★) flash in order with sounds — take turns repeating it; it grows by one each time, and whoever misses drinks',
+            ja='🔴 まねっこ追加（反射神経ゲーム）：4つの色ボタン（●▲■★）が音と一緒に光った順番を交代でまねして押す — 成功ごとに1つ増え、間違えた人が飲む',
+            zh='🔴 新增跟着按（反应游戏）：4个彩色按钮（●▲■★）随声音按顺序亮起，大家轮流照着按 — 每次成功多一个，按错的人喝',
+            th='🔴 เพิ่มทำตาม (เกมความไว): ปุ่มสี 4 ปุ่ม (●▲■★) กะพริบตามลำดับพร้อมเสียง ผลัดกันกดตาม — ถูกแล้วลำดับยาวขึ้นทีละหนึ่ง ใครผิดต้องดื่ม',
+            vi='🔴 Thêm Bắt chước (Trò phản xạ): 4 nút màu (●▲■★) nháy theo thứ tự kèm âm thanh — lần lượt bấm lại; mỗi lần đúng dài thêm một, ai sai thì uống',
+        )),
+        ('✂️', dict(
+            ko='✂️ 폭탄 선 자르기 추가 (운빨게임): 폭탄에 달린 색깔 선(4·5·6·8개) 중 하나만 진짜 — 돌아가며 하나씩 자르고, 진짜 선을 자르면 💥 펑! 헤롱헤롱 늑대와 원샷',
+            en='✂️ New Cut the Wire (Luck Games): only one of the bomb\'s colored wires (4·5·6·8) is real — take turns cutting one; cut the real one and 💥 BOOM, a dizzy wolf and a shot',
+            ja='✂️ 爆弾の線切り追加（運ゲーム）：爆弾の色の線（4・5・6・8本）のうち本物は1本 — 順番に1本ずつ切って、本物を切ったら💥ドカン！フラフラのオオカミと一気',
+            zh='✂️ 新增剪炸弹线（运气游戏）：炸弹上的彩色线（4·5·6·8根）只有一根是真的 — 轮流剪一根，剪到真线就 💥 砰！晕乎乎的小狼和干杯',
+            th='✂️ เพิ่มตัดสายระเบิด (เกมดวง): สายสีของระเบิด (4·5·6·8 เส้น) มีสายจริงแค่เส้นเดียว — ผลัดกันตัดทีละเส้น ตัดโดนสายจริง 💥 ตูม! หมาป่ามึนตึ้บแล้วหมดแก้ว',
+            vi='✂️ Thêm Cắt dây bom (Trò may rủi): chỉ một trong các dây màu (4·5·6·8) của quả bom là thật — lần lượt cắt từng dây; cắt trúng dây thật là 💥 BÙM, sói choáng váng và cạn ly',
+        )),
+        ('🌏', dict(
+            ko='🌏 셋 다 글자 없이 그림·색·숫자만으로 할 수 있어서 외국인 친구랑 같이 하기 좋아요',
+            en='🌏 All three work with pictures, colors and numbers only — no reading needed, great with friends from other countries',
+            ja='🌏 3つとも文字なしで絵・色・数字だけで遊べるので、外国の友だちとも一緒に楽しめます',
+            zh='🌏 这三个游戏只靠图案、颜色和数字就能玩，不用看字，和外国朋友一起玩也没问题',
+            th='🌏 ทั้ง 3 เกมเล่นได้ด้วยรูป สี และตัวเลขเท่านั้น ไม่ต้องอ่าน เล่นกับเพื่อนต่างชาติได้สบาย',
+            vi='🌏 Cả ba chỉ dùng hình, màu và số — không cần đọc chữ, chơi cùng bạn nước ngoài rất hợp',
+        )),
+    ]),
     dict(ver='1.7-beta', date='2026-11-01', items=[
         ('🔢', dict(
             ko='🔢 숫자 폭탄 추가 (운빨게임): 숨은 폭탄 숫자를 피해 돌아가면서 숫자 입력 — ⬆️ UP · ⬇️ DOWN으로 범위가 좁아지고, 폭탄 숫자를 누르면 펑! 그을린 늑대가 헤롱헤롱 😵‍💫',

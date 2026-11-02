@@ -75,6 +75,9 @@ import com.wolfgames.app.games.GomokuScreen
 import com.wolfgames.app.games.HotelScreen
 import com.wolfgames.app.games.NumberBombScreen
 import com.wolfgames.app.games.BalloonScreen
+import com.wolfgames.app.games.TowerScreen
+import com.wolfgames.app.games.SimonScreen
+import com.wolfgames.app.games.WireCutScreen
 import com.wolfgames.app.games.PhraseScreen
 import com.wolfgames.app.games.SettleScreen
 import com.wolfgames.app.i18n.dualStrings
@@ -142,7 +145,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Phrase, Settle }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Phrase, Settle }
 
 @Composable
 fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String, String?) -> Unit) {
@@ -151,9 +154,9 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
     val back: () -> Unit = {
         screen = when (screen) {
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
-            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer -> Screen.QuickMenu
+            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer, Screen.Tower, Screen.Simon -> Screen.QuickMenu
             Screen.Tug, Screen.Slap, Screen.Ttt, Screen.Gomoku -> Screen.BattleMenu
-            Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon, Screen.Finger -> Screen.LuckMenu
+            Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon, Screen.WireCut, Screen.Finger -> Screen.LuckMenu
             Screen.Kings -> Screen.CardMenu
             Screen.UpDown, Screen.HoChiMinh -> Screen.CardMenu
             Screen.Croc, Screen.Race, Screen.Pirate, Screen.Arrow -> Screen.WolfMenu
@@ -192,6 +195,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🔻", s.plinkoTitle, s.plinkoSub, Screen.Plinko),
                 MenuItem("🔢", s.nbTitle, s.nbSub, Screen.NumberBomb),
                 MenuItem("🎈", s.blTitle, s.blSub, Screen.Balloon),
+                MenuItem("✂️", s.wcTitle, s.wcSub, Screen.WireCut),
                 MenuItem("☝️", s.fingerTitle, s.fingerSub, Screen.Finger),
             )) { screen = it }
             Screen.QuickMenu -> CategoryScreen("⚡ ${s.menuQuick}", back, listOf(
@@ -199,6 +203,8 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🎨", s.colorTitle, s.colorSub, Screen.ColorReact),
                 MenuItem("⏱️", s.stopTitle, s.stopSub, Screen.Stopwatch),
                 MenuItem("🍺", s.beerTitle, s.beerSub, Screen.Beer),
+                MenuItem("🏗️", s.tsTitle, s.tsSub, Screen.Tower),
+                MenuItem("🔴", s.smTitle, s.smSub, Screen.Simon),
             )) { screen = it }
             Screen.DiceDuel -> DiceDuelScreen(onBack = back)
             Screen.Reaction -> ReactionGameScreen(onBack = back)
@@ -228,6 +234,9 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.Gomoku -> GomokuScreen(onBack = back)
             Screen.NumberBomb -> NumberBombScreen(onBack = back)
             Screen.Balloon -> BalloonScreen(onBack = back)
+            Screen.Tower -> TowerScreen(onBack = back)
+            Screen.Simon -> SimonScreen(onBack = back)
+            Screen.WireCut -> WireCutScreen(onBack = back)
             Screen.Phrase -> PhraseScreen(onBack = back, mine = currentLang, second = lang2)
             Screen.Settle -> SettleScreen(onBack = back)
             Screen.Hotel -> HotelScreen(onBack = back, langCode = currentLang.code, secondCode = lang2?.code)
