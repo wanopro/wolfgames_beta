@@ -439,7 +439,7 @@ fun CurlingScreen(onBack: () -> Unit) {
 }
 
 private class CurlingGame(val n: Int, val vibe: Vibe) {
-    val PMAX = 100f
+    val PMAX = 90f
     var turn = 0; val res = arrayOfNulls<Int>(n); var phase = 0 // 0 겨냥 · 1 당기는 중 · 2 미끄러짐 · 3 떨어짐 · 4 다음 · 5 끝
     var pull = 0f; var downY = 0f; var t0 = 0f; var y0 = 0f; var D = 0f; var dur = 1f; var fallY = 0f; var doneT = 0f
     var X0 = 0f; var X1 = 0f; var EDGE = 0f; var START = 0f; var pxcm = 1f; var base = 60f
@@ -461,13 +461,13 @@ private class CurlingGame(val n: Int, val vibe: Vibe) {
     fun up(t: Float) {
         if (phase != 1) return
         if (pull < 8) { phase = 0; pull = 0f; return }
-        val k = pull / PMAX; val dmax = (START + 40 + PMAX - EDGE) * 1.25f
-        y0 = START + 40 + pull; D = k.pow(1.5f) * dmax; dur = 0.6f + 1.5f * kotlin.math.sqrt(D / dmax)
+        val k = pull / PMAX; val dmax = (START + 30 + PMAX - EDGE) * 1.25f
+        y0 = START + 30 + pull; D = k.pow(1.5f) * dmax; dur = 0.6f + 1.5f * kotlin.math.sqrt(D / dmax)
         fallY = if (y0 - D < EDGE - 4) EDGE - 4 else 0f
         t0 = t; phase = 2; vibe.tick(); Beep.tone(180f, 0.12f, 3)
     }
     fun draw(c: Ctx, w: Float, h: Float, t: Float, s: Strings) = with(c) {
-        X0 = w * 0.13f; X1 = w * 0.87f; EDGE = max(92f, h * 0.13f); START = h - 200; pxcm = (START - EDGE) / 100; base = min(74f, w * 0.19f)
+        X0 = w * 0.13f; X1 = w * 0.87f; EDGE = max(92f, h * 0.13f); START = h - 150; pxcm = (START - EDGE) / 100; base = min(74f, w * 0.19f)
         fillStyle = "#12121A"; fillRect(0f, 0f, w, h)
         fillStyle = "#1E1E28"; fillRect(0f, 40f, w, EDGE - 40)
         for (i in 0 until 9) { fillStyle = "rgba(255,255,255,.03)"; fillRect(i * 52f, 40f, 26f, EDGE - 40) }
@@ -488,7 +488,7 @@ private class CurlingGame(val n: Int, val vibe: Vibe) {
         }
         val i = turn; val x = if (i < n) laneX(i) else 0f
         if (phase == 0 || phase == 1) {
-            val d = pull; val my = START + 40 + d; val k = d / PMAX
+            val d = pull; val my = START + 30 + d; val k = d / PMAX
             for (sx in listOf(-1, 1)) { beginPath(); arc(x + sx * 34, START + 4, 6f, 0f, TAU); fillStyle = "#5D4037"; fill() }
             beginPath(); moveTo(x - 34, START + 4); lineTo(x - 18, my - 6); moveTo(x + 34, START + 4); lineTo(x + 18, my - 6); strokeStyle = "#FF7043"; lineWidth = 3.5f; lineCap = "round"; stroke()
             wolfMug(x, my, size(START), CU_COLS[i], "${i + 1}", sin(t * 30) * 0.3f * k)

@@ -336,11 +336,11 @@ export function curling(root, back) {
   };
   const play = () => {
     const g = {};
-    const PMAX = 100;
+    const PMAX = 90;
     const fresh = () => Object.assign(g, { turn: 0, res: Array(n).fill(null), phase: 'aim', pull: 0, downY: 0, t0: 0, y0: 0, D: 0, dur: 1, fallY: 0, doneT: 0 });
     fresh();
     const geo = (W, H) => {
-      const X0 = W * 0.13, X1 = W * 0.87, EDGE = Math.max(92, H * 0.13), START = H - 200;
+      const X0 = W * 0.13, X1 = W * 0.87, EDGE = Math.max(92, H * 0.13), START = H - 150;
       return { X0, X1, EDGE, START, pxcm: (START - EDGE) / 100, base: Math.min(74, W * 0.19) };
     };
     const laneX = (G, i) => G.X0 + (G.X1 - G.X0) * (i + 0.5) / n;
@@ -375,7 +375,7 @@ export function curling(root, back) {
       }
       const i = g.turn, x = i < n ? laneX(G, i) : 0;
       if (g.phase === 'aim' || g.phase === 'drag') {
-        const d = g.pull, my = G.START + 40 + d, k = d / PMAX;
+        const d = g.pull, my = G.START + 30 + d, k = d / PMAX;
         for (const sx of [-1, 1]) { c.beginPath(); c.arc(x + sx * 34, G.START + 4, 6, 0, 7); c.fillStyle = '#5D4037'; c.fill(); }
         c.beginPath(); c.moveTo(x - 34, G.START + 4); c.lineTo(x - 18, my - 6); c.moveTo(x + 34, G.START + 4); c.lineTo(x + 18, my - 6); c.strokeStyle = '#FF7043'; c.lineWidth = 3.5; c.lineCap = 'round'; c.stroke();
         wolfMug(c, x, my, size(G, G.START), CU_COLS[i], String(i + 1), Math.sin(t * 30) * 0.3 * k);
@@ -436,8 +436,8 @@ export function curling(root, back) {
     const up = () => {
       if (g.phase !== 'drag' || !G) return;
       if (g.pull < 8) { g.phase = 'aim'; g.pull = 0; return; }
-      const k = g.pull / PMAX, Dmax = (G.START + 40 + PMAX - G.EDGE) * 1.25;
-      g.y0 = G.START + 40 + g.pull; g.D = Math.pow(k, 1.5) * Dmax; g.dur = 0.6 + 1.5 * Math.sqrt(g.D / Dmax);
+      const k = g.pull / PMAX, Dmax = (G.START + 30 + PMAX - G.EDGE) * 1.25;
+      g.y0 = G.START + 30 + g.pull; g.D = Math.pow(k, 1.5) * Dmax; g.dur = 0.6 + 1.5 * Math.sqrt(g.D / Dmax);
       g.fallY = g.y0 - g.D < G.EDGE - 4 ? G.EDGE - 4 : 0;
       g.t0 = now(); g.phase = 'slide'; vibe.tick(); tone(180, 0.12, 'triangle');
     };
