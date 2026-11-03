@@ -41,9 +41,20 @@ S = {
  'wcSafe': ['😮‍💨 휴~ 살았다! 다음 사람 👉', '😮‍💨 Phew~ safe! Next person 👉', '😮‍💨 ふぅ〜セーフ！次の人 👉', '😮‍💨 呼~安全！下一个人 👉', '😮‍💨 เฮ้อ~ รอด! คนถัดไป 👉', '😮‍💨 Phù~ thoát! Người kế tiếp 👉'],
  'wcBoom': ['💥 펑! 진짜 선이었다!', '💥 BOOM! That was the one!', '💥 ドカン！本物だった！', '💥 砰！就是这根！', '💥 ตูม! สายจริง!', '💥 BÙM! Đúng dây thật!'],
  'wcLeft': ('fn', '(Int) -> String', ['{ "남은 선 $it" }', '{ "$it wires left" }', '{ "残り $it 本" }', '{ "还剩 $it 根" }', '{ "เหลือ $it สาย" }', '{ "Còn $it dây" }']),
+ # 🍺 늑대컬링 (⚡ 순발력)
+ 'cuTitle': ['늑대컬링', 'Wolf Curling', 'オオカミカーリング', '狼冰壶', 'เคิร์ลลิงหมาป่า', 'Bi đá sói'],
+ 'cuSub': ['늑대 잔을 당겼다 놓아 끝에 딱!', 'Pull back the wolf mug, let go, stop at the edge!', 'オオカミジョッキを引いて放して端ギリギリに！', '把狼杯往后拉再松手，停在桌边！', 'ดึงแก้วหมาป่าแล้วปล่อย ให้หยุดชิดขอบ!', 'Kéo cốc sói rồi thả, dừng sát mép!'],
+ 'cuDesc': ['테이블 아래쪽의 늑대 맥주잔을 손가락으로 뒤로(아래로) 당겼다가 놓으면 앞으로 미끄러져요. 많이 당길수록 멀리 가요.\n테이블 끝에 가까울수록 좋아요. 끝을 넘으면 💦 떨어져요.\n돌아가며 한 번씩! 떨어진 사람은 모두 🍺 원샷, 아무도 안 떨어졌으면 제일 먼 사람이 마셔요.',
+            'Pull the wolf mug at the bottom of the table back (down) with your finger and let go — it slides forward. The more you pull, the farther it goes.\nThe closer to the edge, the better. Go past it and it 💦 falls off.\nOne turn each! Everyone who falls off drinks 🍺, and if nobody does, the farthest one drinks.',
+            'テーブル下のオオカミジョッキを指で後ろ（下）に引いて放すと前に滑ります。たくさん引くほど遠くへ。\nテーブルの端に近いほど良い。端を越えると💦落ちます。\n1人1回ずつ！落ちた人は全員🍺一気、誰も落ちなければ一番遠い人が飲む。',
+            '用手指把桌子下方的狼啤酒杯往后（往下）拉，松手它就会往前滑。拉得越多滑得越远。\n越靠近桌边越好。超过桌边就会 💦 掉下去。\n每人轮流一次！掉下去的人全部 🍺 干杯，没人掉的话离桌边最远的人喝。',
+            'ใช้นิ้วดึงแก้วเบียร์หมาป่าด้านล่างโต๊ะไปข้างหลัง (ลง) แล้วปล่อย มันจะไถลไปข้างหน้า ยิ่งดึงมากยิ่งไปไกล\nยิ่งใกล้ขอบโต๊ะยิ่งดี ถ้าเลยขอบจะ 💦 ตกลงไป\nผลัดกันคนละครั้ง! ใครตกต้อง 🍺 หมดแก้วทุกคน ถ้าไม่มีใครตก คนที่ไกลที่สุดดื่ม',
+            'Dùng ngón tay kéo cốc bia sói ở cuối bàn về sau (xuống dưới) rồi thả — nó trượt về phía trước. Kéo càng nhiều càng đi xa.\nCàng sát mép bàn càng tốt. Vượt quá mép là 💦 rơi.\nMỗi người một lượt! Ai rơi đều 🍺 cạn ly, nếu không ai rơi thì người xa nhất uống.'],
+ 'cuHint': ['👇 뒤로 당겼다가 놓기', '👇 Pull back, then let go', '👇 後ろに引いて放す', '👇 往后拉再松手', '👇 ดึงลงแล้วปล่อย', '👇 Kéo xuống rồi thả'],
+ 'cuFall': ['💦 떨어졌다!', '💦 It fell off!', '💦 落ちた！', '💦 掉下去了！', '💦 ตกแล้ว!', '💦 Rơi rồi!'],
 }
 MENU = {
- 'menuQuickSub': ['반응속도 대결 · 색 반응 대결 · 스탑워치 · 맥주 거품 채우기 · 탑 쌓기 · 따라 하기', 'Reaction Duel · Color Reaction · Stopwatch · Beer Pour · Tower Stack · Copy Me', '反応速度対決 · 色反応対決 · ストップウォッチ · ビール注ぎ · タワー積み · まねっこ', '反应速度对决 · 颜色反应对决 · 秒表 · 倒啤酒 · 叠高塔 · 跟着按', 'ดวลความไว · ดวลสี · นาฬิกาจับเวลา · รินเบียร์ · ต่อตึก · ทำตาม', 'Đấu phản xạ · Đấu màu · Bấm giờ · Rót bia · Xếp tháp · Bắt chước'],
+ 'menuQuickSub': ['반응속도 대결 · 색 반응 대결 · 스탑워치 · 맥주 거품 채우기 · 탑 쌓기 · 따라 하기 · 늑대컬링', 'Reaction Duel · Color Reaction · Stopwatch · Beer Pour · Tower Stack · Copy Me · Wolf Curling', '反応速度対決 · 色反応対決 · ストップウォッチ · ビール注ぎ · タワー積み · まねっこ · オオカミカーリング', '反应速度对决 · 颜色反应对决 · 秒表 · 倒啤酒 · 叠高塔 · 跟着按 · 狼冰壶', 'ดวลความไว · ดวลสี · นาฬิกาจับเวลา · รินเบียร์ · ต่อตึก · ทำตาม · เคิร์ลลิงหมาป่า', 'Đấu phản xạ · Đấu màu · Bấm giờ · Rót bia · Xếp tháp · Bắt chước · Bi đá sói'],
  'menuLuckSub': ['사다리게임 · 돌림판 · 폭탄돌리기 · 동전 던지기 · 플링코 · 숫자 폭탄 · 풍선 불기 · 폭탄 선 자르기 · 손가락선택', 'Ladder Game · Roulette · Hot Bomb · Coin Toss · Plinko · Number Bomb · Balloon Pump · Cut the Wire · Finger Pick', 'あみだくじ · ルーレット · 爆弾回し · コイントス · プリンコ · 数字爆弾 · 風船ふくらまし · 爆弾の線切り · 指えらび', '爬梯子 · 转盘 · 传炸弹 · 抛硬币 · 弹珠台 · 数字炸弹 · 吹气球 · 剪炸弹线 · 手指选人', 'เกมบันได · วงล้อ · ส่งระเบิด · โยนเหรียญ · พลิงโก · ระเบิดตัวเลข · เป่าลูกโป่ง · ตัดสายระเบิด · จิ้มนิ้วเลือกคน', 'Leo thang · Vòng quay · Chuyền bom · Tung đồng xu · Plinko · Bom số · Thổi bóng bay · Cắt dây bom · Chọn ngón tay'],
 }
 if __name__ == '__main__':

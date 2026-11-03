@@ -459,4 +459,9 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     wcSafe = join2(a.wcSafe, b.wcSafe)
     wcBoom = join2(a.wcBoom, b.wcBoom)
     wcLeft = { p0 -> join2(a.wcLeft(p0), b.wcLeft(p0)) }
+    cuTitle = join2(a.cuTitle, b.cuTitle)
+    cuSub = join2(a.cuSub, b.cuSub)
+    cuDesc = join2(a.cuDesc, b.cuDesc)
+    cuHint = join2(a.cuHint, b.cuHint)
+    cuFall = join2(a.cuFall, b.cuFall)
 }

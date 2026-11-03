@@ -55,6 +55,13 @@ v18() { local P=$1
   open Tower true; sleep 1; for i in 1 2 3 4 5 6; do tap 500 500; sleep 0.45; done; shot ${P}_ts1
   for i in $(seq 1 25); do tap 500 500; sleep 0.25; done; sleep 2; shot ${P}_ts2
   open Simon true; sleep 1.1; shot ${P}_sm1; sleep 1; tap 300 400; tap 700 400; sleep 0.4; shot ${P}_sm2
+  # 늑대컬링 (4명): 잔을 아래로 당겼다 놓기 — 약하게 · 세게(떨어짐)
+  open Curling; shot ${P}_cu0
+  open Curling true; sleep 1; shot ${P}_cu1
+  adb shell input swipe $(px 222) $(py 812) $(px 222) $(py 850) 600; sleep 3.5; shot ${P}_cu2
+  adb shell input swipe $(px 407) $(py 812) $(px 407) $(py 900) 600; sleep 1.2; shot ${P}_cu3; sleep 2.5
+  adb shell input swipe $(px 592) $(py 812) $(px 592) $(py 860) 600; sleep 3.5
+  adb shell input swipe $(px 777) $(py 812) $(px 777) $(py 840) 600; sleep 4; shot ${P}_cu4
   open WireCut; shot ${P}_wc0
   open WireCut true; sleep 1; tap 193 550; sleep 0.5; shot ${P}_wc1
   for x in 316 439 561 684 807; do tap $x 550; sleep 0.4; done; sleep 1.6; shot ${P}_wc2

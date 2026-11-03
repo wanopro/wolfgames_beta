@@ -14,7 +14,7 @@ import { qrScreen, qrEdit } from './qr.js';
 import { plinko, ticTacToe, gomoku } from './games-v16.js';
 import { hotelScreen, hotelEdit } from './hotel.js';
 import { numberBomb, balloon } from './games-v17.js';
-import { tower, simon, wireCut } from './games-v18.js';
+import { tower, simon, wireCut, curling } from './games-v18.js';
 import { phraseScreen } from './phrase.js';
 import { settleScreen } from './settle.js';
 
@@ -75,10 +75,11 @@ const SCREENS = {
   tower,
   simon,
   wire: wireCut,
+  curling,
   phrase: phraseScreen,
   settle: settleScreen,
 };
-const PARENT = { roll: 'dice', shut: 'dice', five: 'dice', d789: 'dice', duel: 'dice', react: 'quick', color: 'quick', stop: 'quick', bomb: 'luck', updown: 'cards', hcm: 'cards', finger: 'luck', teeth: 'wolves', race: 'wolves', pirate: 'wolves', arrow: 'wolves', ladder: 'luck', roulette: 'luck', four: 'battle', tug: 'battle', slap: 'battle', ttt: 'battle', gomoku: 'battle', plinko: 'luck', nbomb: 'luck', balloon: 'luck', tower: 'quick', simon: 'quick', wire: 'luck', beer: 'quick', coin: 'luck', kings: 'cards' };
+const PARENT = { roll: 'dice', shut: 'dice', five: 'dice', d789: 'dice', duel: 'dice', react: 'quick', color: 'quick', stop: 'quick', bomb: 'luck', updown: 'cards', hcm: 'cards', finger: 'luck', teeth: 'wolves', race: 'wolves', pirate: 'wolves', arrow: 'wolves', ladder: 'luck', roulette: 'luck', four: 'battle', tug: 'battle', slap: 'battle', ttt: 'battle', gomoku: 'battle', plinko: 'luck', nbomb: 'luck', balloon: 'luck', tower: 'quick', simon: 'quick', curling: 'quick', wire: 'luck', beer: 'quick', coin: 'luck', kings: 'cards' };
 
 // ---------- 화면 이동 (휴대폰 뒤로가기 버튼과 연동) ----------
 function show(name) {
@@ -217,7 +218,8 @@ function quickMenu(root) {
     card('⏱️', s.stopTitle, s.stopSub, () => go('stop')),
     card('🍺', s.beerTitle, s.beerSub, () => go('beer')),
     card('🏗️', s.tsTitle, s.tsSub, () => go('tower')),
-    card('🔴', s.smTitle, s.smSub, () => go('simon'))));
+    card('🔴', s.smTitle, s.smSub, () => go('simon')),
+    card('🍺', s.cuTitle, s.cuSub, () => go('curling'))));
 }
 function luckMenu(root) {
   const s = S();

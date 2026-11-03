@@ -78,6 +78,7 @@ import com.wolfgames.app.games.BalloonScreen
 import com.wolfgames.app.games.TowerScreen
 import com.wolfgames.app.games.SimonScreen
 import com.wolfgames.app.games.WireCutScreen
+import com.wolfgames.app.games.CurlingScreen
 import com.wolfgames.app.games.PhraseScreen
 import com.wolfgames.app.games.SettleScreen
 import com.wolfgames.app.i18n.dualStrings
@@ -145,7 +146,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Phrase, Settle }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Curling, Phrase, Settle }
 
 @Composable
 fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String, String?) -> Unit) {
@@ -154,7 +155,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
     val back: () -> Unit = {
         screen = when (screen) {
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
-            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer, Screen.Tower, Screen.Simon -> Screen.QuickMenu
+            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer, Screen.Tower, Screen.Simon, Screen.Curling -> Screen.QuickMenu
             Screen.Tug, Screen.Slap, Screen.Ttt, Screen.Gomoku -> Screen.BattleMenu
             Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon, Screen.WireCut, Screen.Finger -> Screen.LuckMenu
             Screen.Kings -> Screen.CardMenu
@@ -205,6 +206,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🍺", s.beerTitle, s.beerSub, Screen.Beer),
                 MenuItem("🏗️", s.tsTitle, s.tsSub, Screen.Tower),
                 MenuItem("🔴", s.smTitle, s.smSub, Screen.Simon),
+                MenuItem("🍺", s.cuTitle, s.cuSub, Screen.Curling),
             )) { screen = it }
             Screen.DiceDuel -> DiceDuelScreen(onBack = back)
             Screen.Reaction -> ReactionGameScreen(onBack = back)
@@ -237,6 +239,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.Tower -> TowerScreen(onBack = back)
             Screen.Simon -> SimonScreen(onBack = back)
             Screen.WireCut -> WireCutScreen(onBack = back)
+            Screen.Curling -> CurlingScreen(onBack = back)
             Screen.Phrase -> PhraseScreen(onBack = back, mine = currentLang, second = lang2)
             Screen.Settle -> SettleScreen(onBack = back)
             Screen.Hotel -> HotelScreen(onBack = back, langCode = currentLang.code, secondCode = lang2?.code)

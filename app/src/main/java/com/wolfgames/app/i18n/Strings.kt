@@ -491,6 +491,11 @@ class Strings {
     lateinit var wcSafe: String
     lateinit var wcBoom: String
     lateinit var wcLeft: (Int) -> String
+    lateinit var cuTitle: String
+    lateinit var cuSub: String
+    lateinit var cuDesc: String
+    lateinit var cuHint: String
+    lateinit var cuFall: String
 }
 
 val KoStrings = Strings().apply {
@@ -681,7 +686,7 @@ val KoStrings = Strings().apply {
     fingerMerong = "메롱~"
     fingerAgain = "화면을 탭하면 다시 해요"
     menuQuick = "순발력게임"
-    menuQuickSub = "반응속도 대결 · 색 반응 대결 · 스탑워치 · 맥주 거품 채우기 · 탑 쌓기 · 따라 하기"
+    menuQuickSub = "반응속도 대결 · 색 반응 대결 · 스탑워치 · 맥주 거품 채우기 · 탑 쌓기 · 따라 하기 · 늑대컬링"
     rankFirst = "👑 1등"
     rankLast = "💀 꼴찌"
     hiTag = "👑 최고"
@@ -937,6 +942,11 @@ val KoStrings = Strings().apply {
     wcSafe = "😮‍💨 휴~ 살았다! 다음 사람 👉"
     wcBoom = "💥 펑! 진짜 선이었다!"
     wcLeft = { "남은 선 $it" }
+    cuTitle = "늑대컬링"
+    cuSub = "늑대 잔을 당겼다 놓아 끝에 딱!"
+    cuDesc = "테이블 아래쪽의 늑대 맥주잔을 손가락으로 뒤로(아래로) 당겼다가 놓으면 앞으로 미끄러져요. 많이 당길수록 멀리 가요.\n테이블 끝에 가까울수록 좋아요. 끝을 넘으면 💦 떨어져요.\n돌아가며 한 번씩! 떨어진 사람은 모두 🍺 원샷, 아무도 안 떨어졌으면 제일 먼 사람이 마셔요."
+    cuHint = "👇 뒤로 당겼다가 놓기"
+    cuFall = "💦 떨어졌다!"
 }
 
 val EnStrings = Strings().apply {
@@ -1127,7 +1137,7 @@ val EnStrings = Strings().apply {
     fingerMerong = "Nyah~"
     fingerAgain = "Tap the screen to play again"
     menuQuick = "Quick Games"
-    menuQuickSub = "Reaction Duel · Color Reaction · Stopwatch · Beer Pour · Tower Stack · Copy Me"
+    menuQuickSub = "Reaction Duel · Color Reaction · Stopwatch · Beer Pour · Tower Stack · Copy Me · Wolf Curling"
     rankFirst = "👑 1st"
     rankLast = "💀 Last"
     hiTag = "👑 Highest"
@@ -1383,6 +1393,11 @@ val EnStrings = Strings().apply {
     wcSafe = "😮‍💨 Phew~ safe! Next person 👉"
     wcBoom = "💥 BOOM! That was the one!"
     wcLeft = { "$it wires left" }
+    cuTitle = "Wolf Curling"
+    cuSub = "Pull back the wolf mug, let go, stop at the edge!"
+    cuDesc = "Pull the wolf mug at the bottom of the table back (down) with your finger and let go — it slides forward. The more you pull, the farther it goes.\nThe closer to the edge, the better. Go past it and it 💦 falls off.\nOne turn each! Everyone who falls off drinks 🍺, and if nobody does, the farthest one drinks."
+    cuHint = "👇 Pull back, then let go"
+    cuFall = "💦 It fell off!"
 }
 
 val JaStrings = Strings().apply {
@@ -1573,7 +1588,7 @@ val JaStrings = Strings().apply {
     fingerMerong = "べー"
     fingerAgain = "画面をタップするともう一度"
     menuQuick = "反射神経ゲーム"
-    menuQuickSub = "反応速度対決 · 色反応対決 · ストップウォッチ · ビール注ぎ · タワー積み · まねっこ"
+    menuQuickSub = "反応速度対決 · 色反応対決 · ストップウォッチ · ビール注ぎ · タワー積み · まねっこ · オオカミカーリング"
     rankFirst = "👑 1位"
     rankLast = "💀 ビリ"
     hiTag = "👑 最高"
@@ -1829,6 +1844,11 @@ val JaStrings = Strings().apply {
     wcSafe = "😮‍💨 ふぅ〜セーフ！次の人 👉"
     wcBoom = "💥 ドカン！本物だった！"
     wcLeft = { "残り $it 本" }
+    cuTitle = "オオカミカーリング"
+    cuSub = "オオカミジョッキを引いて放して端ギリギリに！"
+    cuDesc = "テーブル下のオオカミジョッキを指で後ろ（下）に引いて放すと前に滑ります。たくさん引くほど遠くへ。\nテーブルの端に近いほど良い。端を越えると💦落ちます。\n1人1回ずつ！落ちた人は全員🍺一気、誰も落ちなければ一番遠い人が飲む。"
+    cuHint = "👇 後ろに引いて放す"
+    cuFall = "💦 落ちた！"
 }
 
 val ZhStrings = Strings().apply {
@@ -2019,7 +2039,7 @@ val ZhStrings = Strings().apply {
     fingerMerong = "略略略~"
     fingerAgain = "点屏幕再来一次"
     menuQuick = "反应游戏"
-    menuQuickSub = "反应速度对决 · 颜色反应对决 · 秒表 · 倒啤酒 · 叠高塔 · 跟着按"
+    menuQuickSub = "反应速度对决 · 颜色反应对决 · 秒表 · 倒啤酒 · 叠高塔 · 跟着按 · 狼冰壶"
     rankFirst = "👑 第1名"
     rankLast = "💀 最后"
     hiTag = "👑 最高"
@@ -2275,6 +2295,11 @@ val ZhStrings = Strings().apply {
     wcSafe = "😮‍💨 呼~安全！下一个人 👉"
     wcBoom = "💥 砰！就是这根！"
     wcLeft = { "还剩 $it 根" }
+    cuTitle = "狼冰壶"
+    cuSub = "把狼杯往后拉再松手，停在桌边！"
+    cuDesc = "用手指把桌子下方的狼啤酒杯往后（往下）拉，松手它就会往前滑。拉得越多滑得越远。\n越靠近桌边越好。超过桌边就会 💦 掉下去。\n每人轮流一次！掉下去的人全部 🍺 干杯，没人掉的话离桌边最远的人喝。"
+    cuHint = "👇 往后拉再松手"
+    cuFall = "💦 掉下去了！"
 }
 
 val ThStrings = Strings().apply {
@@ -2465,7 +2490,7 @@ val ThStrings = Strings().apply {
     fingerMerong = "แบร่~"
     fingerAgain = "แตะหน้าจอเพื่อเล่นใหม่"
     menuQuick = "เกมไหวพริบ"
-    menuQuickSub = "ดวลความไว · ดวลสี · นาฬิกาจับเวลา · รินเบียร์ · ต่อตึก · ทำตาม"
+    menuQuickSub = "ดวลความไว · ดวลสี · นาฬิกาจับเวลา · รินเบียร์ · ต่อตึก · ทำตาม · เคิร์ลลิงหมาป่า"
     rankFirst = "👑 ที่ 1"
     rankLast = "💀 ที่โหล่"
     hiTag = "👑 สูงสุด"
@@ -2721,6 +2746,11 @@ val ThStrings = Strings().apply {
     wcSafe = "😮‍💨 เฮ้อ~ รอด! คนถัดไป 👉"
     wcBoom = "💥 ตูม! สายจริง!"
     wcLeft = { "เหลือ $it สาย" }
+    cuTitle = "เคิร์ลลิงหมาป่า"
+    cuSub = "ดึงแก้วหมาป่าแล้วปล่อย ให้หยุดชิดขอบ!"
+    cuDesc = "ใช้นิ้วดึงแก้วเบียร์หมาป่าด้านล่างโต๊ะไปข้างหลัง (ลง) แล้วปล่อย มันจะไถลไปข้างหน้า ยิ่งดึงมากยิ่งไปไกล\nยิ่งใกล้ขอบโต๊ะยิ่งดี ถ้าเลยขอบจะ 💦 ตกลงไป\nผลัดกันคนละครั้ง! ใครตกต้อง 🍺 หมดแก้วทุกคน ถ้าไม่มีใครตก คนที่ไกลที่สุดดื่ม"
+    cuHint = "👇 ดึงลงแล้วปล่อย"
+    cuFall = "💦 ตกแล้ว!"
 }
 
 val ViStrings = Strings().apply {
@@ -2911,7 +2941,7 @@ val ViStrings = Strings().apply {
     fingerMerong = "Lêu lêu~"
     fingerAgain = "Chạm màn hình để chơi lại"
     menuQuick = "Trò phản xạ"
-    menuQuickSub = "Đấu phản xạ · Đấu màu · Bấm giờ · Rót bia · Xếp tháp · Bắt chước"
+    menuQuickSub = "Đấu phản xạ · Đấu màu · Bấm giờ · Rót bia · Xếp tháp · Bắt chước · Bi đá sói"
     rankFirst = "👑 Hạng 1"
     rankLast = "💀 Bét"
     hiTag = "👑 Cao nhất"
@@ -3167,6 +3197,11 @@ val ViStrings = Strings().apply {
     wcSafe = "😮‍💨 Phù~ thoát! Người kế tiếp 👉"
     wcBoom = "💥 BÙM! Đúng dây thật!"
     wcLeft = { "Còn $it dây" }
+    cuTitle = "Bi đá sói"
+    cuSub = "Kéo cốc sói rồi thả, dừng sát mép!"
+    cuDesc = "Dùng ngón tay kéo cốc bia sói ở cuối bàn về sau (xuống dưới) rồi thả — nó trượt về phía trước. Kéo càng nhiều càng đi xa.\nCàng sát mép bàn càng tốt. Vượt quá mép là 💦 rơi.\nMỗi người một lượt! Ai rơi đều 🍺 cạn ly, nếu không ai rơi thì người xa nhất uống."
+    cuHint = "👇 Kéo xuống rồi thả"
+    cuFall = "💦 Rơi rồi!"
 }
 
 fun stringsFor(lang: Lang): Strings = when (lang) {

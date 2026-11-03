@@ -38,14 +38,25 @@ export const CHANGELOG = [
     }
    ],
    [
+    "🍺",
+    {
+     "ko": "🍺 늑대컬링 추가 (순발력게임): 늑대 모양 맥주잔을 뒤로 당겼다가 놓으면 테이블 위를 미끄러져요. 끝에 가까울수록 🥇, 끝을 넘으면 💦 떨어져서 원샷 (힘 게이지 없이 감으로!)",
+     "en": "🍺 New Wolf Curling (Quick Games): pull the wolf-shaped beer mug back and let go to slide it down the table. Closest to the edge gets 🥇, past it and it 💦 falls off — shot! (No power meter, go by feel!)",
+     "ja": "🍺 オオカミカーリング追加（反射神経ゲーム）：オオカミ形のジョッキを後ろに引いて放すとテーブルを滑ります。端に近いほど🥇、越えたら💦落ちて一気（パワーゲージなし、感覚で！）",
+     "zh": "🍺 新增狼冰壶（反应游戏）：把狼形啤酒杯往后拉再松手，它会在桌上滑行。离桌边越近越好 🥇，超过就 💦 掉下去要干杯（没有力度条，全凭手感！）",
+     "th": "🍺 เพิ่มเคิร์ลลิงหมาป่า (เกมความไว): ดึงแก้วเบียร์รูปหมาป่าลงแล้วปล่อยให้ไถลไปบนโต๊ะ ใกล้ขอบที่สุดได้ 🥇 เลยขอบจะ 💦 ตกแล้วต้องดื่ม (ไม่มีเกจแรง ใช้ความรู้สึก!)",
+     "vi": "🍺 Thêm Bi đá sói (Trò phản xạ): kéo cốc bia hình sói về sau rồi thả cho nó trượt trên bàn. Gần mép nhất được 🥇, vượt mép là 💦 rơi và phải uống (không có thanh lực, dựa vào cảm giác!)"
+    }
+   ],
+   [
     "🌏",
     {
-     "ko": "🌏 셋 다 글자 없이 그림·색·숫자만으로 할 수 있어서 외국인 친구랑 같이 하기 좋아요",
-     "en": "🌏 All three work with pictures, colors and numbers only — no reading needed, great with friends from other countries",
-     "ja": "🌏 3つとも文字なしで絵・色・数字だけで遊べるので、外国の友だちとも一緒に楽しめます",
-     "zh": "🌏 这三个游戏只靠图案、颜色和数字就能玩，不用看字，和外国朋友一起玩也没问题",
-     "th": "🌏 ทั้ง 3 เกมเล่นได้ด้วยรูป สี และตัวเลขเท่านั้น ไม่ต้องอ่าน เล่นกับเพื่อนต่างชาติได้สบาย",
-     "vi": "🌏 Cả ba chỉ dùng hình, màu và số — không cần đọc chữ, chơi cùng bạn nước ngoài rất hợp"
+     "ko": "🌏 넷 다 글자 없이 그림·색·숫자만으로 할 수 있어서 외국인 친구랑 같이 하기 좋아요",
+     "en": "🌏 All four work with pictures, colors and numbers only — no reading needed, great with friends from other countries",
+     "ja": "🌏 4つとも文字なしで絵・色・数字だけで遊べるので、外国の友だちとも一緒に楽しめます",
+     "zh": "🌏 这四个游戏只靠图案、颜色和数字就能玩，不用看字，和外国朋友一起玩也没问题",
+     "th": "🌏 ทั้ง 4 เกมเล่นได้ด้วยรูป สี และตัวเลขเท่านั้น ไม่ต้องอ่าน เล่นกับเพื่อนต่างชาติได้สบาย",
+     "vi": "🌏 Cả bốn chỉ dùng hình, màu và số — không cần đọc chữ, chơi cùng bạn nước ngoài rất hợp"
     }
    ]
   ]

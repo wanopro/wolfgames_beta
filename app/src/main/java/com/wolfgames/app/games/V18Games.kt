@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.changedToDown
+import androidx.compose.ui.input.pointer.changedToUp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -31,6 +32,7 @@ import com.wolfgames.app.ui.Ctx
 import com.wolfgames.app.ui.GameScaffold
 import com.wolfgames.app.ui.LocalVibe
 import com.wolfgames.app.ui.SetupPanel
+import com.wolfgames.app.ui.Stepper
 import com.wolfgames.app.ui.TAU
 import com.wolfgames.app.ui.Vibe
 import com.wolfgames.app.ui.coinWolfFace
@@ -47,7 +49,7 @@ import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.random.Random
 
-// v1.8 새 게임 (글 없이 하는 게임): 🏗️ 탑 쌓기 · 🔴 따라 하기 (⚡ 순발력) · ✂️ 폭탄 선 자르기 (🍀 운빨) — 웹 games-v18.js 와 같음
+// v1.8 새 게임 (글 없이 하는 게임): 🏗️ 탑 쌓기 · 🔴 따라 하기 · 🍺 늑대컬링 (⚡ 순발력) · ✂️ 폭탄 선 자르기 (🍀 운빨) — 웹 games-v18.js 와 같음
 
 private fun ease18(u: Float) = 1f - (1f - u.coerceIn(0f, 1f)).pow(3)
 
@@ -362,5 +364,180 @@ private class WireGame(val n: Int, val vibe: Vibe) {
             globalAlpha = p; text(s.wcBoom, w / 2, h * 0.45f + r * 1.35f, 26f, "#FFD740"); text(s.shotWord, w / 2, h * 0.45f + r * 1.35f + 44, 26f, "#FF5A6E"); globalAlpha = 1f
         }
         if (u > 1.3f) pill18(w, h, s.playAgain)
+    }
+}
+
+// ===================== 🍺 늑대컬링 =====================
+/** 🍺 늑대 맥주잔 (앞모습) — 원점 = 잔 바닥 가운데, s = 잔 너비 정도. col = 두건 색, num = 두건 숫자, slosh = 거품 출렁임 */
+fun Ctx.wolfMug(x: Float, y: Float, s: Float, col: String, num: String = "", slosh: Float = 0f) {
+    save(); translate(x, y)
+    beginPath(); ellipse(0f, s * 0.02f, s * 0.55f, s * 0.1f, 0f, 0f, TAU); fillStyle = "rgba(0,0,0,.35)"; fill()
+    for ((cl, lw) in listOf("#5E6773" to 0.15f, "#8E98A5" to 0.08f)) {
+        beginPath(); moveTo(s * 0.38f, -s * 0.82f); bezierCurveTo(s * 0.82f, -s * 0.85f, s * 0.82f, -s * 0.22f, s * 0.38f, -s * 0.28f)
+        strokeStyle = cl; lineWidth = s * lw; lineCap = "round"; stroke()
+    }
+    beginPath(); arc(s * 0.4f, -s * 0.28f, s * 0.09f, 0f, TAU); fillStyle = "#F3F3F3"; fill()
+    for (k in listOf(-1f, 1f)) {
+        beginPath(); moveTo(k * s * 0.42f, -s * 0.9f); lineTo(k * s * 0.33f, -s * 1.42f); lineTo(k * s * 0.08f, -s * 1.02f); closePath(); fillStyle = "#6B7480"; fill()
+        beginPath(); moveTo(k * s * 0.34f, -s * 0.98f); lineTo(k * s * 0.3f, -s * 1.27f); lineTo(k * s * 0.15f, -s * 1.03f); closePath(); fillStyle = "#FF9EB5"; fill()
+    }
+    beginPath(); roundRect4(-s * 0.44f, -s * 1.0f, s * 0.88f, s, s * 0.1f, s * 0.1f, s * 0.2f, s * 0.2f)
+    linearStops(-s * 0.45f, 0f, s * 0.45f, 0f, listOf(0f to "#7C8591", 0.35f to "#B4BCC6", 1f to "#6B7480")); fill()
+    for (k in listOf(-1f, 1f)) { beginPath(); moveTo(k * s * 0.44f, -s * 0.5f); lineTo(k * s * 0.56f, -s * 0.38f); lineTo(k * s * 0.44f, -s * 0.28f); closePath(); fillStyle = "#9AA3AE"; fill() }
+    val fy = -s * 1.0f
+    fillStyle = "#FFFDF5"
+    listOf(-0.3f to 0.13f, -0.12f to 0.16f, 0.08f to 0.15f, 0.27f to 0.13f).forEachIndexed { i, (fx, r) -> beginPath(); arc(fx * s + slosh * s * 0.05f, fy - s * 0.03f + sin(i * 2 + slosh * 3) * s * 0.02f, r * s, 0f, TAU); fill() }
+    beginPath(); roundRect(-s * 0.44f, fy - s * 0.02f, s * 0.88f, s * 0.1f, s * 0.05f); fill()
+    beginPath(); ellipse(-s * 0.22f + slosh * s * 0.04f, fy + s * 0.13f, s * 0.05f, s * 0.09f, 0f, 0f, TAU); fill()
+    beginPath(); ellipse(0f, -s * 0.34f, s * 0.25f, s * 0.17f, 0f, 0f, TAU); fillStyle = "#E9ECEF"; fill()
+    for (k in listOf(-1f, 1f)) {
+        beginPath(); ellipse(k * s * 0.17f, -s * 0.62f, s * 0.085f, s * 0.1f, 0f, 0f, TAU); fillStyle = "#fff"; fill()
+        beginPath(); arc(k * s * 0.16f, -s * 0.6f, s * 0.05f, 0f, TAU); fillStyle = "#1B1B1F"; fill()
+        beginPath(); arc(k * s * 0.14f, -s * 0.63f, s * 0.018f, 0f, TAU); fillStyle = "#fff"; fill()
+        beginPath(); moveTo(k * s * 0.08f, -s * 0.76f); lineTo(k * s * 0.26f, -s * 0.8f); strokeStyle = "#4A525C"; lineWidth = s * 0.03f; stroke()
+    }
+    beginPath(); ellipse(0f, -s * 0.42f, s * 0.08f, s * 0.055f, 0f, 0f, TAU); fillStyle = "#1B1B1F"; fill()
+    beginPath(); moveTo(-s * 0.1f, -s * 0.3f); quadraticCurveTo(-s * 0.05f, -s * 0.24f, 0f, -s * 0.31f); quadraticCurveTo(s * 0.05f, -s * 0.24f, s * 0.1f, -s * 0.3f); strokeStyle = "#1B1B1F"; lineWidth = s * 0.025f; stroke()
+    beginPath(); ellipse(s * 0.03f, -s * 0.24f, s * 0.04f, s * 0.035f, 0f, 0f, TAU); fillStyle = "#FF7A95"; fill()
+    beginPath(); roundRect(-s * 0.44f, -s * 0.17f, s * 0.88f, s * 0.11f, s * 0.03f); fillStyle = col; fill()
+    beginPath(); moveTo(-s * 0.13f, -s * 0.12f); lineTo(s * 0.13f, -s * 0.12f); lineTo(0f, s * 0.08f); closePath(); fill()
+    if (num.isNotEmpty()) text(num, 0f, -s * 0.06f, s * 0.15f, "#fff")
+    restore()
+}
+
+val CU_COLS = listOf("#FF5A6E", "#4FC3F7", "#FFD54F", "#69F0AE", "#BA68C8", "#FF9800")
+
+@Composable
+fun CurlingScreen(onBack: () -> Unit) {
+    val s = LocalStrings.current; val vibe = LocalVibe.current; val ctx = LocalContext.current
+    val prefs = remember { ctx.getSharedPreferences("wolfgames", Context.MODE_PRIVATE) }
+    var n by remember { mutableIntStateOf(prefs.getInt("cu_n", 4).coerceIn(2, 6)) }
+    SetupThen18(s.cuTitle, onBack, { start -> SetupPanel(s.cuDesc, start) { Stepper(s.players, n, 2..6) { n = it; prefs.edit().putInt("cu_n", it).apply() } } }) {
+        val g = remember { CurlingGame(n, vibe) }
+        val density = LocalDensity.current.density
+        val t0 = remember { System.nanoTime() }
+        val now = { (System.nanoTime() - t0) / 1e9f }
+        var tick by remember { mutableLongStateOf(0L) }
+        LaunchedEffect(g) { while (true) withFrameNanos { tick = it } }
+        Canvas(Modifier.fillMaxSize().pointerInput(g) {
+            awaitPointerEventScope {
+                while (true) {
+                    val ev = awaitPointerEvent()
+                    for (ch in ev.changes) {
+                        val y = ch.position.y / density
+                        when { ch.changedToDown() -> g.down(y, now()); ch.changedToUp() -> g.up(now()); ch.pressed -> g.move(y) }
+                        ch.consume()
+                    }
+                }
+            }
+        }) {
+            tick.let { }
+            val w = size.width / density; val h = size.height / density
+            drawIntoCanvas { cc -> val c = Ctx(cc.nativeCanvas, density); g.draw(c, w, h, now(), s); c.finish() }
+        }
+    }
+}
+
+private class CurlingGame(val n: Int, val vibe: Vibe) {
+    val PMAX = 100f
+    var turn = 0; val res = arrayOfNulls<Int>(n); var phase = 0 // 0 겨냥 · 1 당기는 중 · 2 미끄러짐 · 3 떨어짐 · 4 다음 · 5 끝
+    var pull = 0f; var downY = 0f; var t0 = 0f; var y0 = 0f; var D = 0f; var dur = 1f; var fallY = 0f; var doneT = 0f
+    var X0 = 0f; var X1 = 0f; var EDGE = 0f; var START = 0f; var pxcm = 1f; var base = 60f
+    fun fresh() { turn = 0; res.fill(null); phase = 0; pull = 0f; fallY = 0f }
+    fun laneX(i: Int) = X0 + (X1 - X0) * (i + 0.5f) / n
+    fun size(y: Float) = base * (if (n > 4) 0.85f else 1f) * (0.7f + 0.3f * ((y - EDGE) / (START - EDGE)).coerceIn(0f, 1f))
+    fun cmOf(y: Float) = max(0, Math.round((y - EDGE) / pxcm))
+    fun down(y: Float, t: Float) {
+        if (phase == 5) { if (t - doneT > 1.2f) { fresh(); vibe.tap() }; return }
+        if (phase != 0) return
+        downY = y; phase = 1; pull = 0f
+    }
+    fun move(y: Float) {
+        if (phase != 1) return
+        val p = (y - downY).coerceIn(0f, PMAX)
+        if (floor(p / 20) != floor(pull / 20) && p > pull) vibe.tap()
+        pull = p
+    }
+    fun up(t: Float) {
+        if (phase != 1) return
+        if (pull < 8) { phase = 0; pull = 0f; return }
+        val k = pull / PMAX; val dmax = (START + 40 + PMAX - EDGE) * 1.25f
+        y0 = START + 40 + pull; D = k.pow(1.5f) * dmax; dur = 0.6f + 1.5f * kotlin.math.sqrt(D / dmax)
+        fallY = if (y0 - D < EDGE - 4) EDGE - 4 else 0f
+        t0 = t; phase = 2; vibe.tick(); Beep.tone(180f, 0.12f, 3)
+    }
+    fun draw(c: Ctx, w: Float, h: Float, t: Float, s: Strings) = with(c) {
+        X0 = w * 0.13f; X1 = w * 0.87f; EDGE = max(92f, h * 0.13f); START = h - 200; pxcm = (START - EDGE) / 100; base = min(74f, w * 0.19f)
+        fillStyle = "#12121A"; fillRect(0f, 0f, w, h)
+        fillStyle = "#1E1E28"; fillRect(0f, 40f, w, EDGE - 40)
+        for (i in 0 until 9) { fillStyle = "rgba(255,255,255,.03)"; fillRect(i * 52f, 40f, 26f, EDGE - 40) }
+        beginPath(); roundRect4(X0, EDGE, X1 - X0, h - EDGE + 20, 6f, 6f, 0f, 0f); fillStyle = "#8D5A34"; fill()
+        for (i in 1 until 5) { fillStyle = "rgba(0,0,0,.18)"; fillRect(X0 + (X1 - X0) * i / 5 - 1, EDGE, 2f, h) }
+        beginPath(); rect(X0, EDGE, X1 - X0, pxcm * 18); linearStops(0f, EDGE, 0f, EDGE + pxcm * 18, listOf(0f to "rgba(255,215,64,.55)", 1f to "rgba(255,215,64,0)")); fill()
+        fillStyle = "#C08A5B"; fillRect(X0, EDGE - 3, X1 - X0, 6f)
+        text("🔥", X0 + 14, EDGE + 15, 14f, "#fff"); text("🔥", X1 - 14, EDGE + 15, 14f, "#fff")
+        for (k in 0..90 step 10) { val y = EDGE + k * pxcm; fillStyle = "rgba(255,255,255,.35)"; fillRect(X1 + 3, y, 8f, 2f); text("$k", X1 + 22, y + 1, 10f, "rgba(255,255,255,.5)", false) }
+        lineDash = floatArrayOf(8f, 8f); beginPath(); moveTo(X0, START); lineTo(X1, START); strokeStyle = "rgba(255,255,255,.4)"; lineWidth = 2f; stroke(); lineDash = null
+        for (i in 0 until n) { val x = w / 2 + (i - (n - 1) / 2f) * 30; val on = i == turn && phase != 5; globalAlpha = if (on) 1f else 0.45f; beginPath(); arc(x, 20f, if (on) 12f else 9f, 0f, TAU); fillStyle = CU_COLS[i]; fill(); globalAlpha = 1f; text("${i + 1}", x, 21f, 11f, "#000") }
+        var best = -1
+        for (i in 0 until n) { val r = res[i] ?: continue; if (r >= 0 && (best < 0 || r < res[best]!!)) best = i }
+        for (i in 0 until n) {
+            val r = res[i] ?: continue; if (r < 0 || (i == turn && phase != 4 && phase != 5)) continue
+            val y = EDGE + r * pxcm; wolfMug(laneX(i), y, size(y), CU_COLS[i], "${i + 1}")
+            text((if (i == best) "🥇 " else "") + "${r}cm", laneX(i), y + 14, 12f, "#fff")
+        }
+        val i = turn; val x = if (i < n) laneX(i) else 0f
+        if (phase == 0 || phase == 1) {
+            val d = pull; val my = START + 40 + d; val k = d / PMAX
+            for (sx in listOf(-1, 1)) { beginPath(); arc(x + sx * 34, START + 4, 6f, 0f, TAU); fillStyle = "#5D4037"; fill() }
+            beginPath(); moveTo(x - 34, START + 4); lineTo(x - 18, my - 6); moveTo(x + 34, START + 4); lineTo(x + 18, my - 6); strokeStyle = "#FF7043"; lineWidth = 3.5f; lineCap = "round"; stroke()
+            wolfMug(x, my, size(START), CU_COLS[i], "${i + 1}", sin(t * 30) * 0.3f * k)
+            if (d > 4) {
+                lineDash = floatArrayOf(6f, 8f); beginPath(); moveTo(x, START - 60); lineTo(x, START - 150); strokeStyle = "rgba(255,255,255,.55)"; lineWidth = 3f; stroke(); lineDash = null
+                beginPath(); moveTo(x - 10, START - 140); lineTo(x, START - 156); lineTo(x + 10, START - 140); stroke()
+            }
+            if (phase == 0) { val b = sin(t * 4) * 8; text("👆", x + 6, my + 28 + b, 34f, "#fff"); text(s.cuHint, w / 2, h - 22, 15f, "#fff") }
+        } else if (phase == 2) {
+            val u = min(1f, (t - t0) / dur); val y = y0 - D * (1 - (1 - u) * (1 - u))
+            if (fallY > 0 && y <= fallY) { phase = 3; t0 = t; vibe.strong(); Beep.tone(220f, 0.25f, 3); Beep.tone(90f, 0.5f, 2, 0.12f) }
+            else {
+                if (u < 1) for (k in 1 until 4) { globalAlpha = 0.12f; wolfMug(x, y + k * 14 * (1 - u), size(y), CU_COLS[i]) }
+                globalAlpha = 1f
+                wolfMug(x, y, size(y), CU_COLS[i], "${i + 1}", sin(t * 22) * (1 - u))
+                if (u >= 1) { res[i] = cmOf(y); phase = 4; t0 = t; vibe.tap(); Beep.tone(523f, 0.15f) }
+            }
+        }
+        if (phase == 3) {
+            val f = t - t0; val ye = EDGE - 12; val sz = size(EDGE) * max(0.15f, 1 - f * 0.9f); val rot = min(1.9f, f * 4)
+            if (f > 0.15f) { val p = min(1f, (f - 0.15f) / 0.5f); beginPath(); ellipse(x - 8, EDGE - 34, 50 * p, 13 * p, 0f, 0f, TAU); fillStyle = "rgba(255,179,0,.75)"; fill() }
+            if (f < 1.1f) { save(); globalAlpha = max(0f, 1 - f / 1.1f); translate(x, ye + f * 25); rotate(-rot); wolfMug(0f, 0f, sz, CU_COLS[i], "${i + 1}", 1f); restore() }
+            if (f < 1.2f) for (k in 0 until 7) { val a = -PI.toFloat() / 2 - 1.1f + k * 0.36f; val dd = f * 80; globalAlpha = max(0f, 1 - f); text("💦", x + cos(a) * dd, EDGE - 26 + sin(a) * dd, 15f, "#fff") }
+            globalAlpha = 1f
+            if (f > 0.3f) text(s.cuFall, w / 2, EDGE + 60, 24f, "#4FC3F7")
+            if (f > 1.3f) { res[i] = -1; phase = 4; t0 = t }
+        }
+        if (phase == 4 && t - t0 > 0.9f) {
+            turn++; pull = 0f
+            if (turn >= n) { phase = 5; doneT = t; vibe.tick(); if (res.any { (it ?: 0) < 0 }) Beep.tone(330f, 0.4f, 3) } else phase = 0
+        }
+        if (phase == 5) {
+            val v = min(1f, (t - doneT) / 0.4f); globalAlpha = v
+            val r = IntArray(n) { res[it] ?: 0 }
+            val fallen = (0 until n).filter { r[it] < 0 }
+            val losers = if (fallen.isNotEmpty()) fallen else listOf((0 until n).maxByOrNull { r[it] }!!)
+            val order = (0 until n).sortedWith(compareBy({ if (r[it] < 0) 1 else 0 }, { r[it] }))
+            val py = h * 0.42f
+            beginPath(); roundRect(18f, py, w - 36, 200f, 22f); fillStyle = "rgba(10,10,16,.9)"; fill()
+            text("🏆", w / 2, py + 30, 30f, "#fff")
+            val cw = min(70f, (w - 60) / n)
+            order.forEachIndexed { j, k ->
+                val rx = w / 2 + (j - (n - 1) / 2f) * cw
+                beginPath(); arc(rx, py + 80, 15f, 0f, TAU); fillStyle = CU_COLS[k]; fill(); text("${k + 1}", rx, py + 81, 14f, "#000")
+                text(if (r[k] < 0) "💦" else (if (j == 0) "🥇" else "") + "${r[k]}", rx, py + 112, 13f, "#fff")
+            }
+            text(losers.joinToString(" · ") { "${it + 1}" } + " → " + s.shotWord, w / 2, py + 160, 22f, "#FF5A6E")
+            globalAlpha = 1f
+            if (t - doneT > 1.2f) pill18(w, h, s.playAgain)
+        }
     }
 }
