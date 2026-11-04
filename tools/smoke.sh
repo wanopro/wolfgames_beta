@@ -18,7 +18,7 @@ adb logcat -c
 prefs() {
   adb shell am force-stop $PKG
   L2=""; [ -n "$1" ] && L2="<string name=\\\"lang2\\\">$1</string>"
-  adb shell "run-as $PKG sh -c 'mkdir -p shared_prefs; echo \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?><map><string name=\\\"lang\\\">ko</string>$L2<string name=\\\"seen_version\\\">1.6-beta</string><string name=\\\"hotels_json\\\">[{&quot;name&quot;:&quot;Hotel Nikko Saigon&quot;,&quot;addr&quot;:&quot;235 Nguyễn Văn Cừ, Phường 4, Quận 5, Hồ Chí Minh&quot;,&quot;phone&quot;:&quot;+84 28 3925 7777&quot;,&quot;note&quot;:&quot;편의점 옆&quot;},{&quot;name&quot;:&quot;두번째 숙소&quot;,&quot;addr&quot;:&quot;Bangkok Sukhumvit 11&quot;,&quot;phone&quot;:&quot;&quot;,&quot;note&quot;:&quot;&quot;}]</string></map>\" > shared_prefs/wolfgames.xml'"
+  adb shell "run-as $PKG sh -c 'mkdir -p shared_prefs; echo \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?><map><string name=\\\"lang\\\">ko</string>$L2<string name=\\\"seen_version\\\">1.6-beta</string><string name=\\\"settle_json\\\">{&quot;people&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],&quot;ex&quot;:[{&quot;amt&quot;:35400,&quot;by&quot;:0,&quot;for&quot;:[0,1,2],&quot;memo&quot;:&quot;dinner&quot;},{&quot;amt&quot;:12000,&quot;by&quot;:1,&quot;for&quot;:[0,1,2],&quot;memo&quot;:&quot;taxi&quot;}]}</string><string name=\\\"hotels_json\\\">[{&quot;name&quot;:&quot;Hotel Nikko Saigon&quot;,&quot;addr&quot;:&quot;235 Nguyễn Văn Cừ, Phường 4, Quận 5, Hồ Chí Minh&quot;,&quot;phone&quot;:&quot;+84 28 3925 7777&quot;,&quot;note&quot;:&quot;편의점 옆&quot;},{&quot;name&quot;:&quot;두번째 숙소&quot;,&quot;addr&quot;:&quot;Bangkok Sukhumvit 11&quot;,&quot;phone&quot;:&quot;&quot;,&quot;note&quot;:&quot;&quot;}]</string></map>\" > shared_prefs/wolfgames.xml'"
 }
 # 오목 칸 (i,j) → 천분율 좌표 (pixel_5 기준 대략)
 gx() { echo $(( 500 + ($1 - 7) * 63 )); }
@@ -65,11 +65,11 @@ v18() { local P=$1
   # 계산기 → 사이즈 · 정산 (중간 정산 · 내보내기)
   open Calc; shot ${P}_calc
   open Sizes; tap 500 420; sleep 0.5; shot ${P}_sz
-  open Settle; sleep 1
-  tap 500 362; adb shell input text 35400; adb shell input keyevent 4; sleep 0.6; tapText "쓴 돈 추가"; sleep 0.6
-  tap 500 362; adb shell input text 12000; adb shell input keyevent 4; sleep 0.6; tap 260 548; sleep 0.3; tapText "쓴 돈 추가"; sleep 0.8; shot ${P}_st0
-  tapText "중간 정산"; sleep 1; shot ${P}_mid; tapText "받았어요"; sleep 1; tapText "내보내기"; sleep 1; shot ${P}_exp; tapText "취소"; sleep 0.5
-  adb shell input swipe $(px 500) $(py 800) $(px 500) $(py 200) 300; sleep 0.5; shot ${P}_st
+  open Settle; sleep 1.5; shot ${P}_st0
+  adb shell input swipe $(px 500) $(py 750) $(px 500) $(py 350) 300; sleep 0.8; shot ${P}_st1
+  tapText "중간 정산"; sleep 1; shot ${P}_mid; tapText "받았어요"; sleep 1; shot ${P}_st2
+  tapText "내보내기"; sleep 1; shot ${P}_exp; tapExact "취소"; sleep 0.6
+  adb shell input swipe $(px 500) $(py 800) $(px 500) $(py 200) 300; sleep 0.6; tapText "전부 지우기"; sleep 1; shot ${P}_rs
   open WireCut; shot ${P}_wc0
   open WireCut true; sleep 1; tap 193 550; sleep 0.5; shot ${P}_wc1
   for x in 316 439 561 684 807; do tap $x 550; sleep 0.4; done; sleep 1.6; shot ${P}_wc2
