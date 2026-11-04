@@ -127,6 +127,62 @@ export function smShape(c, k, x, y, r) {
   else { for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.45 : r * 1.05; i ? c.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr) : c.moveTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } c.closePath(); }
   c.fill();
 }
+// 🔴 따라 하기: 액세서리 늑대 4마리 — 0 😎 선글라스(초록) · 1 🎀 리본(빨강) · 2 🧢 모자(파랑) · 3 👑 왕관(노랑)
+const SW_FUR = '#9AA3AF', SW_FUR_D = '#7C8593', SW_CREAM = '#F1EEE8', SW_INK = '#2B2B33', SW_PINK = '#F6AFC0';
+// 늑대 얼굴 (원점 = 얼굴 가운데, r = 크기). open: 입 벌림 0~1 (아우~)
+export function smWolfHead(c, r, open = 0) {
+  for (const s of [-1, 1]) {
+    c.beginPath(); c.moveTo(s * r * 0.2, -r * 0.42); c.lineTo(s * r * 0.62, -r * 0.92); c.lineTo(s * r * 0.72, -r * 0.22); c.closePath(); c.fillStyle = SW_FUR_D; c.fill();
+    c.beginPath(); c.moveTo(s * r * 0.34, -r * 0.42); c.lineTo(s * r * 0.58, -r * 0.74); c.lineTo(s * r * 0.62, -r * 0.32); c.closePath(); c.fillStyle = SW_PINK; c.fill();
+  }
+  c.beginPath(); c.ellipse(0, r * 0.02, r * 0.66, r * 0.58, 0, 0, 7); c.fillStyle = SW_FUR; c.fill();
+  for (const s of [-1, 1]) { c.beginPath(); c.moveTo(s * r * 0.62, r * 0.05); c.lineTo(s * r * 0.8, r * 0.18); c.lineTo(s * r * 0.6, r * 0.28); c.closePath(); c.fillStyle = SW_FUR; c.fill(); }
+  c.beginPath(); c.ellipse(0, r * 0.24, r * 0.34, r * 0.26, 0, 0, 7); c.fillStyle = SW_CREAM; c.fill();
+  for (const s of [-1, 1]) {
+    c.beginPath(); c.ellipse(s * r * 0.26, -r * 0.08, r * 0.11, r * 0.13 * (1 - open * 0.5), 0, 0, 7); c.fillStyle = SW_INK; c.fill();
+    c.beginPath(); c.arc(s * r * 0.23, -r * 0.13, r * 0.045, 0, 7); c.fillStyle = '#fff'; c.fill();
+    c.beginPath(); c.ellipse(s * r * 0.44, r * 0.16, r * 0.1, r * 0.06, 0, 0, 7); c.fillStyle = 'rgba(255,130,150,.55)'; c.fill();
+  }
+  c.beginPath(); c.ellipse(0, r * 0.13, r * 0.09, r * 0.065, 0, 0, 7); c.fillStyle = SW_INK; c.fill();
+  if (open > 0.05) { // 아우~ 입
+    c.beginPath(); c.ellipse(0, r * 0.33, r * 0.11, r * 0.13 * open + r * 0.03, 0, 0, 7); c.fillStyle = '#5A1E2B'; c.fill();
+    c.beginPath(); c.ellipse(0, r * 0.38 + r * 0.06 * open, r * 0.06, r * 0.04, 0, 0, 7); c.fillStyle = '#F48FB1'; c.fill();
+  } else {
+    c.beginPath(); c.moveTo(-r * 0.12, r * 0.28); c.quadraticCurveTo(-r * 0.06, r * 0.36, 0, r * 0.28); c.quadraticCurveTo(r * 0.06, r * 0.36, r * 0.12, r * 0.28); c.strokeStyle = SW_INK; c.lineWidth = r * 0.04; c.lineCap = 'round'; c.stroke();
+    c.beginPath(); c.ellipse(0, r * 0.36, r * 0.05, r * 0.06, 0, 0, Math.PI); c.fillStyle = '#F48FB1'; c.fill();
+  }
+}
+// 액세서리 (얼굴 위에)
+export function smAccessory(c, k, r, t = 0) {
+  if (k === 0) { // 😎 선글라스
+    c.fillStyle = '#111';
+    for (const s of [-1, 1]) { c.beginPath(); c.roundRect(s * r * 0.26 - r * 0.2, -r * 0.2, r * 0.4, r * 0.26, [r * 0.06, r * 0.06, r * 0.14, r * 0.14]); c.fill(); }
+    c.fillRect(-r * 0.08, -r * 0.16, r * 0.16, r * 0.05);
+    c.beginPath(); c.moveTo(-r * 0.46, -r * 0.14); c.lineTo(-r * 0.64, -r * 0.2); c.moveTo(r * 0.46, -r * 0.14); c.lineTo(r * 0.64, -r * 0.2); c.strokeStyle = '#111'; c.lineWidth = r * 0.05; c.stroke();
+    for (const s of [-1, 1]) { c.beginPath(); c.moveTo(s * r * 0.26 - r * 0.12, -r * 0.14); c.lineTo(s * r * 0.26 - r * 0.02, -r * 0.14); c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineWidth = r * 0.04; c.stroke(); }
+  } else if (k === 1) { // 🎀 리본 (머리 왼쪽 위)
+    c.save(); c.translate(-r * 0.38, -r * 0.62); c.rotate(-0.35);
+    c.fillStyle = '#FF80AB';
+    for (const s of [-1, 1]) { c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(s * r * 0.32, -r * 0.28, s * r * 0.36, 0); c.quadraticCurveTo(s * r * 0.32, r * 0.26, 0, 0); c.fill(); }
+    for (const s of [-1, 1]) { c.beginPath(); c.moveTo(0, 0); c.lineTo(s * r * 0.14, r * 0.3); c.lineTo(s * r * 0.04, r * 0.26); c.closePath(); c.fill(); }
+    c.beginPath(); c.arc(0, 0, r * 0.08, 0, 7); c.fillStyle = '#D81B60'; c.fill();
+    c.beginPath(); c.ellipse(-r * 0.18, -r * 0.08, r * 0.06, r * 0.03, -0.5, 0, 7); c.fillStyle = 'rgba(255,255,255,.45)'; c.fill();
+    c.restore();
+  } else if (k === 2) { // 🧢 야구 모자 (챙은 오른쪽)
+    c.beginPath(); c.ellipse(0, -r * 0.36, r * 0.6, r * 0.42, 0, Math.PI, 0); c.closePath(); c.fillStyle = '#0D3B8C'; c.fill();
+    c.beginPath(); c.ellipse(r * 0.42, -r * 0.36, r * 0.42, r * 0.1, -0.05, 0, 7); c.fillStyle = '#082A66'; c.fill();
+    c.beginPath(); c.arc(0, -r * 0.78, r * 0.06, 0, 7); c.fillStyle = '#fff'; c.fill();
+    c.beginPath(); c.moveTo(0, -r * 0.76); c.lineTo(0, -r * 0.38); c.strokeStyle = 'rgba(255,255,255,.25)'; c.lineWidth = r * 0.03; c.stroke();
+    c.beginPath(); c.ellipse(-r * 0.26, -r * 0.58, r * 0.12, r * 0.06, -0.6, 0, 7); c.fillStyle = 'rgba(255,255,255,.3)'; c.fill();
+  } else { // 👑 왕관
+    c.beginPath(); c.moveTo(-r * 0.4, -r * 0.48); c.lineTo(-r * 0.46, -r * 0.92); c.lineTo(-r * 0.22, -r * 0.7); c.lineTo(0, -r * 1.02); c.lineTo(r * 0.22, -r * 0.7); c.lineTo(r * 0.46, -r * 0.92); c.lineTo(r * 0.4, -r * 0.48); c.closePath();
+    c.fillStyle = '#FFE082'; c.fill(); c.strokeStyle = '#A86E0C'; c.lineWidth = r * 0.03; c.stroke();
+    c.fillStyle = '#C8901A'; c.fillRect(-r * 0.4, -r * 0.56, r * 0.8, r * 0.08);
+    [[-0.46, -0.92, '#E53950'], [0, -1.02, '#4FC3F7'], [0.46, -0.92, '#69F0AE']].forEach(([x, y, col]) => { c.beginPath(); c.arc(x * r, y * r, r * 0.06, 0, 7); c.fillStyle = col; c.fill(); });
+    const tw = 0.5 + 0.5 * Math.sin(t * 6); c.globalAlpha *= tw; c.fillStyle = '#fff'; c.beginPath(); c.arc(r * 0.18, -r * 0.84, r * 0.035, 0, 7); c.fill(); c.globalAlpha /= Math.max(0.01, tw);
+  }
+}
+
 export function simon(root, back) {
   const s = S();
   let cv = null;
@@ -141,17 +197,17 @@ export function simon(root, back) {
     const layout = (W, H) => { const S2 = Math.min(W - 32, H - 210), x0 = (W - S2) / 2, y0 = Math.max(100, (H - S2) / 2 + 10), gap = 12, p = (S2 - gap) / 2; return { x0, y0, p, gap }; };
     cv = stage(root, s.smTitle, setup, (c, W, H, t) => {
       const L = layout(W, H);
-      let lit = -1;
+      let lit = -1, lu = 0;
       if (g.phase === 'show') {
         const st = step(), k = Math.floor((t - g.ps) / st);
         if (t >= g.ps) {
           if (k >= g.seq.length) { g.phase = 'input'; g.inp = 0; g.pt = t; }
-          else if (t - g.ps - k * st < st * 0.68) { lit = g.seq[k]; if (g.shown !== k) { g.shown = k; tone(SM_HZ[lit], st * 0.68); } }
+          else if (t - g.ps - k * st < st * 0.68) { lit = g.seq[k]; lu = (t - g.ps - k * st) / (st * 0.68); if (g.shown !== k) { g.shown = k; tone(SM_HZ[lit], st * 0.68); } }
         }
       } else if (g.phase === 'ok') {
         if (t - g.pt > 1.1) { g.seq.push(rnd()); g.phase = 'show'; g.ps = t + 0.3; g.shown = -1; }
       }
-      if (g.phase !== 'show' && t - g.tapT < 0.22) lit = g.tap;
+      if (g.phase !== 'show' && t - g.tapT < 0.3) { lit = g.tap; lu = (t - g.tapT) / 0.3; }
       const wrongK = g.phase === 'wrong' ? g.seq[g.inp] : -1;
       for (let k = 0; k < 4; k++) {
         const x = L.x0 + (k % 2) * (L.p + L.gap), y = L.y0 + Math.floor(k / 2) * (L.p + L.gap);
@@ -159,7 +215,12 @@ export function simon(root, back) {
         c.save(); c.translate(x + L.p / 2, y + L.p / 2); const sc = on ? 1.04 : 1; c.scale(sc, sc);
         c.beginPath(); c.roundRect(-L.p / 2, -L.p / 2, L.p, L.p, L.p * 0.16); c.fillStyle = on ? SM_COL[k][0] : SM_COL[k][1]; c.fill();
         if (on) { c.beginPath(); c.roundRect(-L.p / 2, -L.p / 2, L.p, L.p, L.p * 0.16); c.fillStyle = 'rgba(255,255,255,.22)'; c.fill(); }
-        c.fillStyle = on ? 'rgba(255,255,255,.95)' : 'rgba(255,255,255,.35)'; smShape(c, k, 0, 0, L.p * 0.17);
+        c.fillStyle = on ? 'rgba(255,255,255,.95)' : 'rgba(255,255,255,.35)'; smShape(c, k, -L.p / 2 + L.p * 0.11, -L.p / 2 + L.p * 0.11, L.p * 0.055);
+        // 액세서리 늑대: 켜지면 폴짝 + 아우~
+        const bump = on && k === lit ? Math.sin(Math.min(1, lu) * Math.PI) : (on ? 0.6 : 0);
+        c.save(); c.globalAlpha = on ? 1 : 0.55; c.translate(0, L.p * 0.06 - bump * L.p * 0.08);
+        smWolfHead(c, L.p * 0.36, bump); smAccessory(c, k, L.p * 0.36, t); c.restore();
+        if (on) { txt(c, '♪', L.p * 0.32, -L.p * 0.3 - lu * 14, 22, 'rgba(255,255,255,.9)'); for (let q = 0; q < 5; q++) { const a = q * 1.26 + t * 2; c.beginPath(); c.arc(Math.cos(a) * L.p * 0.42, Math.sin(a) * L.p * 0.42, 3, 0, 7); c.fillStyle = 'rgba(255,255,255,.7)'; c.fill(); } }
         c.restore();
       }
       txt(c, s.smLevel(g.seq.length), W / 2, 38, 30, '#fff');

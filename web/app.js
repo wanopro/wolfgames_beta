@@ -7,7 +7,7 @@ import { fingerPick } from './games-finger.js';
 import { wolfTeeth, ladder, roulette } from './games-pick.js';
 import { race, pirate, arrow } from './games-fun.js';
 import { four } from './games-four.js';
-import { calculator, exchange } from './calc.js';
+import { calculator, exchange, sizesScreen } from './calc.js';
 import { CHANGELOG } from './changelog.js';
 import { tugWar, slapDuel, beerPour, coinToss, kingsCup } from './games-v15.js';
 import { qrScreen, qrEdit } from './qr.js';
@@ -56,6 +56,7 @@ const SCREENS = {
   four,
   calc: (root, b) => calculator(root, b, go),
   fx: exchange,
+  sizes: sizesScreen,
   lang: langScreen,
   log: logScreen,
   tug: tugWar,

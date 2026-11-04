@@ -79,6 +79,7 @@ import com.wolfgames.app.games.TowerScreen
 import com.wolfgames.app.games.SimonScreen
 import com.wolfgames.app.games.WireCutScreen
 import com.wolfgames.app.games.CurlingScreen
+import com.wolfgames.app.games.SizeScreen
 import com.wolfgames.app.games.PhraseScreen
 import com.wolfgames.app.games.SettleScreen
 import com.wolfgames.app.i18n.dualStrings
@@ -98,6 +99,7 @@ import com.wolfgames.app.i18n.Lang
 import com.wolfgames.app.i18n.LocalStrings
 import com.wolfgames.app.i18n.stringsFor
 import com.wolfgames.app.ui.GameScaffold
+import com.wolfgames.app.ui.BigButton
 import com.wolfgames.app.ui.LocalVibe
 import com.wolfgames.app.ui.VTextButton
 import com.wolfgames.app.ui.Vibe
@@ -146,7 +148,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Curling, Phrase, Settle }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Curling, Sizes, CalcSettle, Phrase, Settle }
 
 @Composable
 fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String, String?) -> Unit) {
@@ -163,7 +165,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.Croc, Screen.Race, Screen.Pirate, Screen.Arrow -> Screen.WolfMenu
             Screen.Ladder, Screen.Roulette, Screen.Bomb -> Screen.LuckMenu
             Screen.Four -> Screen.BattleMenu
-            Screen.Fx -> Screen.Calc
+            Screen.Fx, Screen.Sizes, Screen.CalcSettle -> Screen.Calc
             else -> Screen.Home
         }
     }
@@ -221,7 +223,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.Pirate -> PirateGame(onBack = back)
             Screen.Arrow -> ArrowGame(onBack = back)
             Screen.Four -> FourGame(onBack = back)
-            Screen.Calc -> CalculatorScreen(onBack = back, onExchange = { screen = Screen.Fx })
+            Screen.Calc -> CalculatorScreen(onBack = back, onExchange = { screen = Screen.Fx }, onSettle = { screen = Screen.CalcSettle }, onSizes = { screen = Screen.Sizes })
             Screen.Fx -> ExchangeScreen(onBack = back, langCode = currentLang.code)
             Screen.Language -> LanguageScreen(langPref, lang2?.code, onBack = back, onSelect = onLangChange)
             Screen.Changelog -> ChangelogScreen(currentLang.code, onBack = back)
@@ -241,9 +243,12 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.WireCut -> WireCutScreen(onBack = back)
             Screen.Curling -> CurlingScreen(onBack = back)
             Screen.Phrase -> PhraseScreen(onBack = back, mine = currentLang, second = lang2)
-            Screen.Settle -> SettleScreen(onBack = back)
+            Screen.Settle, Screen.CalcSettle -> SettleScreen(onBack = back)
+            Screen.Sizes -> SizeScreen(onBack = back)
             Screen.Hotel -> HotelScreen(onBack = back, langCode = currentLang.code, secondCode = lang2?.code)
         }
+        // 🔄 앱 켤 때 새 버전 확인 (홈 화면에서만 물어봄)
+        if (screen == Screen.Home) UpdatePrompt()
     }
 }
 
@@ -476,11 +481,16 @@ private fun ChangeRow(item: ChangeItem, langCode: String) {
 @Composable
 fun ChangelogScreen(langCode: String, onBack: () -> Unit) {
     val s = LocalStrings.current
+    var checkN by remember { mutableStateOf(0) }
+    var latest by remember { mutableStateOf(false) }
+    Box(Modifier.fillMaxSize()) {
     GameScaffold("📜 ${s.logTitle}", onBack) {
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
+            // 🔄 지금 새 버전 있는지 확인
+            BigButton(if (latest) s.upLatest else s.upCheck, Modifier.fillMaxWidth(), color = WG.Surface2, contentColor = WG.Accent) { latest = false; checkN++ }
             CHANGELOG.forEachIndexed { i, rel ->
                 Column(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(18.dp)).background(WG.Surface).padding(horizontal = 18.dp, vertical = 16.dp),
@@ -505,6 +515,8 @@ fun ChangelogScreen(langCode: String, onBack: () -> Unit) {
                 }
             }
         }
+    }
+    UpdatePrompt(manual = checkN, onLatest = { latest = true })
     }
 }
 

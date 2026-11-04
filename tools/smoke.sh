@@ -62,6 +62,12 @@ v18() { local P=$1
   adb shell input swipe $(px 407) $(py 812) $(px 407) $(py 900) 600; sleep 1.2; shot ${P}_cu3; sleep 2.5
   adb shell input swipe $(px 592) $(py 812) $(px 592) $(py 860) 600; sleep 3.5
   adb shell input swipe $(px 777) $(py 812) $(px 777) $(py 840) 600; sleep 4; shot ${P}_cu4
+  # 계산기 → 사이즈 · 정산 (중간 정산 · 내보내기)
+  open Calc; shot ${P}_calc
+  open Sizes; tap 500 420; sleep 0.5; shot ${P}_sz
+  open Settle; sleep 1; tapText "금액"; adb shell input text 35400; tapText "쓴 돈 추가"; sleep 0.5; tapText "금액"; adb shell input text 12000; tapExact "P2"; tapText "쓴 돈 추가"; sleep 0.8
+  tapText "중간 정산"; sleep 1; shot ${P}_mid; tapText "받았어요"; sleep 1; tapText "내보내기"; sleep 1; shot ${P}_exp; tapText "취소"; sleep 0.5
+  adb shell input swipe $(px 500) $(py 800) $(px 500) $(py 200) 300; sleep 0.5; shot ${P}_st
   open WireCut; shot ${P}_wc0
   open WireCut true; sleep 1; tap 193 550; sleep 0.5; shot ${P}_wc1
   for x in 316 439 561 684 807; do tap $x 550; sleep 0.4; done; sleep 1.6; shot ${P}_wc2

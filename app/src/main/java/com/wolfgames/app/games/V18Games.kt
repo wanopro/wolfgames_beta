@@ -213,6 +213,64 @@ fun Ctx.smShape(k: Int, x: Float, y: Float, r: Float) {
     fill()
 }
 
+// 🔴 따라 하기: 액세서리 늑대 — 0 😎 선글라스 · 1 🎀 리본 · 2 🧢 모자 · 3 👑 왕관 (웹 smWolfHead · smAccessory 와 같음)
+fun Ctx.smWolfHead(r: Float, open: Float = 0f) {
+    for (s in listOf(-1f, 1f)) {
+        beginPath(); moveTo(s * r * 0.2f, -r * 0.42f); lineTo(s * r * 0.62f, -r * 0.92f); lineTo(s * r * 0.72f, -r * 0.22f); closePath(); fillStyle = "#7C8593"; fill()
+        beginPath(); moveTo(s * r * 0.34f, -r * 0.42f); lineTo(s * r * 0.58f, -r * 0.74f); lineTo(s * r * 0.62f, -r * 0.32f); closePath(); fillStyle = "#F6AFC0"; fill()
+    }
+    beginPath(); ellipse(0f, r * 0.02f, r * 0.66f, r * 0.58f, 0f, 0f, TAU); fillStyle = "#9AA3AF"; fill()
+    for (s in listOf(-1f, 1f)) { beginPath(); moveTo(s * r * 0.62f, r * 0.05f); lineTo(s * r * 0.8f, r * 0.18f); lineTo(s * r * 0.6f, r * 0.28f); closePath(); fillStyle = "#9AA3AF"; fill() }
+    beginPath(); ellipse(0f, r * 0.24f, r * 0.34f, r * 0.26f, 0f, 0f, TAU); fillStyle = "#F1EEE8"; fill()
+    for (s in listOf(-1f, 1f)) {
+        beginPath(); ellipse(s * r * 0.26f, -r * 0.08f, r * 0.11f, r * 0.13f * (1 - open * 0.5f), 0f, 0f, TAU); fillStyle = "#2B2B33"; fill()
+        beginPath(); arc(s * r * 0.23f, -r * 0.13f, r * 0.045f, 0f, TAU); fillStyle = "#fff"; fill()
+        beginPath(); ellipse(s * r * 0.44f, r * 0.16f, r * 0.1f, r * 0.06f, 0f, 0f, TAU); fillStyle = "rgba(255,130,150,.55)"; fill()
+    }
+    beginPath(); ellipse(0f, r * 0.13f, r * 0.09f, r * 0.065f, 0f, 0f, TAU); fillStyle = "#2B2B33"; fill()
+    if (open > 0.05f) {
+        beginPath(); ellipse(0f, r * 0.33f, r * 0.11f, r * 0.13f * open + r * 0.03f, 0f, 0f, TAU); fillStyle = "#5A1E2B"; fill()
+        beginPath(); ellipse(0f, r * 0.38f + r * 0.06f * open, r * 0.06f, r * 0.04f, 0f, 0f, TAU); fillStyle = "#F48FB1"; fill()
+    } else {
+        beginPath(); moveTo(-r * 0.12f, r * 0.28f); quadraticCurveTo(-r * 0.06f, r * 0.36f, 0f, r * 0.28f); quadraticCurveTo(r * 0.06f, r * 0.36f, r * 0.12f, r * 0.28f); strokeStyle = "#2B2B33"; lineWidth = r * 0.04f; lineCap = "round"; stroke()
+        beginPath(); ellipse(0f, r * 0.36f, r * 0.05f, r * 0.06f, 0f, 0f, PI.toFloat()); fillStyle = "#F48FB1"; fill()
+    }
+}
+fun Ctx.smAccessory(k: Int, r: Float, t: Float) {
+    when (k) {
+        0 -> {
+            fillStyle = "#111"
+            for (s in listOf(-1f, 1f)) { beginPath(); roundRect4(s * r * 0.26f - r * 0.2f, -r * 0.2f, r * 0.4f, r * 0.26f, r * 0.06f, r * 0.06f, r * 0.14f, r * 0.14f); fill() }
+            fillRect(-r * 0.08f, -r * 0.16f, r * 0.16f, r * 0.05f)
+            beginPath(); moveTo(-r * 0.46f, -r * 0.14f); lineTo(-r * 0.64f, -r * 0.2f); moveTo(r * 0.46f, -r * 0.14f); lineTo(r * 0.64f, -r * 0.2f); strokeStyle = "#111"; lineWidth = r * 0.05f; stroke()
+            for (s in listOf(-1f, 1f)) { beginPath(); moveTo(s * r * 0.26f - r * 0.12f, -r * 0.14f); lineTo(s * r * 0.26f - r * 0.02f, -r * 0.14f); strokeStyle = "rgba(255,255,255,.7)"; lineWidth = r * 0.04f; stroke() }
+        }
+        1 -> {
+            save(); translate(-r * 0.38f, -r * 0.62f); rotate(-0.35f)
+            fillStyle = "#FF80AB"
+            for (s in listOf(-1f, 1f)) { beginPath(); moveTo(0f, 0f); quadraticCurveTo(s * r * 0.32f, -r * 0.28f, s * r * 0.36f, 0f); quadraticCurveTo(s * r * 0.32f, r * 0.26f, 0f, 0f); fill() }
+            for (s in listOf(-1f, 1f)) { beginPath(); moveTo(0f, 0f); lineTo(s * r * 0.14f, r * 0.3f); lineTo(s * r * 0.04f, r * 0.26f); closePath(); fill() }
+            beginPath(); arc(0f, 0f, r * 0.08f, 0f, TAU); fillStyle = "#D81B60"; fill()
+            beginPath(); ellipse(-r * 0.18f, -r * 0.08f, r * 0.06f, r * 0.03f, -0.5f, 0f, TAU); fillStyle = "rgba(255,255,255,.45)"; fill()
+            restore()
+        }
+        2 -> {
+            beginPath(); ellipse(0f, -r * 0.36f, r * 0.6f, r * 0.42f, 0f, PI.toFloat(), 2 * PI.toFloat()); closePath(); fillStyle = "#0D3B8C"; fill()
+            beginPath(); ellipse(r * 0.42f, -r * 0.36f, r * 0.42f, r * 0.1f, -0.05f, 0f, TAU); fillStyle = "#082A66"; fill()
+            beginPath(); arc(0f, -r * 0.78f, r * 0.06f, 0f, TAU); fillStyle = "#fff"; fill()
+            beginPath(); moveTo(0f, -r * 0.76f); lineTo(0f, -r * 0.38f); strokeStyle = "rgba(255,255,255,.25)"; lineWidth = r * 0.03f; stroke()
+            beginPath(); ellipse(-r * 0.26f, -r * 0.58f, r * 0.12f, r * 0.06f, -0.6f, 0f, TAU); fillStyle = "rgba(255,255,255,.3)"; fill()
+        }
+        else -> {
+            beginPath(); moveTo(-r * 0.4f, -r * 0.48f); lineTo(-r * 0.46f, -r * 0.92f); lineTo(-r * 0.22f, -r * 0.7f); lineTo(0f, -r * 1.02f); lineTo(r * 0.22f, -r * 0.7f); lineTo(r * 0.46f, -r * 0.92f); lineTo(r * 0.4f, -r * 0.48f); closePath()
+            fillStyle = "#FFE082"; fill(); strokeStyle = "#A86E0C"; lineWidth = r * 0.03f; stroke()
+            fillStyle = "#C8901A"; fillRect(-r * 0.4f, -r * 0.56f, r * 0.8f, r * 0.08f)
+            for ((pos, col) in listOf((-0.46f to -0.92f) to "#E53950", (0f to -1.02f) to "#4FC3F7", (0.46f to -0.92f) to "#69F0AE")) { beginPath(); arc(pos.first * r, pos.second * r, r * 0.06f, 0f, TAU); fillStyle = col; fill() }
+            val a0 = globalAlpha; globalAlpha = a0 * (0.5f + 0.5f * sin(t * 6)); fillStyle = "#fff"; beginPath(); arc(r * 0.18f, -r * 0.84f, r * 0.035f, 0f, TAU); fill(); globalAlpha = a0
+        }
+    }
+}
+
 @Composable
 fun SimonScreen(onBack: () -> Unit) {
     val s = LocalStrings.current; val vibe = LocalVibe.current
@@ -245,15 +303,15 @@ private class SimonGame(val vibe: Vibe) {
     fun draw(c: Ctx, w: Float, h: Float, t: Float, s: Strings) = with(c) {
         fillStyle = "#12121A"; fillRect(0f, 0f, w, h)
         val l = layout(w, h)
-        var lit = -1
+        var lit = -1; var lu = 0f
         if (phase == 0) {
             val st = step(); val k = floor((t - ps) / st).toInt()
             if (t >= ps) {
                 if (k >= seq.size) { phase = 1; inp = 0; pt = t }
-                else if (t - ps - k * st < st * 0.68f) { lit = seq[k]; if (shown != k) { shown = k; Beep.tone(SM_HZ[lit], st * 0.68f) } }
+                else if (t - ps - k * st < st * 0.68f) { lit = seq[k]; lu = (t - ps - k * st) / (st * 0.68f); if (shown != k) { shown = k; Beep.tone(SM_HZ[lit], st * 0.68f) } }
             }
         } else if (phase == 2 && t - pt > 1.1f) { seq.add(Random.nextInt(4)); phase = 0; ps = t + 0.3f; shown = -1 }
-        if (phase != 0 && t - tapT < 0.22f) lit = tap
+        if (phase != 0 && t - tapT < 0.3f) { lit = tap; lu = (t - tapT) / 0.3f }
         val wrongK = if (phase == 3) seq[inp] else -1
         for (k in 0 until 4) {
             val x = l.x0 + (k % 2) * (l.p + l.gap); val y = l.y0 + (k / 2) * (l.p + l.gap)
@@ -261,7 +319,11 @@ private class SimonGame(val vibe: Vibe) {
             save(); translate(x + l.p / 2, y + l.p / 2); val sc = if (on) 1.04f else 1f; scale(sc, sc)
             beginPath(); roundRect(-l.p / 2, -l.p / 2, l.p, l.p, l.p * 0.16f); fillStyle = if (on) SM_COL[k].first else SM_COL[k].second; fill()
             if (on) { beginPath(); roundRect(-l.p / 2, -l.p / 2, l.p, l.p, l.p * 0.16f); fillStyle = "rgba(255,255,255,.22)"; fill() }
-            fillStyle = if (on) "rgba(255,255,255,.95)" else "rgba(255,255,255,.35)"; smShape(k, 0f, 0f, l.p * 0.17f)
+            fillStyle = if (on) "rgba(255,255,255,.95)" else "rgba(255,255,255,.35)"; smShape(k, -l.p / 2 + l.p * 0.11f, -l.p / 2 + l.p * 0.11f, l.p * 0.055f)
+            val bump = if (on && k == lit) sin(min(1f, lu) * PI.toFloat()) else if (on) 0.6f else 0f
+            save(); globalAlpha = if (on) 1f else 0.55f; translate(0f, l.p * 0.06f - bump * l.p * 0.08f)
+            smWolfHead(l.p * 0.36f, bump); smAccessory(k, l.p * 0.36f, t); restore()
+            if (on) { text("♪", l.p * 0.32f, -l.p * 0.3f - lu * 14, 22f, "rgba(255,255,255,.9)"); for (q in 0 until 5) { val a = q * 1.26f + t * 2; beginPath(); arc(cos(a) * l.p * 0.42f, sin(a) * l.p * 0.42f, 3f, 0f, TAU); fillStyle = "rgba(255,255,255,.7)"; fill() } }
             restore()
         }
         text(s.smLevel(seq.size), w / 2, 38f, 30f, "#fff")
