@@ -75,6 +75,7 @@
   <label id="lSearch"></label>
   <div id="acWrap"></div>
   <div id="picked" class="sub" style="margin-top:6px"></div>
+  <div id="tapHint" class="sub" style="margin-top:4px">💡 </div>
   <div id="catBox"><label id="lCat"></label><select id="fCat"></select></div>
   <label id="lNick"></label>
   <input id="fNick" maxlength="20" autocomplete="nickname">
@@ -95,27 +96,27 @@ import { ROUTES, RT, routeLayer } from './routes.js?v=2';
 
 // ---------- 6개 언어 ----------
 const T = {
-  ko: { menu:'추천 메뉴 (1~2개)', menuPh1:'예: 똠얌꿍', menuPh2:'예: 팟타이', wolf:'울프 커뮤니티에서 검색', needMenu:'메뉴를 하나 이상 적어 주세요', title:'맛집 지도', add:'+ 추가', addT:'맛집 추가', search:'가게 검색 (구글맵)', cat:'카테고리', rating:'별점', nick:'닉네임 (필수)', nickPh:'예: 늑대',
+  ko: { tapAdd:'이 가게 등록하기', near:'이 근처 가게', nearNone:'근처에 가게가 없어요. 검색으로 찾아 주세요', tapHint:'지도에서 가게를 눌러도 등록할 수 있어요', already:'이미 등록된 곳이에요 — 후기를 남겨 주세요', menu:'추천 메뉴 (1~2개)', menuPh1:'예: 똠얌꿍', menuPh2:'예: 팟타이', wolf:'울프 커뮤니티에서 검색', needMenu:'메뉴를 하나 이상 적어 주세요', title:'맛집 지도', add:'+ 추가', addT:'맛집 추가', search:'가게 검색 (구글맵)', cat:'카테고리', rating:'별점', nick:'닉네임 (필수)', nickPh:'예: 늑대',
         comment:'한줄평', commentPh:'뭐가 맛있었나요?', save:'등록하기', open:'구글맵 앱에서 열기', dir:'길찾기', more:'나도 후기 남기기', share:'공유',
         copied:'링크를 복사했어요', needPlace:'가게를 먼저 검색해서 골라 주세요', needNick:'닉네임을 입력해 주세요', saved:'등록했어요!', fail:'등록 실패',
         locNo:'위치 권한을 허용해 주세요', by:'등록', reviews:'후기', all:'전체', setup:'맛집 지도는 아직 준비 중이에요.\n(관리자: map-config.js 에 키를 넣어 주세요)', loadFail:'지도를 불러오지 못했어요' },
-  en: { menu:'Recommended dishes (1-2)', menuPh1:'e.g. Tom Yum', menuPh2:'e.g. Pad Thai', wolf:'Search on Wolf Community', needMenu:'Please add at least one dish', title:'Food Map', add:'+ Add', addT:'Add a place', search:'Search a place (Google Maps)', cat:'Category', rating:'Rating', nick:'Nickname (required)', nickPh:'e.g. Wolf',
+  en: { tapAdd:'Add this place', near:'Places nearby', nearNone:'No places nearby. Try searching', tapHint:'You can also tap a place on the map to add it', already:'Already on the map — leave a review', menu:'Recommended dishes (1-2)', menuPh1:'e.g. Tom Yum', menuPh2:'e.g. Pad Thai', wolf:'Search on Wolf Community', needMenu:'Please add at least one dish', title:'Food Map', add:'+ Add', addT:'Add a place', search:'Search a place (Google Maps)', cat:'Category', rating:'Rating', nick:'Nickname (required)', nickPh:'e.g. Wolf',
         comment:'One-line review', commentPh:'What was good?', save:'Add', open:'Open in Google Maps', dir:'Directions', more:'Add my review', share:'Share',
         copied:'Link copied', needPlace:'Search and pick a place first', needNick:'Please enter a nickname', saved:'Added!', fail:'Failed',
         locNo:'Please allow location', by:'Added by', reviews:'reviews', all:'All', setup:'The food map is not ready yet.', loadFail:'Could not load the map' },
-  ja: { menu:'おすすめメニュー (1〜2個)', menuPh1:'例: トムヤムクン', menuPh2:'例: パッタイ', wolf:'ウルフコミュニティで検索', needMenu:'メニューを1つ以上入力してください', title:'グルメマップ', add:'+ 追加', addT:'お店を追加', search:'お店を検索 (Googleマップ)', cat:'カテゴリー', rating:'評価', nick:'ニックネーム (必須)', nickPh:'例: オオカミ',
+  ja: { tapAdd:'このお店を登録', near:'この近くのお店', nearNone:'近くにお店がありません。検索してください', tapHint:'地図上のお店をタップしても登録できます', already:'登録済みです — レビューを書いてください', menu:'おすすめメニュー (1〜2個)', menuPh1:'例: トムヤムクン', menuPh2:'例: パッタイ', wolf:'ウルフコミュニティで検索', needMenu:'メニューを1つ以上入力してください', title:'グルメマップ', add:'+ 追加', addT:'お店を追加', search:'お店を検索 (Googleマップ)', cat:'カテゴリー', rating:'評価', nick:'ニックネーム (必須)', nickPh:'例: オオカミ',
         comment:'ひとこと', commentPh:'何がおいしかった？', save:'登録', open:'Googleマップで開く', dir:'ルート', more:'私もレビュー', share:'共有',
         copied:'リンクをコピーしました', needPlace:'先にお店を検索して選んでください', needNick:'ニックネームを入力してください', saved:'登録しました！', fail:'失敗',
         locNo:'位置情報を許可してください', by:'登録', reviews:'件', all:'すべて', setup:'グルメマップは準備中です。', loadFail:'地図を読み込めませんでした' },
-  zh: { menu:'推荐菜 (1~2个)', menuPh1:'例: 冬阴功', menuPh2:'例: 泰式炒河粉', wolf:'在狼社区搜索', needMenu:'请至少填写一道菜', title:'美食地图', add:'+ 添加', addT:'添加餐厅', search:'搜索店铺 (谷歌地图)', cat:'分类', rating:'评分', nick:'昵称 (必填)', nickPh:'例: 狼',
+  zh: { tapAdd:'添加这家店', near:'附近的店', nearNone:'附近没有店，请搜索', tapHint:'在地图上点店铺也能添加', already:'已经在地图上了 — 来写点评吧', menu:'推荐菜 (1~2个)', menuPh1:'例: 冬阴功', menuPh2:'例: 泰式炒河粉', wolf:'在狼社区搜索', needMenu:'请至少填写一道菜', title:'美食地图', add:'+ 添加', addT:'添加餐厅', search:'搜索店铺 (谷歌地图)', cat:'分类', rating:'评分', nick:'昵称 (必填)', nickPh:'例: 狼',
         comment:'一句话点评', commentPh:'什么好吃？', save:'添加', open:'在谷歌地图打开', dir:'导航', more:'我也点评', share:'分享',
         copied:'已复制链接', needPlace:'请先搜索并选择店铺', needNick:'请输入昵称', saved:'已添加！', fail:'失败',
         locNo:'请允许定位', by:'添加者', reviews:'条点评', all:'全部', setup:'美食地图还在准备中。', loadFail:'地图加载失败' },
-  th: { menu:'เมนูแนะนำ (1-2)', menuPh1:'เช่น ต้มยำกุ้ง', menuPh2:'เช่น ผัดไทย', wolf:'ค้นหาใน Wolf Community', needMenu:'ใส่เมนูอย่างน้อย 1 อย่าง', title:'แผนที่ร้านอร่อย', add:'+ เพิ่ม', addT:'เพิ่มร้าน', search:'ค้นหาร้าน (Google Maps)', cat:'หมวดหมู่', rating:'คะแนน', nick:'ชื่อเล่น (จำเป็น)', nickPh:'เช่น หมาป่า',
+  th: { tapAdd:'เพิ่มร้านนี้', near:'ร้านใกล้ๆ นี้', nearNone:'ไม่มีร้านใกล้ๆ ลองค้นหาดู', tapHint:'แตะร้านบนแผนที่เพื่อเพิ่มได้เลย', already:'มีในแผนที่แล้ว — เขียนรีวิวได้เลย', menu:'เมนูแนะนำ (1-2)', menuPh1:'เช่น ต้มยำกุ้ง', menuPh2:'เช่น ผัดไทย', wolf:'ค้นหาใน Wolf Community', needMenu:'ใส่เมนูอย่างน้อย 1 อย่าง', title:'แผนที่ร้านอร่อย', add:'+ เพิ่ม', addT:'เพิ่มร้าน', search:'ค้นหาร้าน (Google Maps)', cat:'หมวดหมู่', rating:'คะแนน', nick:'ชื่อเล่น (จำเป็น)', nickPh:'เช่น หมาป่า',
         comment:'รีวิวสั้นๆ', commentPh:'อะไรอร่อย?', save:'เพิ่ม', open:'เปิดใน Google Maps', dir:'เส้นทาง', more:'รีวิวด้วย', share:'แชร์',
         copied:'คัดลอกลิงก์แล้ว', needPlace:'ค้นหาและเลือกร้านก่อน', needNick:'กรุณาใส่ชื่อเล่น', saved:'เพิ่มแล้ว!', fail:'ไม่สำเร็จ',
         locNo:'กรุณาอนุญาตตำแหน่ง', by:'เพิ่มโดย', reviews:'รีวิว', all:'ทั้งหมด', setup:'แผนที่ยังไม่พร้อม', loadFail:'โหลดแผนที่ไม่ได้' },
-  vi: { menu:'Món nên thử (1-2)', menuPh1:'VD: Tom Yum', menuPh2:'VD: Pad Thái', wolf:'Tìm trên Wolf Community', needMenu:'Hãy nhập ít nhất một món', title:'Bản đồ quán ngon', add:'+ Thêm', addT:'Thêm quán', search:'Tìm quán (Google Maps)', cat:'Loại', rating:'Đánh giá', nick:'Biệt danh (bắt buộc)', nickPh:'VD: Sói',
+  vi: { tapAdd:'Thêm quán này', near:'Quán gần đây', nearNone:'Không có quán gần đây. Hãy tìm kiếm', tapHint:'Bạn cũng có thể chạm vào quán trên bản đồ để thêm', already:'Đã có trên bản đồ — hãy đánh giá', menu:'Món nên thử (1-2)', menuPh1:'VD: Tom Yum', menuPh2:'VD: Pad Thái', wolf:'Tìm trên Wolf Community', needMenu:'Hãy nhập ít nhất một món', title:'Bản đồ quán ngon', add:'+ Thêm', addT:'Thêm quán', search:'Tìm quán (Google Maps)', cat:'Loại', rating:'Đánh giá', nick:'Biệt danh (bắt buộc)', nickPh:'VD: Sói',
         comment:'Nhận xét ngắn', commentPh:'Món gì ngon?', save:'Thêm', open:'Mở bằng Google Maps', dir:'Chỉ đường', more:'Tôi cũng đánh giá', share:'Chia sẻ',
         copied:'Đã sao chép liên kết', needPlace:'Hãy tìm và chọn quán trước', needNick:'Hãy nhập biệt danh', saved:'Đã thêm!', fail:'Thất bại',
         locNo:'Hãy cho phép vị trí', by:'Người thêm', reviews:'đánh giá', all:'Tất cả', setup:'Bản đồ chưa sẵn sàng.', loadFail:'Không tải được bản đồ' },
@@ -155,7 +156,7 @@ document.querySelectorAll('[data-close]').forEach((b) => { b.onclick = closeShee
 // 화면 글자
 document.title = `🍜 ${t.title}`;
 $('title').textContent = `🍜 ${t.title}`; $('btnAdd').textContent = t.add; $('tAdd').textContent = t.addT;
-$('lSearch').textContent = t.search; $('lCat').textContent = t.cat; $('lMenu').textContent = t.menu;
+$('lSearch').textContent = t.search; $('tapHint').textContent = `💡 ${t.tapHint}`; $('lCat').textContent = t.cat; $('lMenu').textContent = t.menu;
 $('fMenu1').placeholder = t.menuPh1; $('fMenu2').placeholder = t.menuPh2;
 $('lNick').textContent = t.nick; $('fNick').placeholder = t.nickPh; $('lComment').textContent = t.comment;
 $('fComment').placeholder = t.commentPh; $('btnSave').textContent = t.save;
@@ -191,7 +192,7 @@ async function start() {
 
   const map = new Map($('map'), {
     center: { lat: 20, lng: 110 }, zoom: 3, mapId: 'DEMO_MAP_ID', colorScheme: core.ColorScheme ? core.ColorScheme.DARK : undefined,
-    clickableIcons: false, gestureHandling: 'greedy', mapTypeControl: false, streetViewControl: false, fullscreenControl: false,
+    clickableIcons: true, gestureHandling: 'greedy', mapTypeControl: false, streetViewControl: false, fullscreenControl: false,
   });
 
   let places = [], stats = {}, active = 'all', picked = null, fitted = false, unsubRv = null;
@@ -219,6 +220,43 @@ async function start() {
   };
   ac.addEventListener('gmp-select', (e) => pick(e.placePrediction.toPlace()));
   ac.addEventListener('gmp-placeselect', (e) => pick(e.place)); // 이전 버전 호환
+
+  // 🗺️ 지도에서 바로 고르기: 가게 아이콘을 누르면 그 가게, 빈 곳을 누르면 근처 가게 목록
+  const { Place } = await google.maps.importLibrary('places');
+  const FOOD = ['restaurant', 'cafe', 'bar', 'bakery', 'meal_takeaway', 'coffee_shop', 'pub', 'food_court', 'night_club'];
+  const startAdd = (pl) => {
+    const known = places.find((x) => x.placeId === pl.placeId);
+    picked = known || pl; $('picked').textContent = `✅ ${picked.name} · ${picked.address}`;
+    $('catBox').style.display = known ? 'none' : ''; openSheet('addSheet');
+    if (known) toast(t.already);
+  };
+  const fromPlace = async (place) => {
+    await place.fetchFields({ fields: ['id', 'displayName', 'formattedAddress', 'location', 'googleMapsURI'] });
+    return { placeId: place.id, name: place.displayName || '', address: place.formattedAddress || '', lat: place.location.lat(), lng: place.location.lng(), mapsUrl: place.googleMapsURI || '' };
+  };
+  const choose = (list) => {
+    $('detailBody').innerHTML = `<h2>📍 ${esc(t.near)}</h2>` + (list.length
+      ? list.map((p, i) => `<div class="rv" data-i="${i}" style="cursor:pointer"><b>${esc(p.name)}</b><div class="sub">${esc(p.address)}</div></div>`).join('')
+      : `<div class="sub" style="margin-top:10px">${esc(t.nearNone)}</div>`);
+    $('detailBody').querySelectorAll('[data-i]').forEach((el) => { el.onclick = () => startAdd(list[+el.dataset.i]); });
+    openSheet('detailSheet');
+  };
+  map.addListener('click', async (e) => {
+    try {
+      if (e.placeId) { // 구글맵의 가게 아이콘
+        e.stop();
+        const known = places.find((x) => x.placeId === e.placeId);
+        if (known) return detail(known);
+        return startAdd(await fromPlace(new Place({ id: e.placeId })));
+      }
+      if (document.querySelector('.sheet.open')) return closeSheets();
+      const { places: near } = await Place.searchNearby({
+        fields: ['id', 'displayName', 'formattedAddress', 'location', 'googleMapsURI'],
+        locationRestriction: { center: e.latLng, radius: 120 }, includedTypes: FOOD, maxResultCount: 8, rankPreference: 'DISTANCE',
+      });
+      choose((near || []).map((pl) => ({ placeId: pl.id, name: pl.displayName || '', address: pl.formattedAddress || '', lat: pl.location.lat(), lng: pl.location.lng(), mapsUrl: pl.googleMapsURI || '' })));
+    } catch (err) { console.error(err); toast(t.fail); }
+  });
 
   $('fNick').value = store('wg-map-nick') || '';
   ['fNick', 'fMenu1'].forEach((id) => $(id).addEventListener('input', () => $(id).classList.remove('bad')));
