@@ -28,14 +28,6 @@ CHANGELOG = [
             th='🏁 วิ่งแข่งหมาป่า: อันดับตัวใหญ่กลางลู่ — ที่ 1 👑 ที่ 2·3 สีเหรียญ ที่โหล่ 💀 สีแดง พร้อมชื่อสัตว์',
             vi='🏁 Sói chạy đua: thứ hạng hiện to ở giữa mỗi làn — hạng 1 👑, hạng 2·3 màu huy chương, bét 💀 màu đỏ, kèm tên con vật',
         )),
-        ('🗺️', dict(
-            ko='🗺️ 지도(베타): 지도에서 가게를 눌러 바로 등록 · 호텔·클럽·마사지 추가 · 썽태우 노선 끄기/켜기 · 📍 내 위치 버튼',
-            en='🗺️ Map (beta): tap a place on the map to add it · hotels, clubs, massage · toggle songthaew routes · 📍 my-location button',
-            ja='🗺️ 地図（ベータ）：地図上のお店をタップしてすぐ登録・ホテル/クラブ/マッサージ追加・ソンテウ路線のオン/オフ・📍現在地ボタン',
-            zh='🗺️ 地图（测试）：在地图上点店铺直接登记 · 新增酒店/夜店/按摩 · 双条车路线开关 · 📍 我的位置按钮',
-            th='🗺️ แผนที่ (เบต้า): แตะร้านบนแผนที่เพื่อเพิ่มได้เลย · เพิ่มโรงแรม คลับ นวด · เปิด/ปิดสายสองแถว · ปุ่ม 📍 ตำแหน่งของฉัน',
-            vi='🗺️ Bản đồ (beta): chạm vào quán trên bản đồ để thêm ngay · thêm khách sạn, club, massage · bật/tắt tuyến songthaew · nút 📍 vị trí của tôi',
-        )),
     ]),
     dict(ver='1.8.1-beta', date='2026-11-04', items=[
         ('🔴', dict(

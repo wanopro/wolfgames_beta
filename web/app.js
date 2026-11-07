@@ -122,7 +122,6 @@ function homeScreen(root) {
           btn('▦ QR', () => go('qr'), 'chip'),
           btn(m(s.hotelBtn), () => go('hotel'), 'chip'),
           btn(m(s.phraseBtn), () => go('phrase'), 'chip'),
-          btn(m(s.mapBtn), () => { vibe.tap(); location.href = `map.html?lang=${lang.current}`; }, 'chip'),
           btn(m(s.shBtn), () => go('share'), 'chip')))),
     h('div', { style: 'height:4px' }),
     card('🎲', s.menuDice, s.menuDiceSub, () => go('dice')),

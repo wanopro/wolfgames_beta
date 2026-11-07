@@ -4,9 +4,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 환전: 환율 정보 받아오기 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 🍜 맛집 지도: '내 위치' 버튼 (누를 때만 물어봄) -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 🔄 앱 안 업데이트: 새 APK 설치 화면 열기 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
