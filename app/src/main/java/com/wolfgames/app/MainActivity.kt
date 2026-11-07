@@ -47,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -123,7 +124,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         DebugOpen.screen = intent?.getStringExtra("screen"); DebugOpen.autostart = intent?.getBooleanExtra("autostart", false) ?: false
         enableEdgeToEdge()
-        // 술자리에서 화면이 꺼지지 않도록
+        // 게임 중에 화면이 꺼지지 않도록
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         val vibe = Vibe.from(this)
@@ -159,12 +160,12 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
     val back: () -> Unit = {
         screen = when (screen) {
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
-            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer, Screen.Tower, Screen.Simon, Screen.Curling -> Screen.QuickMenu
+            Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer, Screen.Tower, Screen.Simon -> Screen.QuickMenu
             Screen.Tug, Screen.Slap, Screen.Ttt, Screen.Gomoku -> Screen.BattleMenu
             Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon, Screen.WireCut, Screen.Yabawi, Screen.Finger -> Screen.LuckMenu
             Screen.Kings -> Screen.CardMenu
             Screen.UpDown, Screen.HoChiMinh -> Screen.CardMenu
-            Screen.Croc, Screen.Race, Screen.Pirate, Screen.Arrow -> Screen.WolfMenu
+            Screen.Croc, Screen.Race, Screen.Pirate, Screen.Arrow, Screen.Curling -> Screen.WolfMenu
             Screen.Ladder, Screen.Roulette, Screen.Bomb -> Screen.LuckMenu
             Screen.Four -> Screen.BattleMenu
             Screen.Fx, Screen.Sizes, Screen.CalcSettle, Screen.Settle -> Screen.Calc
@@ -191,6 +192,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🏁", s.menuRace, s.menuRaceSub, Screen.Race),
                 MenuItem("🗡️", s.menuPirate, s.menuPirateSub, Screen.Pirate),
                 MenuItem("🔄", s.menuArrow, s.menuArrowSub, Screen.Arrow),
+                MenuItem("🥌", s.cuTitle, s.cuSub, Screen.Curling),
             )) { screen = it }
             Screen.LuckMenu -> CategoryScreen("🍀 ${s.menuLuck}", back, listOf(
                 MenuItem("@ladder", s.menuLadder, s.menuLadderSub, Screen.Ladder),
@@ -208,10 +210,9 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🟢", s.reactTitle, s.reactSub, Screen.Reaction),
                 MenuItem("🎨", s.colorTitle, s.colorSub, Screen.ColorReact),
                 MenuItem("⏱️", s.stopTitle, s.stopSub, Screen.Stopwatch),
-                MenuItem("🍺", s.beerTitle, s.beerSub, Screen.Beer),
+                MenuItem("💧", s.beerTitle, s.beerSub, Screen.Beer),
                 MenuItem("🏗️", s.tsTitle, s.tsSub, Screen.Tower),
                 MenuItem("🔴", s.smTitle, s.smSub, Screen.Simon),
-                MenuItem("🍺", s.cuTitle, s.cuSub, Screen.Curling),
             )) { screen = it }
             Screen.DiceDuel -> DiceDuelScreen(onBack = back)
             Screen.Reaction -> ReactionGameScreen(onBack = back)
@@ -430,6 +431,15 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                         .padding(horizontal = 4.dp, vertical = 6.dp),
                 )
             }
+            // ⚠️ 면책 안내 (작게)
+            Text(
+                m.disclaimer,
+                color = WG.SubText.copy(alpha = 0.7f),
+                fontSize = 10.sp,
+                lineHeight = 14.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 2.dp, bottom = 12.dp),
+            )
         }
     }
 
@@ -537,7 +547,7 @@ fun DiceMenuScreen(onBack: () -> Unit, onSelect: (Screen) -> Unit) {
             MenuCard("👆", s.rollTitle, s.rollSub) { onSelect(Screen.RollDice) }
             MenuCard("🔢", s.shutTitle, s.shutSub) { onSelect(Screen.ShutBox) }
             MenuCard("🎲", s.fiveTitle, s.fiveSub) { onSelect(Screen.FiveDice) }
-            MenuCard("🍶", s.d789Title, s.d789Sub) { onSelect(Screen.D789) }
+            MenuCard("🎯", s.d789Title, s.d789Sub) { onSelect(Screen.D789) }
             MenuCard("⚔️", s.duelTitle, s.duelSub) { onSelect(Screen.DiceDuel) }
         }
     }

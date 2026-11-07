@@ -49,7 +49,7 @@ import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.random.Random
 
-// v1.8 새 게임 (글 없이 하는 게임): 🏗️ 탑 쌓기 · 🔴 따라 하기 · 🍺 늑대컬링 (⚡ 순발력) · ✂️ 폭탄 선 자르기 (🍀 운빨) — 웹 games-v18.js 와 같음
+// v1.8 새 게임 (글 없이 하는 게임): 🏗️ 탑 쌓기 · 🔴 따라 하기 (⚡ 순발력) · 🥌 늑대컬링 (🐺 늑대게임) · ✂️ 폭탄 선 자르기 (🍀 운빨) — 웹 games-v18.js 와 같음
 
 private fun ease18(u: Float) = 1f - (1f - u.coerceIn(0f, 1f)).pow(3)
 
@@ -437,28 +437,23 @@ private class WireGame(val n: Int, val vibe: Vibe) {
     }
 }
 
-// ===================== 🍺 늑대컬링 =====================
-/** 🍺 늑대 맥주잔 (앞모습) — 원점 = 잔 바닥 가운데, s = 잔 너비 정도. col = 두건 색, num = 두건 숫자, slosh = 거품 출렁임 */
+// ===================== 🥌 늑대컬링 =====================
+/** 🥌 늑대 스톤 (앞모습, 컬링 스톤) — 원점 = 스톤 바닥 가운데, s = 스톤 너비 정도. col = 손잡이·띠 색, num = 띠 숫자, slosh = 흔들림 */
 fun Ctx.wolfMug(x: Float, y: Float, s: Float, col: String, num: String = "", slosh: Float = 0f) {
-    save(); translate(x, y)
-    beginPath(); ellipse(0f, s * 0.02f, s * 0.55f, s * 0.1f, 0f, 0f, TAU); fillStyle = "rgba(0,0,0,.35)"; fill()
-    for ((cl, lw) in listOf("#5E6773" to 0.15f, "#8E98A5" to 0.08f)) {
-        beginPath(); moveTo(s * 0.38f, -s * 0.82f); bezierCurveTo(s * 0.82f, -s * 0.85f, s * 0.82f, -s * 0.22f, s * 0.38f, -s * 0.28f)
-        strokeStyle = cl; lineWidth = s * lw; lineCap = "round"; stroke()
-    }
-    beginPath(); arc(s * 0.4f, -s * 0.28f, s * 0.09f, 0f, TAU); fillStyle = "#F3F3F3"; fill()
+    save(); translate(x, y); rotate(slosh * 0.06f)
+    beginPath(); ellipse(0f, s * 0.02f, s * 0.6f, s * 0.1f, 0f, 0f, TAU); fillStyle = "rgba(0,0,0,.35)"; fill()
+    // 손잡이 (사람 색)
+    beginPath(); roundRect(-s * 0.06f, -s * 1.1f, s * 0.12f, s * 0.16f, s * 0.03f); fillStyle = "#4A525C"; fill()
+    beginPath(); roundRect(-s * 0.3f, -s * 1.2f, s * 0.6f, s * 0.13f, s * 0.065f); fillStyle = col; fill()
     for (k in listOf(-1f, 1f)) {
         beginPath(); moveTo(k * s * 0.42f, -s * 0.9f); lineTo(k * s * 0.33f, -s * 1.42f); lineTo(k * s * 0.08f, -s * 1.02f); closePath(); fillStyle = "#6B7480"; fill()
         beginPath(); moveTo(k * s * 0.34f, -s * 0.98f); lineTo(k * s * 0.3f, -s * 1.27f); lineTo(k * s * 0.15f, -s * 1.03f); closePath(); fillStyle = "#FF9EB5"; fill()
     }
-    beginPath(); roundRect4(-s * 0.44f, -s * 1.0f, s * 0.88f, s, s * 0.1f, s * 0.1f, s * 0.2f, s * 0.2f)
-    linearStops(-s * 0.45f, 0f, s * 0.45f, 0f, listOf(0f to "#7C8591", 0.35f to "#B4BCC6", 1f to "#6B7480")); fill()
-    for (k in listOf(-1f, 1f)) { beginPath(); moveTo(k * s * 0.44f, -s * 0.5f); lineTo(k * s * 0.56f, -s * 0.38f); lineTo(k * s * 0.44f, -s * 0.28f); closePath(); fillStyle = "#9AA3AE"; fill() }
-    val fy = -s * 1.0f
-    fillStyle = "#FFFDF5"
-    listOf(-0.3f to 0.13f, -0.12f to 0.16f, 0.08f to 0.15f, 0.27f to 0.13f).forEachIndexed { i, (fx, r) -> beginPath(); arc(fx * s + slosh * s * 0.05f, fy - s * 0.03f + sin(i * 2 + slosh * 3) * s * 0.02f, r * s, 0f, TAU); fill() }
-    beginPath(); roundRect(-s * 0.44f, fy - s * 0.02f, s * 0.88f, s * 0.1f, s * 0.05f); fill()
-    beginPath(); ellipse(-s * 0.22f + slosh * s * 0.04f, fy + s * 0.13f, s * 0.05f, s * 0.09f, 0f, 0f, TAU); fill()
+    // 몸통 (화강암 스톤)
+    beginPath(); roundRect4(-s * 0.5f, -s * 1.0f, s, s, s * 0.32f, s * 0.32f, s * 0.26f, s * 0.26f)
+    linearStops(-s * 0.5f, 0f, s * 0.5f, 0f, listOf(0f to "#7C8591", 0.35f to "#B4BCC6", 1f to "#6B7480")); fill()
+    fillStyle = "rgba(40,44,52,.35)"
+    for ((px, py) in listOf(-0.32f to -0.8f, 0.3f to -0.86f, -0.36f to -0.42f, 0.36f to -0.5f, 0.2f to -0.18f, -0.24f to -0.2f, 0.05f to -0.92f)) { beginPath(); arc(px * s, py * s, s * 0.022f, 0f, TAU); fill() }
     beginPath(); ellipse(0f, -s * 0.34f, s * 0.25f, s * 0.17f, 0f, 0f, TAU); fillStyle = "#E9ECEF"; fill()
     for (k in listOf(-1f, 1f)) {
         beginPath(); ellipse(k * s * 0.17f, -s * 0.62f, s * 0.085f, s * 0.1f, 0f, 0f, TAU); fillStyle = "#fff"; fill()
@@ -469,9 +464,9 @@ fun Ctx.wolfMug(x: Float, y: Float, s: Float, col: String, num: String = "", slo
     beginPath(); ellipse(0f, -s * 0.42f, s * 0.08f, s * 0.055f, 0f, 0f, TAU); fillStyle = "#1B1B1F"; fill()
     beginPath(); moveTo(-s * 0.1f, -s * 0.3f); quadraticCurveTo(-s * 0.05f, -s * 0.24f, 0f, -s * 0.31f); quadraticCurveTo(s * 0.05f, -s * 0.24f, s * 0.1f, -s * 0.3f); strokeStyle = "#1B1B1F"; lineWidth = s * 0.025f; stroke()
     beginPath(); ellipse(s * 0.03f, -s * 0.24f, s * 0.04f, s * 0.035f, 0f, 0f, TAU); fillStyle = "#FF7A95"; fill()
-    beginPath(); roundRect(-s * 0.44f, -s * 0.17f, s * 0.88f, s * 0.11f, s * 0.03f); fillStyle = col; fill()
-    beginPath(); moveTo(-s * 0.13f, -s * 0.12f); lineTo(s * 0.13f, -s * 0.12f); lineTo(0f, s * 0.08f); closePath(); fill()
-    if (num.isNotEmpty()) text(num, 0f, -s * 0.06f, s * 0.15f, "#fff")
+    // 띠 (사람 색) + 숫자
+    beginPath(); roundRect(-s * 0.49f, -s * 0.17f, s * 0.98f, s * 0.12f, s * 0.04f); fillStyle = col; fill()
+    if (num.isNotEmpty()) text(num, 0f, -s * 0.11f, s * 0.15f, "#fff")
     restore()
 }
 

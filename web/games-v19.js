@@ -37,7 +37,7 @@ export function yWolf(c, x, y, r, open, mood = 0, t = 0) {
 }
 
 // ===================== 🐺 늑대 야바위 =====================
-// 늑대 수 = 인원 (1~8명, 1명이면 2마리). 꽝 늑대(코인 못 먹음) 1 ~ 인원-1마리 → 섞기 약 8초(점점 빨라짐) → 한 명씩 골라서 빈 입이면 원샷, 꽝을 다 찾으면 끝
+// 늑대 수 = 인원 (1~8명, 1명이면 2마리). 꽝 늑대(코인 못 먹음) 1 ~ 인원-1마리 → 섞기 약 8초(점점 빨라짐) → 한 명씩 골라서 빈 입이면 벌칙, 꽝을 다 찾으면 끝
 export const YB_EAT_END = 3.0;
 export function ybSwaps(n, rnd = Math.random) {
   const sw = []; let d = 0.62;
@@ -110,7 +110,7 @@ export function yabawi(root, back) {
       const eatenNow = tt < YB_EAT_END ? g.eat.filter((k) => tt > eatAt(k) + 0.45).length : g.eat.length;
       if (eatenNow > g.eaten) { g.eaten = eatenNow; tone(880 + eatenNow * 40, 0.08, 'triangle', 0.16); }
       if (tt >= YB_EAT_END && tt < g.shEnd && j !== g.swapIdx) { g.swapIdx = j; if (g.sw[j] && g.sw[j][2] > 0.2) tone(320, 0.05, 'sine', 0.08); }
-      // 사람 점 (지금 고를 사람 밝게, 원샷한 사람 💀)
+      // 사람 점 (지금 고를 사람 밝게, 벌칙 받은 사람 💀)
       const dotR = Math.min(14, W / (P * 3.2)), losers = g.hits.map((x) => x.p);
       for (let i = 0; i < P; i++) {
         const x = W / 2 + (i - (P - 1) / 2) * dotR * 2.8;

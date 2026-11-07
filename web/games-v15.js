@@ -1,4 +1,4 @@
-// v1.5 새 게임: 탭 줄다리기 · 슬랩 대결(⚔️ 대결) / 맥주 거품 채우기(⚡ 순발력) / 동전 던지기(🍀 운빨) / 글로벌 킹스컵(🃏 카드)
+// v1.5 새 게임: 탭 줄다리기 · 슬랩 대결(⚔️ 대결) / 물컵 채우기(⚡ 순발력) / 동전 던지기(🍀 운빨) / 글로벌 킹스컵(🃏 카드)
 import { C, S, h, btn, top, stepper, setupPanel, liveCanvas, vibe, newDeck, SUITS } from './core.js';
 import { region, lines, text, badge } from './split.js';
 import { splitStage, hub } from './games-quick.js';
@@ -151,7 +151,7 @@ export function slapDuel(root, back) {
   return () => { if (cv) cv.stop(); };
 }
 
-// ===================== 🍺 맥주 거품 채우기 =====================
+// ===================== 💧 물컵 채우기 =====================
 export function beerPour(root, back) {
   const s = S();
   let n = 2, cv = null;
@@ -184,12 +184,11 @@ export function beerPour(root, back) {
             c.save(); c.beginPath(); c.moveTo(-gw / 2, topY); c.lineTo(gw / 2, topY); c.lineTo(gw / 2 - 8 * sc, bot); c.lineTo(-gw / 2 + 8 * sc, bot); c.closePath();
             c.fillStyle = 'rgba(255,255,255,.10)'; c.fill(); c.save(); c.clip();
             const fillTop = bot - (bot - lineY) * Math.min(v, 1.0);
-            c.fillStyle = '#F9A825'; c.fillRect(-gw, fillTop, gw * 2, bot - fillTop + 2);
+            c.fillStyle = '#29B6F6'; c.fillRect(-gw, fillTop, gw * 2, bot - fillTop + 2);
             for (let b = 0; b < 7; b++) { const by = bot - ((t * 60 * sc + b * 23 * sc) % (bot - fillTop + 1)); c.beginPath(); c.arc(-gw / 3 + (b * 13 % 50) * sc, by, 2.2 * sc, 0, 7); c.fillStyle = 'rgba(255,255,255,.55)'; c.fill(); }
-            const fh = 12 * sc; c.fillStyle = '#FFF8E1'; for (let q = -3; q <= 3; q++) { c.beginPath(); c.arc(q * 14 * sc, fillTop - fh * 0.3 + Math.sin(t * 6 + q) * 1.5 * sc, 10 * sc, 0, 7); c.fill(); } c.fillRect(-gw, fillTop - fh * 0.3, gw * 2, fh);
-            c.restore(); c.lineWidth = 4 * sc; c.strokeStyle = '#E0E0E0'; c.stroke();
-            c.beginPath(); c.roundRect(gw / 2 - 4 * sc, topY + 26 * sc, 26 * sc, 70 * sc, 12 * sc); c.lineWidth = 7 * sc; c.stroke(); c.restore();
-            if (v >= 1.04) { c.fillStyle = '#FFF8E1'; for (const sd of [-1, 1]) { c.beginPath(); c.ellipse(sd * (gw / 2 + 2 * sc), topY + 30 * sc, 8 * sc, 28 * sc, 0, 0, 7); c.fill(); } c.beginPath(); c.ellipse(0, topY - 8 * sc, gw * 0.6, 14 * sc, 0, 0, 7); c.fill(); }
+            c.fillStyle = '#B3E5FC'; c.beginPath(); c.moveTo(-gw, fillTop + 6 * sc); for (let q = -gw; q <= gw; q += 4 * sc) c.lineTo(q, fillTop + Math.sin(t * 5 + q / (9 * sc)) * 2.5 * sc); c.lineTo(gw, fillTop + 6 * sc); c.closePath(); c.fill(); // 물결
+            c.restore(); c.lineWidth = 4 * sc; c.strokeStyle = '#E0E0E0'; c.stroke(); c.restore();
+            if (v >= 1.04) { c.fillStyle = '#4FC3F7'; for (const sd of [-1, 1]) { c.beginPath(); c.ellipse(sd * (gw / 2 + 2 * sc), topY + 30 * sc, 6 * sc, 26 * sc, 0, 0, 7); c.fill(); c.beginPath(); c.arc(sd * (gw / 2 + 4 * sc), topY + 64 * sc + (t * 40 % 20) * sc, 4 * sc, 0, 7); c.fill(); } c.beginPath(); c.ellipse(0, topY - 4 * sc, gw * 0.55, 9 * sc, 0, 0, 7); c.fill(); }
             c.setLineDash([6 * sc, 5 * sc]); c.strokeStyle = '#FF5252'; c.lineWidth = 3 * sc; c.beginPath(); c.moveTo(-gw / 2 - 14 * sc, lineY); c.lineTo(gw / 2 + 14 * sc, lineY); c.stroke(); c.setLineDash([]);
             text(c, s.beerLine, -gw / 2 - 32 * sc, lineY, 11 * sc, '#FF8A80', 800);
             const msg = g.stop[i] !== null ? (over ? s.beerOver : `${(Math.round(v * 1000) / 10).toFixed(1)}%`) : t < g.startAt ? s.readyWord : s.beerTap;
@@ -199,7 +198,7 @@ export function beerPour(root, back) {
           }, glow);
         });
         lines(ctx, secs, W, H);
-        hub(ctx, W, H, 34, '#1F2433', () => text(ctx, done ? '🔄' : '🍺', W / 2, H / 2 + 1, 24, '#fff', 900));
+        hub(ctx, W, H, 34, '#1F2433', () => text(ctx, done ? '🔄' : '💧', W / 2, H / 2 + 1, 24, '#fff', 900));
         if (done) text(ctx, s.tapHubAgain, W / 2, H / 2 + 52, 13, '#fff', 700);
       },
     };
@@ -286,7 +285,7 @@ export function coinToss(root, back) {
 }
 
 // ===================== 👑 글로벌 킹스컵 =====================
-export const KC_ICONS = ['🌊', '👉', '🙋', '🚽', '💃', '🍻', '🙌', '🤝', '🔤', '📚', '📜', '❓', '👑'];
+export const KC_ICONS = ['🌊', '👉', '🙋', '🚽', '💃', '🎉', '🙌', '🤝', '🔤', '📚', '📜', '❓', '👑'];
 const RANK = ['', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 export function kingsCup(root, back) {
   const s = S();
@@ -303,10 +302,10 @@ export function kingsCup(root, back) {
     const t = now();
     ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
     const deckY = Math.max(70, H * 0.12);
-    const gx = W - 56, gy = deckY; ctx.save(); ctx.translate(gx, gy);
-    ctx.beginPath(); ctx.moveTo(-24, -28); ctx.lineTo(24, -28); ctx.lineTo(17, 28); ctx.lineTo(-17, 28); ctx.closePath(); ctx.fillStyle = 'rgba(255,255,255,.12)'; ctx.fill(); ctx.strokeStyle = '#ddd'; ctx.lineWidth = 3; ctx.stroke();
-    ctx.save(); ctx.clip(); ctx.fillStyle = '#F9A825'; ctx.fillRect(-30, 28 - 56 * kings / 4, 60, 56 * kings / 4); ctx.restore(); ctx.restore();
-    text(ctx, `👑 ${kings}/4`, gx, gy + 46, 15, '#FFD740', 900);
+    // 👑 왕관 4칸 (K 나올 때마다 하나씩 켜짐)
+    const gx = W - 56, gy = deckY;
+    for (let q = 0; q < 4; q++) { const qx = gx + (q % 2 - 0.5) * 30, qy = gy + (Math.floor(q / 2) - 0.5) * 30; ctx.globalAlpha = q < kings ? 1 : 0.18; text(ctx, '👑', qx, qy, 22, '#fff'); } ctx.globalAlpha = 1;
+    text(ctx, `${kings}/4`, gx, gy + 46, 15, '#FFD740', 900);
     text(ctx, `🂠 ${s.kcLeft(deck.length)}`, 64, deckY, 15, '#aaa', 700);
     if (deck.length) { for (let i = 0; i < Math.min(4, deck.length); i++) { ctx.beginPath(); ctx.roundRect(W / 2 - 38 + i * 2, deckY - 52 - i * 2, 76, 104, 10); ctx.fillStyle = '#B71C1C'; ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke(); } text(ctx, '🐺', W / 2 + 6, deckY - 2, 34, '#fff'); }
     if (!cur) { text(ctx, deck.length ? s.kcTap : s.kcEmpty, W / 2, H * 0.55, 22, '#fff', 800); return; }
@@ -321,7 +320,7 @@ export function kingsCup(root, back) {
       const col = cur.s === 1 || cur.s === 2 ? '#D32F2F' : '#212121', su = SUITS[cur.s];
       for (const rot of [0, Math.PI]) { ctx.save(); ctx.rotate(rot); text(ctx, RANK[cur.r], -cw / 2 + 26, -ch / 2 + 28, 26, col, 900); text(ctx, su, -cw / 2 + 26, -ch / 2 + 56, 22, col, 900); ctx.restore(); }
       const pop = 1 + 0.15 * Math.max(0, Math.sin(Math.min(1, (u - 0.5) * 2) * Math.PI));
-      text(ctx, last ? '🍺' : KC_ICONS[ri], 0, -ch * 0.06, cw * 0.42 * pop, '#000');
+      text(ctx, last ? '🏆' : KC_ICONS[ri], 0, -ch * 0.06, cw * 0.42 * pop, '#000');
     }
     ctx.restore();
     if (flip >= 0.5) {
@@ -334,7 +333,7 @@ export function kingsCup(root, back) {
   cv.canvas.addEventListener('pointerdown', () => {
     if (!deck.length) return;
     if (cur && now() - at < 0.4) return;
-    if (cur && cur.r === 13 && kings === 4) kings = 0; // 킹스컵 마시고 다시 시작
+    if (cur && cur.r === 13 && kings === 4) kings = 0; // 킹스컵 벌칙 뒤 다시 시작
     cur = deck.pop(); at = now(); if (cur.r === 13) kings++;
     vibe.tap(); if (cur.r === 13 && kings === 4) vibe.strong();
   });

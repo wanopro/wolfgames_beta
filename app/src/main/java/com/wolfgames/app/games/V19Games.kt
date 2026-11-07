@@ -142,7 +142,7 @@ private class YabawiGame(val players: Int, losers: Int, val vibe: Vibe) {
         if (eatenNow > eaten) { eaten = eatenNow; Beep.tone(880f + eatenNow * 40, 0.08f, 3, 0.16f) }
         if (tt >= YB_EAT_END && tt < shEnd && wh.j != swapIdx) { swapIdx = wh.j; if (wh.j < sw.size && sw[wh.j].third > 0.2f) Beep.tone(320f, 0.05f, 0, 0.08f) }
         val isOver = over()
-        // 사람 점 (지금 고를 사람 밝게, 원샷한 사람 💀)
+        // 사람 점 (지금 고를 사람 밝게, 벌칙 받은 사람 💀)
         val dotR = min(14f, w / (players * 3.2f)); val losers = hits.map { it.p }
         for (i in 0 until players) {
             val x = w / 2 + (i - (players - 1) / 2f) * dotR * 2.8f

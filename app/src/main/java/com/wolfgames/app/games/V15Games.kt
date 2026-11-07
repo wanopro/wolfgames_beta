@@ -80,7 +80,7 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 // v1.5 새 게임 (웹 games-v15.js 와 같은 규칙)
-// 탭 줄다리기 · 슬랩 대결(⚔️ 대결) / 맥주 거품 채우기(⚡ 순발력) / 동전 던지기(🍀 운빨) / 글로벌 킹스컵(🃏 카드)
+// 탭 줄다리기 · 슬랩 대결(⚔️ 대결) / 물컵 채우기(⚡ 순발력) / 동전 던지기(🍀 운빨) / 글로벌 킹스컵(🃏 카드)
 
 private const val GOLD = "#FFC107"
 private const val RED = "#FF3D5A"
@@ -270,7 +270,7 @@ fun SlapDuelScreen(onBack: () -> Unit) {
     SetupThen(s.slapTitle, onBack, { start -> SetupPanel(s.slapDesc, start) {} }) { TwoSideCanvas(remember { SlapGame(vibe) }) }
 }
 
-// ===================== 🍺 맥주 거품 채우기 =====================
+// ===================== 💧 물컵 채우기 =====================
 private class BeerGame(override val n: Int, val vibe: Vibe) : SplitGame {
     var startAt = 0f; var k = 1f; var stop = arrayOfNulls<Float>(n); var doneAt = 0f
     // 차오르는 속도 = 점점 빨라지는 기본 속도 × (1 + 물결 두 개) → 빨라졌다 느려졌다 (멈추거나 줄지는 않음) — 웹과 같음
@@ -303,16 +303,15 @@ private class BeerGame(override val n: Int, val vibe: Vibe) : SplitGame {
                 glass(); fillStyle = "rgba(255,255,255,.10)"; fill()
                 save(); glass(); clip()
                 val fillTop = bot - (bot - lineY) * min(v, 1f)
-                fillStyle = "#F9A825"; fillRect(-gw, fillTop, gw * 2, bot - fillTop + 2)
+                fillStyle = "#29B6F6"; fillRect(-gw, fillTop, gw * 2, bot - fillTop + 2)
                 fillStyle = "rgba(255,255,255,.55)"
                 for (b in 0 until 7) { val by = bot - ((t * 60 * sc + b * 23 * sc) % (bot - fillTop + 1)); beginPath(); arc(-gw / 3 + (b * 13 % 50) * sc, by, 2.2f * sc, 0f, TAU); fill() }
-                val fh = 12 * sc; fillStyle = "#FFF8E1"
-                for (q in -3..3) { beginPath(); arc(q * 14 * sc, fillTop - fh * 0.3f + sin(t * 6 + q) * 1.5f * sc, 10 * sc, 0f, TAU); fill() }
-                fillRect(-gw, fillTop - fh * 0.3f, gw * 2, fh)
+                fillStyle = "#B3E5FC"; beginPath(); moveTo(-gw, fillTop + 6 * sc) // 물결
+                var q = -gw; while (q <= gw) { lineTo(q, fillTop + sin(t * 5 + q / (9 * sc)) * 2.5f * sc); q += 4 * sc }
+                lineTo(gw, fillTop + 6 * sc); closePath(); fill()
                 restore()
                 glass(); lineWidth = 4 * sc; strokeStyle = "#E0E0E0"; stroke()
-                beginPath(); roundRect(gw / 2 - 4 * sc, topY + 26 * sc, 26 * sc, 70 * sc, 12 * sc); lineWidth = 7 * sc; stroke()
-                if (v >= 1.04f) { fillStyle = "#FFF8E1"; for (sd in listOf(-1f, 1f)) { beginPath(); ellipse(sd * (gw / 2 + 2 * sc), topY + 30 * sc, 8 * sc, 28 * sc, 0f, 0f, TAU); fill() }; beginPath(); ellipse(0f, topY - 8 * sc, gw * 0.6f, 14 * sc, 0f, 0f, TAU); fill() }
+                if (v >= 1.04f) { fillStyle = "#4FC3F7"; for (sd in listOf(-1f, 1f)) { beginPath(); ellipse(sd * (gw / 2 + 2 * sc), topY + 30 * sc, 6 * sc, 26 * sc, 0f, 0f, TAU); fill(); beginPath(); arc(sd * (gw / 2 + 4 * sc), topY + 64 * sc + (t * 40 % 20) * sc, 4 * sc, 0f, TAU); fill() }; beginPath(); ellipse(0f, topY - 4 * sc, gw * 0.55f, 9 * sc, 0f, 0f, TAU); fill() }
                 lineDash = floatArrayOf(6 * sc, 5 * sc); strokeStyle = "#FF5252"; lineWidth = 3 * sc; beginPath(); moveTo(-gw / 2 - 14 * sc, lineY); lineTo(gw / 2 + 14 * sc, lineY); stroke(); lineDash = null
                 text(s.beerLine, -gw / 2 - 32 * sc, lineY, 11 * sc, "#FF8A80")
                 val msg = if (stop[i] != null) (if (over) s.beerOver else "%.1f%%".format(v * 100)) else if (t < startAt) s.readyWord else s.beerTap
@@ -321,7 +320,7 @@ private class BeerGame(override val n: Int, val vibe: Vibe) : SplitGame {
             }
         }
         splitLines(secs, w, h)
-        hub(w, h, 34f, "#1F2433") { text(if (done) "🔄" else "🍺", w / 2, h / 2 + 1, 24f, "#fff") }
+        hub(w, h, 34f, "#1F2433") { text(if (done) "🔄" else "💧", w / 2, h / 2 + 1, 24f, "#fff") }
         if (done) text(s.tapHubAgain, w / 2, h / 2 + 52, 13f, "#fff")
     }
 }
@@ -405,7 +404,7 @@ fun CoinTossScreen(onBack: () -> Unit) {
 }
 
 // ===================== 👑 글로벌 킹스컵 =====================
-val KC_ICONS = listOf("🌊", "👉", "🙋", "🚽", "💃", "🍻", "🙌", "🤝", "🔤", "📚", "📜", "❓", "👑")
+val KC_ICONS = listOf("🌊", "👉", "🙋", "🚽", "💃", "🎉", "🙌", "🤝", "🔤", "📚", "📜", "❓", "👑")
 
 private class KingsState {
     var deck = PCard.deck(); var cur: PCard? = null; var at = 0f; var kings = 0
@@ -450,11 +449,10 @@ fun KingsCupScreen(onBack: () -> Unit) {
                 val t = now()
                 val deckY = max(70f, h * 0.12f)
                 val gx = w - 56; val gy = deckY
-                save(); translate(gx, gy)
-                val cup: Ctx.() -> Unit = { beginPath(); moveTo(-24f, -28f); lineTo(24f, -28f); lineTo(17f, 28f); lineTo(-17f, 28f); closePath() }
-                cup(); fillStyle = "rgba(255,255,255,.12)"; fill(); strokeStyle = "#ddd"; lineWidth = 3f; stroke()
-                save(); cup(); clip(); fillStyle = "#F9A825"; fillRect(-30f, 28 - 56f * st.kings / 4, 60f, 56f * st.kings / 4); restore(); restore()
-                text("👑 ${st.kings}/4", gx, gy + 46, 15f, "#FFD740")
+                // 👑 왕관 4칸 (K 나올 때마다 하나씩 켜짐)
+                for (q in 0 until 4) { globalAlpha = if (q < st.kings) 1f else 0.18f; text("👑", gx + (q % 2 - 0.5f) * 30, gy + (q / 2 - 0.5f) * 30, 22f, "#fff") }
+                globalAlpha = 1f
+                text("${st.kings}/4", gx, gy + 46, 15f, "#FFD740")
                 text("🂠 ${s.kcLeft(st.deck.size)}", 64f, deckY, 15f, "#aaa")
                 if (st.deck.isNotEmpty()) {
                     for (i in 0 until min(4, st.deck.size)) { beginPath(); roundRect(w / 2 - 38 + i * 2, deckY - 52 - i * 2, 76f, 104f, 10f); fillStyle = "#B71C1C"; fill(); strokeStyle = "#fff"; lineWidth = 2f; stroke() }
@@ -473,7 +471,7 @@ fun KingsCupScreen(onBack: () -> Unit) {
                     val col = if (cur.red) "#D32F2F" else "#212121"
                     for (rot in listOf(0f, PIf)) { save(); rotate(rot); text(cur.rank, -cw / 2 + 26, -ch / 2 + 28, 26f, col); text(cur.suit, -cw / 2 + 26, -ch / 2 + 56, 22f, col); restore() }
                     val pop = 1 + 0.15f * max(0f, sin(min(1f, (u - 0.5f) * 2) * PIf))
-                    text(if (last) "🍺" else KC_ICONS[ri], 0f, -ch * 0.06f, cw * 0.42f * pop, "#000")
+                    text(if (last) "🏆" else KC_ICONS[ri], 0f, -ch * 0.06f, cw * 0.42f * pop, "#000")
                 }
                 restore()
                 if (flip >= 0.5f) {

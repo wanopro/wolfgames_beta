@@ -516,6 +516,7 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     shMsg = join2(a.shMsg, b.shMsg)
     ybDesc = join2(a.ybDesc, b.ybDesc)
     ybLosers = join2(a.ybLosers, b.ybLosers)
+    disclaimer = join2(a.disclaimer, b.disclaimer)
     ybEatingN = { p0 -> join2(a.ybEatingN(p0), b.ybEatingN(p0)) }
     ybShotN = { p0 -> join2(a.ybShotN(part(p0, 0)), b.ybShotN(part(p0, 1))) }
 }
