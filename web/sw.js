@@ -16,6 +16,8 @@ self.addEventListener('activate', (e) => {
 // 인터넷이 되면 새 파일, 안 되면 저장해 둔 파일
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
+  // 🍜 맛집 지도: 구글맵·Firebase 는 항상 인터넷으로 (저장하지 않음)
+  if (/(^|\.)(googleapis\.com|gstatic\.com|google\.com|firebaseio\.com|firebaseapp\.com|ggpht\.com)$/.test(new URL(e.request.url).hostname)) return;
   e.respondWith(
     // 같은 사이트 파일은 브라우저 임시 저장(HTTP 캐시)을 건너뛰고 서버에 확인해서 항상 최신 파일을 받음
     fetch(new URL(e.request.url).origin === location.origin ? new Request(e.request, { cache: 'no-cache' }) : e.request).then((res) => {

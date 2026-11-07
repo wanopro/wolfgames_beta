@@ -424,6 +424,7 @@ class Strings {
     lateinit var colorTurn: (String) -> String
     lateinit var youAre: (String) -> String
     lateinit var phraseBtn: String
+    lateinit var mapBtn: String
     lateinit var settleBtn: String
     lateinit var nbTitle: String
     lateinit var nbSub: String
@@ -900,6 +901,7 @@ val KoStrings = Strings().apply {
     colorTurn = { "${it} 차례" }
     youAre = { "나: ${it}" }
     phraseBtn = "🗣️ 회화"
+    mapBtn = "🍜 맛집 지도"
     settleBtn = "🧾 정산"
     nbTitle = "숫자 폭탄"
     nbSub = "숨은 폭탄 숫자를 피해라! UP · DOWN"
@@ -1379,6 +1381,7 @@ val EnStrings = Strings().apply {
     colorTurn = { "$it's turn" }
     youAre = { "You: $it" }
     phraseBtn = "🗣️ Phrases"
+    mapBtn = "🍜 Food Map"
     settleBtn = "🧾 Split bill"
     nbTitle = "Number Bomb"
     nbSub = "Dodge the hidden bomb number! UP · DOWN"
@@ -1858,6 +1861,7 @@ val JaStrings = Strings().apply {
     colorTurn = { "${it}の番" }
     youAre = { "あなた: ${it}" }
     phraseBtn = "🗣️ 会話"
+    mapBtn = "🍜 グルメマップ"
     settleBtn = "🧾 精算"
     nbTitle = "数字爆弾"
     nbSub = "隠れた爆弾の数字をよけろ！UP・DOWN"
@@ -2337,6 +2341,7 @@ val ZhStrings = Strings().apply {
     colorTurn = { "轮到${it}" }
     youAre = { "你: ${it}" }
     phraseBtn = "🗣️ 会话"
+    mapBtn = "🍜 美食地图"
     settleBtn = "🧾 结算"
     nbTitle = "数字炸弹"
     nbSub = "躲开隐藏的炸弹数字！UP · DOWN"
@@ -2816,6 +2821,7 @@ val ThStrings = Strings().apply {
     colorTurn = { "ตา${it}" }
     youAre = { "คุณ: ${it}" }
     phraseBtn = "🗣️ ประโยค"
+    mapBtn = "🍜 ร้านอร่อย"
     settleBtn = "🧾 แบ่งจ่าย"
     nbTitle = "ระเบิดตัวเลข"
     nbSub = "หลบเลขระเบิดที่ซ่อนอยู่! UP · DOWN"
@@ -3295,6 +3301,7 @@ val ViStrings = Strings().apply {
     colorTurn = { "Lượt $it" }
     youAre = { "Bạn: $it" }
     phraseBtn = "🗣️ Câu nói"
+    mapBtn = "🍜 Quán ngon"
     settleBtn = "🧾 Chia tiền"
     nbTitle = "Bom số"
     nbSub = "Né con số bom ẩn! UP · DOWN"

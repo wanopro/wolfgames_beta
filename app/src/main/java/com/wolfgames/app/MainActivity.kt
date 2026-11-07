@@ -73,6 +73,7 @@ import com.wolfgames.app.games.PlinkoScreen
 import com.wolfgames.app.games.TicTacToeScreen
 import com.wolfgames.app.games.GomokuScreen
 import com.wolfgames.app.games.HotelScreen
+import com.wolfgames.app.games.MapScreen
 import com.wolfgames.app.games.NumberBombScreen
 import com.wolfgames.app.games.BalloonScreen
 import com.wolfgames.app.games.TowerScreen
@@ -148,7 +149,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Curling, Sizes, CalcSettle, Phrase, Settle }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Curling, Sizes, CalcSettle, Phrase, Settle, Map }
 
 @Composable
 fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String, String?) -> Unit) {
@@ -246,6 +247,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.Settle, Screen.CalcSettle -> SettleScreen(onBack = back)
             Screen.Sizes -> SizeScreen(onBack = back)
             Screen.Hotel -> HotelScreen(onBack = back, langCode = currentLang.code, secondCode = lang2?.code)
+            Screen.Map -> MapScreen(onBack = back, langCode = currentLang.code)
         }
         // 🔄 앱 켤 때 새 버전 확인 (홈 화면에서만 물어봄)
         if (screen == Screen.Home) UpdatePrompt()
@@ -353,6 +355,17 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(m.phraseBtn, color = WG.Text, fontSize = 14.sp)
+                        }
+                        // 🍜 맛집 지도 (웹 지도를 앱 안에서)
+                        Row(
+                            Modifier
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(WG.Surface)
+                                .clickable { vibe.tap(); onSelect(Screen.Map) }
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(m.mapBtn, color = WG.Text, fontSize = 14.sp)
                         }
                     }
                 }

@@ -392,6 +392,7 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     colorTurn = { p0 -> join2(a.colorTurn(part(p0, 0)), b.colorTurn(part(p0, 1))) }
     youAre = { p0 -> join2(a.youAre(part(p0, 0)), b.youAre(part(p0, 1))) }
     phraseBtn = join2(a.phraseBtn, b.phraseBtn)
+    mapBtn = join2(a.mapBtn, b.mapBtn)
     settleBtn = join2(a.settleBtn, b.settleBtn)
     nbTitle = join2(a.nbTitle, b.nbTitle)
     nbSub = join2(a.nbSub, b.nbSub)

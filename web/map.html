@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12121A">
+<title>🍜 맛집 지도</title>
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<style>
+  :root { --bg:#12121A; --surface:#1E1E2A; --surface2:#2C2C3E; --accent:#FFB300; --text:#F2F2F7; --sub:#9A9AB0; --win:#FF3D5A; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--text);
+    font-family:-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans Thai", sans-serif; }
+  #app { display:flex; flex-direction:column; height:100%; }
+  header { padding:calc(8px + env(safe-area-inset-top)) 12px 8px; display:flex; align-items:center; gap:8px; }
+  header h1 { font-size:18px; margin:0; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .back { color:var(--text); text-decoration:none; font-size:22px; padding:2px 6px; }
+  .chips { display:flex; gap:6px; overflow-x:auto; padding:0 12px 8px; scrollbar-width:none; }
+  .chips::-webkit-scrollbar { display:none; }
+  .chip { flex:none; border:0; background:var(--surface); color:var(--text); padding:7px 12px; border-radius:20px; font-size:14px; cursor:pointer; }
+  .chip.on { background:var(--accent); color:#000; font-weight:700; }
+  #map { flex:1; min-height:0; background:var(--surface); }
+  button { font-family:inherit; }
+  .primary { background:var(--accent); color:#000; border:0; border-radius:12px; padding:11px 14px; font-size:15px; font-weight:700; cursor:pointer; }
+  .ghost { background:var(--surface2); color:var(--text); border:0; border-radius:12px; padding:11px 12px; font-size:15px; cursor:pointer; }
+  .icon { background:var(--surface); color:var(--text); border:0; border-radius:20px; padding:7px 11px; font-size:15px; cursor:pointer; }
+  .sheet { position:fixed; left:0; right:0; bottom:0; background:var(--bg); border-top-left-radius:18px; border-top-right-radius:18px;
+    box-shadow:0 -6px 24px rgba(0,0,0,.5); padding:18px 16px calc(18px + env(safe-area-inset-bottom));
+    max-height:82%; overflow-y:auto; transform:translateY(110%); transition:transform .25s; z-index:10; }
+  .sheet.open { transform:translateY(0); }
+  .sheet h2 { margin:0 0 4px; font-size:19px; padding-right:30px; }
+  .sub { color:var(--sub); font-size:13px; line-height:1.4; }
+  .row { display:flex; gap:8px; margin:10px 0; }
+  .row > * { flex:1; }
+  label { display:block; font-size:13px; color:var(--sub); margin:12px 0 5px; }
+  input, select, textarea { width:100%; padding:11px; border:0; border-radius:12px; background:var(--surface); color:var(--text); font-size:16px; font-family:inherit; }
+  input.bad { outline:2px solid var(--win); }
+  .stars { color:var(--accent); letter-spacing:1px; }
+  .rv { border-top:1px solid var(--surface2); padding:9px 0; font-size:15px; line-height:1.4; }
+  .x { position:absolute; right:10px; top:8px; background:none; border:0; font-size:26px; color:var(--sub); cursor:pointer; }
+  gmp-place-autocomplete { width:100%; color-scheme:dark; }
+  .toast { position:fixed; left:50%; top:calc(64px + env(safe-area-inset-top)); transform:translateX(-50%); background:var(--surface2); color:var(--text);
+    padding:9px 15px; border-radius:10px; font-size:14px; opacity:0; transition:opacity .2s; z-index:20; pointer-events:none; }
+  .toast.show { opacity:1; }
+  .setup { margin:auto; max-width:340px; padding:24px; text-align:center; line-height:1.6; color:var(--sub); }
+  .pin { background:#1E1E2A; border:2px solid var(--accent); border-radius:20px; padding:3px 8px; font-size:13px; font-weight:700; color:#F2F2F7;
+    box-shadow:0 2px 6px rgba(0,0,0,.4); white-space:nowrap; max-width:160px; overflow:hidden; text-overflow:ellipsis; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <a class="back" id="back" href="./">←</a>
+    <h1 id="title"></h1>
+    <button class="icon" id="btnLocate">📍</button>
+    <button class="primary" id="btnAdd" style="padding:8px 12px;font-size:14px"></button>
+  </header>
+  <div class="chips" id="chips"></div>
+  <div id="map"></div>
+</div>
+
+<div class="sheet" id="detailSheet"><button class="x" data-close>×</button><div id="detailBody"></div></div>
+
+<div class="sheet" id="addSheet">
+  <button class="x" data-close>×</button>
+  <h2 id="tAdd"></h2>
+  <label id="lSearch"></label>
+  <div id="acWrap"></div>
+  <div id="picked" class="sub" style="margin-top:6px"></div>
+  <div id="catBox"><label id="lCat"></label><select id="fCat"></select></div>
+  <label id="lRating"></label>
+  <select id="fRating"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select>
+  <label id="lNick"></label>
+  <input id="fNick" maxlength="20" autocomplete="nickname">
+  <label id="lComment"></label>
+  <textarea id="fComment" rows="2" maxlength="200"></textarea>
+  <div class="row"><button class="primary" id="btnSave"></button></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { GOOGLE_MAPS_API_KEY, firebaseConfig } from './map-config.js';
+
+// ---------- 6개 언어 ----------
+const T = {
+  ko: { title:'맛집 지도', add:'+ 추가', addT:'맛집 추가', search:'가게 검색 (구글맵)', cat:'카테고리', rating:'별점', nick:'닉네임 (필수)', nickPh:'예: 늑대',
+        comment:'한줄평', commentPh:'뭐가 맛있었나요?', save:'등록하기', open:'구글맵 앱에서 열기', dir:'길찾기', more:'나도 후기 남기기', share:'공유',
+        copied:'링크를 복사했어요', needPlace:'가게를 먼저 검색해서 골라 주세요', needNick:'닉네임을 입력해 주세요', saved:'등록했어요!', fail:'등록 실패',
+        locNo:'위치 권한을 허용해 주세요', by:'등록', reviews:'후기', all:'전체', setup:'맛집 지도는 아직 준비 중이에요.\n(관리자: map-config.js 에 키를 넣어 주세요)', loadFail:'지도를 불러오지 못했어요' },
+  en: { title:'Food Map', add:'+ Add', addT:'Add a place', search:'Search a place (Google Maps)', cat:'Category', rating:'Rating', nick:'Nickname (required)', nickPh:'e.g. Wolf',
+        comment:'One-line review', commentPh:'What was good?', save:'Add', open:'Open in Google Maps', dir:'Directions', more:'Add my review', share:'Share',
+        copied:'Link copied', needPlace:'Search and pick a place first', needNick:'Please enter a nickname', saved:'Added!', fail:'Failed',
+        locNo:'Please allow location', by:'Added by', reviews:'reviews', all:'All', setup:'The food map is not ready yet.', loadFail:'Could not load the map' },
+  ja: { title:'グルメマップ', add:'+ 追加', addT:'お店を追加', search:'お店を検索 (Googleマップ)', cat:'カテゴリー', rating:'評価', nick:'ニックネーム (必須)', nickPh:'例: オオカミ',
+        comment:'ひとこと', commentPh:'何がおいしかった？', save:'登録', open:'Googleマップで開く', dir:'ルート', more:'私もレビュー', share:'共有',
+        copied:'リンクをコピーしました', needPlace:'先にお店を検索して選んでください', needNick:'ニックネームを入力してください', saved:'登録しました！', fail:'失敗',
+        locNo:'位置情報を許可してください', by:'登録', reviews:'件', all:'すべて', setup:'グルメマップは準備中です。', loadFail:'地図を読み込めませんでした' },
+  zh: { title:'美食地图', add:'+ 添加', addT:'添加餐厅', search:'搜索店铺 (谷歌地图)', cat:'分类', rating:'评分', nick:'昵称 (必填)', nickPh:'例: 狼',
+        comment:'一句话点评', commentPh:'什么好吃？', save:'添加', open:'在谷歌地图打开', dir:'导航', more:'我也点评', share:'分享',
+        copied:'已复制链接', needPlace:'请先搜索并选择店铺', needNick:'请输入昵称', saved:'已添加！', fail:'失败',
+        locNo:'请允许定位', by:'添加者', reviews:'条点评', all:'全部', setup:'美食地图还在准备中。', loadFail:'地图加载失败' },
+  th: { title:'แผนที่ร้านอร่อย', add:'+ เพิ่ม', addT:'เพิ่มร้าน', search:'ค้นหาร้าน (Google Maps)', cat:'หมวดหมู่', rating:'คะแนน', nick:'ชื่อเล่น (จำเป็น)', nickPh:'เช่น หมาป่า',
+        comment:'รีวิวสั้นๆ', commentPh:'อะไรอร่อย?', save:'เพิ่ม', open:'เปิดใน Google Maps', dir:'เส้นทาง', more:'รีวิวด้วย', share:'แชร์',
+        copied:'คัดลอกลิงก์แล้ว', needPlace:'ค้นหาและเลือกร้านก่อน', needNick:'กรุณาใส่ชื่อเล่น', saved:'เพิ่มแล้ว!', fail:'ไม่สำเร็จ',
+        locNo:'กรุณาอนุญาตตำแหน่ง', by:'เพิ่มโดย', reviews:'รีวิว', all:'ทั้งหมด', setup:'แผนที่ยังไม่พร้อม', loadFail:'โหลดแผนที่ไม่ได้' },
+  vi: { title:'Bản đồ quán ngon', add:'+ Thêm', addT:'Thêm quán', search:'Tìm quán (Google Maps)', cat:'Loại', rating:'Đánh giá', nick:'Biệt danh (bắt buộc)', nickPh:'VD: Sói',
+        comment:'Nhận xét ngắn', commentPh:'Món gì ngon?', save:'Thêm', open:'Mở bằng Google Maps', dir:'Chỉ đường', more:'Tôi cũng đánh giá', share:'Chia sẻ',
+        copied:'Đã sao chép liên kết', needPlace:'Hãy tìm và chọn quán trước', needNick:'Hãy nhập biệt danh', saved:'Đã thêm!', fail:'Thất bại',
+        locNo:'Hãy cho phép vị trí', by:'Người thêm', reviews:'đánh giá', all:'Tất cả', setup:'Bản đồ chưa sẵn sàng.', loadFail:'Không tải được bản đồ' },
+};
+// 카테고리: 저장은 코드(kr 등), 화면은 이모지 + 각 언어 이름
+const CATS = [
+  ['kr','🍚',{ko:'한식',en:'Korean',ja:'韓国料理',zh:'韩餐',th:'เกาหลี',vi:'Món Hàn'}],
+  ['local','🍲',{ko:'현지 음식',en:'Local',ja:'現地料理',zh:'当地菜',th:'อาหารท้องถิ่น',vi:'Món địa phương'}],
+  ['noodle','🍜',{ko:'면',en:'Noodles',ja:'麺',zh:'面',th:'ก๋วยเตี๋ยว',vi:'Món nước'}],
+  ['meat','🥩',{ko:'고기',en:'BBQ',ja:'焼肉',zh:'烤肉',th:'ปิ้งย่าง',vi:'Thịt nướng'}],
+  ['sea','🦐',{ko:'해산물',en:'Seafood',ja:'海鮮',zh:'海鲜',th:'ซีฟู้ด',vi:'Hải sản'}],
+  ['jp','🍣',{ko:'일식',en:'Japanese',ja:'和食',zh:'日料',th:'ญี่ปุ่น',vi:'Món Nhật'}],
+  ['west','🍕',{ko:'양식',en:'Western',ja:'洋食',zh:'西餐',th:'ตะวันตก',vi:'Món Âu'}],
+  ['cafe','☕',{ko:'카페',en:'Cafe',ja:'カフェ',zh:'咖啡',th:'คาเฟ่',vi:'Cà phê'}],
+  ['bar','🍺',{ko:'술집',en:'Bar',ja:'居酒屋',zh:'酒吧',th:'บาร์',vi:'Quán nhậu'}],
+  ['etc','🍴',{ko:'기타',en:'Other',ja:'その他',zh:'其他',th:'อื่นๆ',vi:'Khác'}],
+];
+const CAT = Object.fromEntries(CATS.map(([k, e, n]) => [k, { e, n }]));
+
+const qs = new URLSearchParams(location.search);
+const inApp = qs.get('app') === '1';
+const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (_) { return null; } };
+const pref = qs.get('lang') || store('wg-lang') || 'system';
+const L = T[pref] ? pref : (T[(navigator.language || 'en').slice(0, 2)] ? navigator.language.slice(0, 2) : 'en');
+const t = T[L];
+const catName = (k) => (CAT[k] || CAT.etc).n[L] || (CAT[k] || CAT.etc).n.en;
+const catEmoji = (k) => (CAT[k] || CAT.etc).e;
+document.documentElement.lang = L;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+const stars = (n) => '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n));
+const toast = (m) => { const e = $('toast'); e.textContent = m; e.classList.add('show'); setTimeout(() => e.classList.remove('show'), 2000); };
+const openSheet = (id) => document.querySelectorAll('.sheet').forEach((s) => s.classList.toggle('open', s.id === id));
+const closeSheets = () => document.querySelectorAll('.sheet').forEach((s) => s.classList.remove('open'));
+document.querySelectorAll('[data-close]').forEach((b) => { b.onclick = closeSheets; });
+
+// 화면 글자
+document.title = `🍜 ${t.title}`;
+$('title').textContent = `🍜 ${t.title}`; $('btnAdd').textContent = t.add; $('tAdd').textContent = t.addT;
+$('lSearch').textContent = t.search; $('lCat').textContent = t.cat; $('lRating').textContent = t.rating;
+$('lNick').textContent = t.nick; $('fNick').placeholder = t.nickPh; $('lComment').textContent = t.comment;
+$('fComment').placeholder = t.commentPh; $('btnSave').textContent = t.save;
+if (inApp) $('back').style.display = 'none'; // 앱에서는 앱의 뒤로가기 사용
+
+// 구글맵 앱 링크 (폰에 앱이 있으면 앱으로 열림)
+const viewUrl = (p) => p.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name)}&query_place_id=${p.placeId}`;
+const dirUrl = (p) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(p.name)}&destination_place_id=${p.placeId}`;
+
+if (GOOGLE_MAPS_API_KEY.startsWith('YOUR_') || firebaseConfig.projectId.startsWith('YOUR_')) {
+  $('map').replaceWith(Object.assign(document.createElement('div'), { className: 'setup', textContent: t.setup, style: 'white-space:pre-line' }));
+  $('btnAdd').disabled = true; $('btnLocate').disabled = true;
+} else {
+  start().catch((e) => { console.error(e); toast(t.loadFail); });
+}
+
+async function start() {
+  const [{ initializeApp }, fs] = await Promise.all([
+    import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
+    import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js'),
+  ]);
+  const { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp } = fs;
+  const db = getFirestore(initializeApp(firebaseConfig));
+
+  // Google Maps 공식 동적 로더
+  ((g)=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+  ({ key: GOOGLE_MAPS_API_KEY, v: 'weekly', language: L });
+
+  const { Map } = await google.maps.importLibrary('maps');
+  const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+  const { PlaceAutocompleteElement } = await google.maps.importLibrary('places');
+  const core = await google.maps.importLibrary('core');
+
+  const map = new Map($('map'), {
+    center: { lat: 20, lng: 110 }, zoom: 3, mapId: 'DEMO_MAP_ID', colorScheme: core.ColorScheme ? core.ColorScheme.DARK : undefined,
+    clickableIcons: false, gestureHandling: 'greedy', mapTypeControl: false, streetViewControl: false, fullscreenControl: false,
+  });
+
+  let places = [], stats = {}, active = 'all', picked = null, fitted = false, unsubRv = null;
+  const markers = [];
+
+  // 카테고리 칩 + 선택 상자
+  [['all', '', { [L]: t.all }], ...CATS].forEach(([k, e]) => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (k === 'all' ? ' on' : ''); b.textContent = k === 'all' ? t.all : `${e} ${catName(k)}`;
+    b.onclick = () => { active = k; document.querySelectorAll('.chip').forEach((x) => x.classList.toggle('on', x === b)); draw(); };
+    $('chips').append(b);
+  });
+  CATS.forEach(([k, e]) => $('fCat').add(new Option(`${e} ${catName(k)}`, k)));
+
+  // 가게 검색 (전 세계)
+  const ac = new PlaceAutocompleteElement();
+  $('acWrap').append(ac);
+  const pick = async (place) => {
+    await place.fetchFields({ fields: ['id', 'displayName', 'formattedAddress', 'location', 'googleMapsURI'] });
+    picked = { placeId: place.id, name: place.displayName || '', address: place.formattedAddress || '',
+      lat: place.location.lat(), lng: place.location.lng(), mapsUrl: place.googleMapsURI || '' };
+    const known = places.find((x) => x.placeId === picked.placeId);
+    $('catBox').style.display = known ? 'none' : '';
+    $('picked').textContent = `✅ ${picked.name} · ${picked.address}`;
+  };
+  ac.addEventListener('gmp-select', (e) => pick(e.placePrediction.toPlace()));
+  ac.addEventListener('gmp-placeselect', (e) => pick(e.place)); // 이전 버전 호환
+
+  $('fNick').value = store('wg-map-nick') || '';
+  $('fNick').addEventListener('input', () => $('fNick').classList.remove('bad'));
+  $('btnAdd').onclick = () => { picked = null; $('picked').textContent = ''; $('catBox').style.display = ''; openSheet('addSheet'); };
+  $('btnLocate').onclick = () => {
+    if (!navigator.geolocation) return toast(t.locNo);
+    navigator.geolocation.getCurrentPosition((p) => { map.setCenter({ lat: p.coords.latitude, lng: p.coords.longitude }); map.setZoom(15); }, () => toast(t.locNo));
+  };
+
+  const avg = (id) => { const s = stats[id]; return s && s.n ? s.sum / s.n : 0; };
+  function draw() {
+    markers.splice(0).forEach((m) => { m.map = null; });
+    places.filter((p) => active === 'all' || p.category === active).forEach((p) => {
+      const pin = document.createElement('div'); pin.className = 'pin';
+      pin.textContent = `${catEmoji(p.category)} ${p.name}`;
+      const m = new AdvancedMarkerElement({ map, position: { lat: p.lat, lng: p.lng }, content: pin, title: p.name });
+      m.addListener('click', () => detail(p));
+      markers.push(m);
+    });
+  }
+
+  function detail(p) {
+    const n = stats[p.placeId]?.n || 0;
+    $('detailBody').innerHTML = `
+      <h2>${catEmoji(p.category)} ${esc(p.name)}</h2>
+      <div class="sub">${esc(p.address)}</div>
+      <div style="margin-top:6px"><span class="stars">${stars(avg(p.placeId))}</span>
+        <span class="sub">${avg(p.placeId).toFixed(1)} · ${n} ${esc(t.reviews)} · ${esc(t.by)}: ${esc(p.addedBy)}</span></div>
+      <div class="row"><button class="primary" id="bOpen">${esc(t.open)}</button><button class="ghost" id="bDir" style="flex:.6">${esc(t.dir)}</button></div>
+      <div class="row"><button class="ghost" id="bMore">${esc(t.more)}</button><button class="ghost" id="bShare" style="flex:.6">${esc(t.share)}</button></div>
+      <div id="rvs"></div>`;
+    $('bOpen').onclick = () => { location.href = viewUrl(p); };
+    $('bDir').onclick = () => { location.href = dirUrl(p); };
+    $('bMore').onclick = () => { picked = p; $('picked').textContent = `✅ ${p.name} · ${p.address}`; $('catBox').style.display = 'none'; openSheet('addSheet'); };
+    $('bShare').onclick = async () => {
+      const url = `${location.origin}${location.pathname}#${p.id}`;
+      if (navigator.share) navigator.share({ title: p.name, url }).catch(() => {});
+      else { try { await navigator.clipboard.writeText(url); toast(t.copied); } catch (_) { prompt('', url); } }
+    };
+    map.panTo({ lat: p.lat, lng: p.lng });
+    openSheet('detailSheet');
+    if (unsubRv) unsubRv();
+    unsubRv = onSnapshot(query(collection(db, 'reviews'), where('placeId', '==', p.placeId)), (snap) => {
+      const list = snap.docs.map((d) => d.data()).sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      $('rvs').innerHTML = list.map((r) => `<div class="rv"><span class="stars">${stars(r.rating)}</span> ${esc(r.comment)}<div class="sub">${esc(r.nickname)}</div></div>`).join('');
+    });
+  }
+
+  $('btnSave').onclick = async () => {
+    const nickname = $('fNick').value.trim();
+    if (!picked) return toast(t.needPlace);
+    if (!nickname) { $('fNick').classList.add('bad'); $('fNick').focus(); return toast(t.needNick); }
+    $('btnSave').disabled = true;
+    try {
+      store('wg-map-nick', nickname);
+      const rating = Number($('fRating').value), comment = $('fComment').value.trim();
+      if (!places.find((x) => x.placeId === picked.placeId)) {
+        await addDoc(collection(db, 'places'), {
+          placeId: picked.placeId, name: picked.name.slice(0, 120), address: picked.address.slice(0, 300),
+          lat: picked.lat, lng: picked.lng, mapsUrl: picked.mapsUrl.slice(0, 500), category: $('fCat').value,
+          addedBy: nickname, createdAt: serverTimestamp(),
+        });
+      }
+      await addDoc(collection(db, 'reviews'), { placeId: picked.placeId, rating, comment, nickname, createdAt: serverTimestamp() });
+      toast(t.saved); $('fComment').value = ''; picked = null; $('picked').textContent = ''; closeSheets();
+    } catch (e) { console.error(e); toast(`${t.fail}: ${e.code || e.message}`); }
+    finally { $('btnSave').disabled = false; }
+  };
+
+  onSnapshot(collection(db, 'places'), (snap) => {
+    places = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    draw();
+    const want = location.hash.slice(1), hit = want && places.find((x) => x.id === want);
+    if (!fitted && hit) { map.setCenter({ lat: hit.lat, lng: hit.lng }); map.setZoom(16); detail(hit); fitted = true; }
+    else if (!fitted && places.length) {
+      const b = new google.maps.LatLngBounds(); places.forEach((p) => b.extend({ lat: p.lat, lng: p.lng }));
+      map.fitBounds(b, 60); if (places.length === 1) map.setZoom(15); fitted = true;
+    }
+  });
+  onSnapshot(collection(db, 'reviews'), (snap) => {
+    stats = {};
+    snap.docs.forEach((d) => { const r = d.data(); const s = (stats[r.placeId] ||= { sum: 0, n: 0 }); s.sum += r.rating; s.n += 1; });
+  });
+}
+</script>
+</body>
+</html>
