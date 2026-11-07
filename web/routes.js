@@ -1,5 +1,5 @@
 // 🚐 파타야 썽태우(바트버스) 노선 — 맛집 지도 위에 색깔 선으로
-// 길 모양은 구글 길찾기(운전)로 실제 도로에 맞춰 그림 (한 번 받으면 이 휴대폰에 저장). 실패하면 아래 pts 를 이은 직선으로.
+// 길 모양은 구글 Routes API(운전)로 실제 도로에 맞춰 그림 (한 번 받으면 이 휴대폰에 저장). 실패하면 아래 pts 를 이은 직선으로.
 // 출처: pattayaunlimited.com · pattayapointer (2026-04 기준 요금). 기사님마다 다를 수 있어서 타기 전에 행선지 확인 안내.
 export const ROUTES_VER = 1;
 export const ROUTE_CENTER = { lat: 12.928, lng: 100.885 };
@@ -57,25 +57,41 @@ export function routeLayer(map, google, L, onPick) {
   const lines = []; let built = false;
   const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (_) { return null; } };
   const arrows = (r) => (r.oneway ? [{ icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 2.6, strokeColor: '#fff', strokeWeight: 1, fillColor: r.color, fillOpacity: 1 }, offset: '24px', repeat: '90px' }] : []);
-  async function pathOf(r, svc) {
+  const toPts = (arr) => arr.map((p) => (typeof p.lat === 'function' ? [p.lat(), p.lng()] : [p.lat, p.lng])).map(([a, b]) => [Math.round(a * 1e5) / 1e5, Math.round(b * 1e5) / 1e5]);
+  async function viaRoutesApi(r) { // 새 Route 클래스 (Routes API) — 새 프로젝트는 이걸 써야 함
+    const lib = await google.maps.importLibrary('routes');
+    if (!lib.Route) return null;
+    const { routes } = await lib.Route.computeRoutes({
+      origin: r.stops[0], destination: r.stops[r.stops.length - 1], travelMode: 'DRIVING',
+      intermediates: r.stops.slice(1, -1).map((s) => ({ location: s, via: true })), fields: ['path'],
+    });
+    const rt = routes && routes[0]; if (!rt) return null;
+    if (rt.path && rt.path.length) return toPts(rt.path);
+    const pl = rt.createPolylines ? rt.createPolylines() : [];
+    const all = []; pl.forEach((x) => x.getPath().forEach((p) => all.push(p)));
+    return all.length ? toPts(all) : null;
+  }
+  async function viaDirections(r) { // 예전 DirectionsService (Directions API, 예전 프로젝트용)
+    const { DirectionsService } = await google.maps.importLibrary('routes');
+    if (!DirectionsService) return null;
+    const res = await new DirectionsService().route({
+      origin: r.stops[0], destination: r.stops[r.stops.length - 1], travelMode: google.maps.TravelMode.DRIVING,
+      waypoints: r.stops.slice(1, -1).map((s) => ({ location: s, stopover: false })), optimizeWaypoints: false,
+    });
+    return toPts(res.routes[0].overview_path);
+  }
+  async function pathOf(r) {
     const key = `wg-route-${ROUTES_VER}-${r.id}`;
     try { const c = JSON.parse(store(key) || 'null'); if (c && c.length > 2) return c; } catch (_) { /* 무시 */ }
-    try {
-      const res = await svc.route({
-        origin: r.stops[0], destination: r.stops[r.stops.length - 1], travelMode: google.maps.TravelMode.DRIVING,
-        waypoints: r.stops.slice(1, -1).map((s) => ({ location: s, stopover: false })), optimizeWaypoints: false,
-      });
-      const pts = res.routes[0].overview_path.map((p) => [Math.round(p.lat() * 1e5) / 1e5, Math.round(p.lng() * 1e5) / 1e5]);
-      if (pts.length > 2) { store(key, JSON.stringify(pts)); return pts; }
-    } catch (e) { console.warn('route', r.id, e); }
+    for (const fn of [viaRoutesApi, viaDirections]) {
+      try { const pts = await fn(r); if (pts && pts.length > 2) { store(key, JSON.stringify(pts)); return pts; } } catch (e) { console.warn('route', r.id, fn.name, e); }
+    }
     return r.pts;
   }
   async function build() {
     built = true;
-    const { DirectionsService } = await google.maps.importLibrary('routes');
-    const svc = new DirectionsService();
     for (const r of ROUTES) {
-      const path = (await pathOf(r, svc)).map(([lat, lng]) => ({ lat, lng }));
+      const path = (await pathOf(r)).map(([lat, lng]) => ({ lat, lng }));
       const under = new google.maps.Polyline({ path, strokeColor: '#000', strokeOpacity: 0.45, strokeWeight: 9, zIndex: 1, clickable: false });
       const line = new google.maps.Polyline({ path, strokeColor: r.color, strokeOpacity: 0.95, strokeWeight: 5, zIndex: 2, icons: arrows(r) });
       line.addListener('click', () => onPick(r));
