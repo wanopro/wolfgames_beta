@@ -11,8 +11,9 @@
 4. 프로젝트 설정 → 내 앱 → **웹 앱(</>)** 추가 → `firebaseConfig` 값을 `web/map-config.js` 에 붙여넣기
 
 ## 2. Google Maps API 키
-1. https://console.cloud.google.com → 위에서 만든 **같은 프로젝트** 선택
-2. 결제 계정 연결 (카드 등록 필요. 월 무료 사용량 안에서는 과금 없음)
+1. https://console.cloud.google.com → **새 프로젝트를 따로 만들기** (예: wolfgames-maps)
+   - Firebase 프로젝트에 결제 계정을 붙이면 Firebase가 자동으로 유료(Blaze) 플랜으로 바뀌어서, 구글맵 키는 다른 프로젝트에서 만드는 게 깔끔해요. **Firebase는 Spark(무료) 그대로.**
+2. 이 새 프로젝트에 결제 계정 연결 (카드 등록 필요. 월 무료 사용량 안에서는 과금 없음)
 3. API 및 서비스 → 라이브러리 → **Maps JavaScript API**, **Places API (New)**, **Directions API** 사용 설정 (Directions는 🚐 썽태우 노선을 실제 도로 모양으로 그릴 때 씀 — 휴대폰마다 처음 한 번만 받고 저장)
 4. 사용자 인증 정보 → API 키 만들기 → `web/map-config.js` 의 `GOOGLE_MAPS_API_KEY` 에 붙여넣기
 5. **키 제한 (꼭!)**: 애플리케이션 제한 = 웹사이트 → `https://wanopro.github.io/*`
