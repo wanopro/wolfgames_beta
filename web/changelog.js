@@ -7,12 +7,12 @@ export const CHANGELOG = [
    [
     "🐺",
     {
-     "ko": "🐺 🍀 운빨게임에 늑대 야바위 추가: 늑대들이 코인을 하나씩 먹는데 한 마리만 굶어요 → 섞이고 나면 한 명씩 골라서 빈 입이면 원샷 (1~6명)",
-     "en": "🐺 New 🍀 Luck game, Wolf Shell Game: the wolves each eat a coin except one → after the shuffle, take turns picking — empty mouth drinks (1–6 players)",
-     "ja": "🐺 🍀 運ゲーに オオカミ当て を追加：オオカミがコインを1枚ずつ食べ、1匹だけおあずけ → シャッフル後に1人ずつ選んで空っぽなら一気（1〜6人）",
-     "zh": "🐺 🍀 拼手气新增 狼猜猜猜：狼一只只吃硬币，只有一只没吃到 → 洗完后轮流选，选到空嘴的干杯（1~6人）",
-     "th": "🐺 เพิ่มใน 🍀 เกมดวง: หมาป่าซ่อนเหรียญ — หมาป่ากินเหรียญทีละตัว มีตัวเดียวที่อด → สลับเสร็จผลัดกันเลือก ปากว่างต้องดื่ม (1–6 คน)",
-     "vi": "🐺 Thêm vào 🍀 Trò may rủi: Đoán sói — các con sói lần lượt ăn xu, chỉ một con nhịn → trộn xong lần lượt chọn, trúng miệng trống là uống (1–6 người)"
+     "ko": "🐺 🍀 운빨게임에 늑대 야바위 추가: 늑대들이 코인을 먹는데 꽝 늑대는 굶어요 → 섞이고 나면 한 명씩 골라서 빈 입이면 원샷 (1~8명, 꽝 늑대 1 ~ 인원-1마리)",
+     "en": "🐺 New 🍀 Luck game, Wolf Shell Game: the wolves eat coins except the empty ones → after the shuffle, take turns picking — empty mouth drinks (1–8 players, 1 to players−1 empty wolves)",
+     "ja": "🐺 🍀 運ゲーに オオカミ当て を追加：オオカミがコインを食べ、ハズレだけおあずけ → シャッフル後に1人ずつ選んで空っぽなら一気（1〜8人、ハズレは1〜人数−1匹）",
+     "zh": "🐺 🍀 拼手气新增 狼猜猜猜：狼吃硬币，空嘴狼吃不到 → 洗完后轮流选，选到空嘴的干杯（1~8人，空嘴狼 1~人数−1只）",
+     "th": "🐺 เพิ่มใน 🍀 เกมดวง: หมาป่าซ่อนเหรียญ — หมาป่ากินเหรียญ ยกเว้นตัวปากว่าง → สลับเสร็จผลัดกันเลือก ปากว่างต้องดื่ม (1–8 คน, ปากว่าง 1 ถึง จำนวนคน−1 ตัว)",
+     "vi": "🐺 Thêm vào 🍀 Trò may rủi: Đoán sói — các con sói ăn xu, trừ con miệng trống → trộn xong lần lượt chọn, trúng miệng trống là uống (1–8 người, 1 đến số người−1 con miệng trống)"
     }
    ],
    [

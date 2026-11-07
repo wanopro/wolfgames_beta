@@ -1,15 +1,18 @@
-# v1.9 새 문구 (ko, en, ja, zh, th, vi) — 🐺 늑대 야바위 · 📤 앱 공유하기
+# v1.9 새 문구 (ybDesc 는 2026-11-07 꽝 늑대 여러 마리로 바뀜 — 기존 줄을 지우고 다시 넣음) (ko, en, ja, zh, th, vi) — 🐺 늑대 야바위 · 📤 앱 공유하기
 # 사용: python3 tools/v19strings.py → python3 tools/gen_web_i18n.py → python3 tools/gen_dual.py
 S = {
  # 🐺 늑대 야바위 (🍀 운빨)
  'ybTitle': ['늑대 야바위', 'Wolf Shell Game', 'オオカミ当て', '狼猜猜猜', 'หมาป่าซ่อนเหรียญ', 'Đoán sói'],
  'ybSub': ['코인 못 먹은 늑대를 고르면 원샷!', 'Pick the wolf with no coin — drink!', 'コインを食べてないオオカミを選んだら一気！', '选到没吃硬币的狼就干杯！', 'เลือกหมาป่าที่ไม่ได้กินเหรียญ ดื่ม!', 'Chọn trúng con sói không có xu là uống!'],
- 'ybDesc': ['늑대들이 입을 벌리고 코인을 하나씩 먹어요. 딱 한 마리만 못 먹어요.\n늑대들이 이리저리 섞이면 잘 따라가 봐요 👀 (점점 빨라져요)\n한 사람씩 늑대를 하나 골라요 👆 코인이 나오면 통과, 빈 입이면 🍺 원샷!',
-            'The wolves open wide and each eats a coin — except one.\nThen they shuffle around. Try to keep track 👀 (it gets faster)\nOne at a time, pick a wolf 👆 Coin = safe. Empty mouth = 🍺 bottoms up!',
-            'オオカミたちが口を開けてコインを1枚ずつ食べます。1匹だけ食べられません。\nオオカミがぐるぐる入れ替わるのをよく見て 👀（だんだん速く）\n1人ずつオオカミを1匹選ぶ 👆 コインが出たらセーフ、空っぽなら🍺一気！',
-            '狼们张大嘴，一只一只吃硬币，只有一只没吃到。\n然后狼会来回交换位置，好好盯着 👀（越来越快）\n每人轮流选一只狼 👆 有硬币就过关，空嘴的 🍺 干杯！',
-            'หมาป่าอ้าปากกินเหรียญทีละตัว มีแค่ตัวเดียวที่ไม่ได้กิน\nแล้วหมาป่าจะสลับที่ไปมา ตามดูให้ดี 👀 (เร็วขึ้นเรื่อยๆ)\nผลัดกันเลือกหมาป่าคนละตัว 👆 มีเหรียญ = รอด ปากว่าง = 🍺 หมดแก้ว!',
-            'Những con sói há miệng ăn xu từng con một — chỉ một con không được ăn.\nRồi chúng đổi chỗ qua lại, nhìn theo kỹ nhé 👀 (càng lúc càng nhanh)\nLần lượt mỗi người chọn một con 👆 Có xu = thoát, miệng trống = 🍺 cạn ly!'],
+ 'ybDesc': ['늑대들이 입을 벌리고 코인을 하나씩 먹어요. 정한 수만큼은 못 먹어요 (꽝 늑대).\n늑대들이 이리저리 섞이면 잘 따라가 봐요 👀 (점점 빨라져요)\n한 사람씩 늑대를 하나 골라요 👆 코인이 나오면 통과, 빈 입이면 🍺 원샷! 꽝 늑대를 다 찾으면 끝.',
+            'The wolves open wide and eat coins — except the empty ones (you choose how many).\nThen they shuffle around. Try to keep track 👀 (it gets faster)\nOne at a time, pick a wolf 👆 Coin = safe. Empty mouth = 🍺 bottoms up! Ends when every empty wolf is found.',
+            'オオカミたちが口を開けてコインを食べます。決めた数だけ食べられません（ハズレオオカミ）。\nオオカミがぐるぐる入れ替わるのをよく見て 👀（だんだん速く）\n1人ずつオオカミを1匹選ぶ 👆 コインが出たらセーフ、空っぽなら🍺一気！ハズレを全部見つけたら終わり。',
+            '狼们张大嘴吃硬币，按设定的数量有几只吃不到（空嘴狼）。\n然后狼会来回交换位置，好好盯着 👀（越来越快）\n每人轮流选一只狼 👆 有硬币就过关，空嘴的 🍺 干杯！空嘴狼全部找到就结束。',
+            'หมาป่าอ้าปากกินเหรียญ มีบางตัวที่อดตามจำนวนที่ตั้งไว้ (หมาป่าปากว่าง)\nแล้วหมาป่าจะสลับที่ไปมา ตามดูให้ดี 👀 (เร็วขึ้นเรื่อยๆ)\nผลัดกันเลือกหมาป่าคนละตัว 👆 มีเหรียญ = รอด ปากว่าง = 🍺 หมดแก้ว! เจอปากว่างครบก็จบ',
+            'Những con sói há miệng ăn xu — trừ số con miệng trống bạn đã chọn.\nRồi chúng đổi chỗ qua lại, nhìn theo kỹ nhé 👀 (càng lúc càng nhanh)\nLần lượt mỗi người chọn một con 👆 Có xu = thoát, miệng trống = 🍺 cạn ly! Tìm hết sói miệng trống là xong.'],
+ 'ybLosers': ['꽝 늑대 수 (원샷할 사람 수)', 'Empty wolves (how many drink)', 'ハズレオオカミの数（飲む人数）', '空嘴狼数量（喝酒人数）', 'จำนวนหมาป่าปากว่าง (คนที่ต้องดื่ม)', 'Số sói miệng trống (số người uống)'],
+ 'ybEatingN': ('fn', '(Int) -> String', ['{ "🪙 냠냠… ${it}마리는 굶어요" }', '{ "🪙 Nom nom… $it go hungry" }', '{ "🪙 もぐもぐ…${it}匹はおあずけ" }', '{ "🪙 吧唧吧唧…有${it}只饿着" }', '{ "🪙 งั่มๆ… อด $it ตัว" }', '{ "🪙 Măm măm… $it con bị nhịn" }']),
+ 'ybShotN': ('fn', '(String) -> String', ['{ "${it}번 원샷! 🍺" }', '{ "No. $it — drink! 🍺" }', '{ "${it}番 一気！🍺" }', '{ "${it}号 干杯！🍺" }', '{ "คนที่ $it หมดแก้ว! 🍺" }', '{ "Người số $it cạn ly! 🍺" }']),
  'ybStart': ['🪙 코인 먹이기', '🪙 Feed the coins', '🪙 コインを食べさせる', '🪙 喂硬币', '🪙 ป้อนเหรียญ', '🪙 Cho ăn xu'],
  'ybEating': ['🪙 냠냠… 한 마리는 굶어요', '🪙 Nom nom… one goes hungry', '🪙 もぐもぐ…1匹はおあずけ', '🪙 吧唧吧唧…有一只饿着', '🪙 งั่มๆ… มีตัวหนึ่งอด', '🪙 Măm măm… một con bị nhịn'],
  'ybShuffle': ['🔀 섞는 중… 잘 봐요 👀', '🔀 Shuffling… watch closely 👀', '🔀 シャッフル中…よく見て 👀', '🔀 洗牌中…看仔细 👀', '🔀 กำลังสลับ… ดูให้ดี 👀', '🔀 Đang trộn… nhìn kỹ 👀'],

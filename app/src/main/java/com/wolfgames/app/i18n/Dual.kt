@@ -495,7 +495,6 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     upLatest = join2(a.upLatest, b.upLatest)
     ybTitle = join2(a.ybTitle, b.ybTitle)
     ybSub = join2(a.ybSub, b.ybSub)
-    ybDesc = join2(a.ybDesc, b.ybDesc)
     ybStart = join2(a.ybStart, b.ybStart)
     ybEating = join2(a.ybEating, b.ybEating)
     ybShuffle = join2(a.ybShuffle, b.ybShuffle)
@@ -515,4 +514,8 @@ private fun build(a: Strings, b: Strings): Strings = Strings().apply {
     shCopy = join2(a.shCopy, b.shCopy)
     shCopied = join2(a.shCopied, b.shCopied)
     shMsg = join2(a.shMsg, b.shMsg)
+    ybDesc = join2(a.ybDesc, b.ybDesc)
+    ybLosers = join2(a.ybLosers, b.ybLosers)
+    ybEatingN = { p0 -> join2(a.ybEatingN(p0), b.ybEatingN(p0)) }
+    ybShotN = { p0 -> join2(a.ybShotN(part(p0, 0)), b.ybShotN(part(p0, 1))) }
 }
