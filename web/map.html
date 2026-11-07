@@ -49,6 +49,10 @@
   .legend b { display:block; font-size:14px; margin-bottom:6px; }
   .lg { display:flex; align-items:center; gap:8px; font-size:13px; padding:4px 0; cursor:pointer; }
   .lg i { flex:none; width:22px; height:5px; border-radius:3px; }
+  .locate { position:fixed; right:12px; bottom:calc(84px + env(safe-area-inset-bottom)); width:48px; height:48px; border-radius:50%; border:0;
+    background:var(--surface); color:var(--sub); box-shadow:0 3px 10px rgba(0,0,0,.5); z-index:6; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .locate.on { color:#4FC3F7; }
+  .me { width:18px; height:18px; border-radius:50%; background:#4FC3F7; border:3px solid #fff; box-shadow:0 0 0 6px rgba(79,195,247,.25), 0 2px 6px rgba(0,0,0,.5); }
   .lg.off { opacity:.35; text-decoration:line-through; }
   .icon.on { background:var(--accent); color:#000; }
   .pin { background:#1E1E2A; border:2px solid var(--accent); border-radius:20px; padding:3px 8px; font-size:13px; font-weight:700; color:#F2F2F7;
@@ -61,7 +65,6 @@
     <a class="back" id="back" href="./">←</a>
     <h1 id="title"></h1>
     <button class="icon" id="btnRoutes">🚐</button>
-    <button class="icon" id="btnLocate">📍</button>
     <button class="primary" id="btnAdd" style="padding:8px 12px;font-size:14px"></button>
   </header>
   <div class="chips" id="chips"></div>
@@ -88,6 +91,7 @@
 </div>
 
 <div class="legend" id="legend"></div>
+<button id="btnLocate" class="locate" aria-label="📍"><svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="4" fill="currentColor"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4" stroke="currentColor" stroke-width="2"/></svg></button>
 
 <div class="toast" id="toast"></div>
 
@@ -302,9 +306,22 @@ async function start() {
   };
   if (qs.get('routes') === '1') $('btnRoutes').onclick();
 
+  // 📍 내 위치: 파란 점 + 정확도 원, 누르면 내 위치로 이동 (켜져 있는 동안 따라감)
+  let meMarker = null, meCircle = null, watchId = null, firstFix = true;
+  const showMe = (pos) => {
+    const ll = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    if (!meMarker) { const d = document.createElement('div'); d.className = 'me'; meMarker = new AdvancedMarkerElement({ map, position: ll, content: d, zIndex: 999 }); }
+    else meMarker.position = ll;
+    if (!meCircle) meCircle = new google.maps.Circle({ map, center: ll, radius: pos.coords.accuracy || 30, strokeOpacity: 0, fillColor: '#4FC3F7', fillOpacity: 0.12, clickable: false });
+    else { meCircle.setCenter(ll); meCircle.setRadius(pos.coords.accuracy || 30); }
+    if (firstFix) { map.panTo(ll); if (map.getZoom() < 15) map.setZoom(16); firstFix = false; }
+    $('btnLocate').classList.add('on');
+  };
   $('btnLocate').onclick = () => {
     if (!navigator.geolocation) return toast(t.locNo);
-    navigator.geolocation.getCurrentPosition((p) => { map.setCenter({ lat: p.coords.latitude, lng: p.coords.longitude }); map.setZoom(15); }, () => toast(t.locNo));
+    firstFix = true;
+    if (meMarker) { map.panTo(meMarker.position); if (map.getZoom() < 15) map.setZoom(16); }
+    if (watchId == null) watchId = navigator.geolocation.watchPosition(showMe, () => { toast(t.locNo); navigator.geolocation.clearWatch(watchId); watchId = null; $('btnLocate').classList.remove('on'); }, { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 });
   };
 
   // 여러 사람이 적은 메뉴 중 많이 나온 순으로 3개
