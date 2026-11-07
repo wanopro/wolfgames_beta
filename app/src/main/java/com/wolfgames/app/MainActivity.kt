@@ -356,7 +356,7 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                         ) {
                             Text(m.phraseBtn, color = WG.Text, fontSize = 14.sp)
                         }
-                        // 🍜 맛집 지도 (웹 지도를 앱 안에서)
+                        // 🗺️ 지도 (맛집·호텔·클럽·마사지 + 썽태우 노선, 웹 지도를 앱 안에서)
                         Row(
                             Modifier
                                 .clip(RoundedCornerShape(20.dp))
