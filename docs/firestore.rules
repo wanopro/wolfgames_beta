@@ -17,9 +17,9 @@ service cloud.firestore {
     }
     match /reviews/{id} {
       allow read: if true;
-      allow create: if request.resource.data.keys().hasOnly(['placeId','rating','comment','nickname','createdAt'])
-                    && request.resource.data.rating is int
-                    && request.resource.data.rating >= 1 && request.resource.data.rating <= 5
+      allow create: if request.resource.data.keys().hasOnly(['placeId','menus','comment','nickname','createdAt'])
+                    && request.resource.data.menus is list
+                    && request.resource.data.menus.size() >= 1 && request.resource.data.menus.size() <= 2
                     && request.resource.data.comment is string && request.resource.data.comment.size() <= 200
                     && nick(request.resource.data.nickname)
                     && request.resource.data.createdAt == request.time;

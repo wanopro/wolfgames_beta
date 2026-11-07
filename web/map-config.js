@@ -7,3 +7,7 @@ export const firebaseConfig = {
   projectId: 'YOUR_PROJECT',
   appId: 'YOUR_APP_ID',
 };
+
+// 🐺 울프 커뮤니티 가게 이름 검색 주소 — 끝에 가게 이름이 붙음
+// wolf.community 에서 아무거나 검색한 뒤 주소창 주소를 보고, 검색어 앞부분까지 여기에 넣으면 됩니다
+export const WOLF_SEARCH = 'https://wolf.community/index.php?act=IS&is_keyword=';
