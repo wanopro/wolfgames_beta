@@ -16,14 +16,14 @@ export const CHANGELOG = [
     }
    ],
    [
-    "🥌",
+    "🍺",
     {
-     "ko": "🥌 늑대컬링을 🐺 늑대게임으로 옮기고 잔 대신 늑대 스톤으로 · 💧 물컵 채우기(새 그림) · 킹스컵은 왕관 모으기",
-     "en": "🥌 Wolf Curling moved to 🐺 Wolf Games and now uses a wolf stone · 💧 Fill the Cup (new look) · King's Cup now collects crowns",
-     "ja": "🥌 オオカミカーリングを 🐺 オオカミゲームへ移動、オオカミストーンに ・ 💧 コップに水を（新しい絵） ・ キングスカップは王冠集め",
-     "zh": "🥌 狼冰壶移到 🐺 狼游戏，改用狼冰壶石 · 💧 倒水杯（新画面） · 国王杯改为收集王冠",
-     "th": "🥌 ย้ายเคิร์ลลิงหมาป่าไปที่ 🐺 เกมหมาป่า ใช้หินหมาป่าแทน · 💧 เติมน้ำให้เต็มแก้ว (ภาพใหม่) · คิงส์คัพเปลี่ยนเป็นสะสมมงกุฎ",
-     "vi": "🥌 Bi đá sói chuyển sang 🐺 Trò chơi sói, dùng đá sói · 💧 Rót đầy cốc nước (hình mới) · King's Cup đổi thành gom vương miện"
+     "ko": "🍺 늑대컬링을 ⚡ 순발력게임에서 🐺 늑대게임으로 옮김",
+     "en": "🍺 Wolf Curling moved from ⚡ Quick Games to 🐺 Wolf Games",
+     "ja": "🍺 オオカミカーリングを ⚡ 反射神経ゲームから 🐺 オオカミゲームへ移動",
+     "zh": "🍺 狼冰壶从 ⚡ 反应游戏移到 🐺 狼游戏",
+     "th": "🍺 ย้ายเคิร์ลลิงหมาป่าจาก ⚡ เกมความไว ไปที่ 🐺 เกมหมาป่า",
+     "vi": "🍺 Bi đá sói chuyển từ ⚡ Trò phản xạ sang 🐺 Trò chơi sói"
     }
    ],
    [
@@ -79,12 +79,12 @@ export const CHANGELOG = [
    [
     "🥌",
     {
-     "ko": "🥌 늑대컬링: 마지막 🏆 결과를 크게 — 순위 · 거리(cm) · 벌칙 받을 사람이 한눈에",
-     "en": "🥌 Wolf Curling: the final 🏆 result is bigger — ranking, distance (cm) and who gets the penalty at a glance",
-     "ja": "🥌 オオカミカーリング：最後の🏆結果を大きく — 順位・距離（cm）・罰ゲームの人がひと目で",
-     "zh": "🥌 狼冰壶：最后的 🏆 结果变大了 — 排名、距离（cm）和要受惩罚的人一目了然",
-     "th": "🥌 เคิร์ลลิงหมาป่า: ผล 🏆 ตอนจบตัวใหญ่ขึ้น — อันดับ · ระยะ (cm) · ใครโดนทำโทษ เห็นชัดในทีเดียว",
-     "vi": "🥌 Bi đá sói: kết quả 🏆 cuối ván to hơn — thứ hạng, khoảng cách (cm) và ai bị phạt nhìn là thấy"
+     "ko": "🍺 늑대컬링: 마지막 🏆 결과를 크게 — 순위 · 거리(cm) · 벌칙 받을 사람이 한눈에",
+     "en": "🍺 Wolf Curling: the final 🏆 result is bigger — ranking, distance (cm) and who gets the penalty at a glance",
+     "ja": "🍺 オオカミカーリング：最後の🏆結果を大きく — 順位・距離（cm）・罰ゲームの人がひと目で",
+     "zh": "🍺 狼冰壶：最后的 🏆 结果变大了 — 排名、距离（cm）和要受惩罚的人一目了然",
+     "th": "🍺 เคิร์ลลิงหมาป่า: ผล 🏆 ตอนจบตัวใหญ่ขึ้น — อันดับ · ระยะ (cm) · ใครโดนทำโทษ เห็นชัดในทีเดียว",
+     "vi": "🍺 Bi đá sói: kết quả 🏆 cuối ván to hơn — thứ hạng, khoảng cách (cm) và ai bị phạt nhìn là thấy"
     }
    ],
    [
@@ -138,14 +138,14 @@ export const CHANGELOG = [
     }
    ],
    [
-    "🥌",
+    "🍺",
     {
-     "ko": "🥌 늑대컬링 추가 (순발력게임): 늑대 스톤을 뒤로 당겼다가 놓으면 테이블 위를 미끄러져요. 끝에 가까울수록 🥇, 끝을 넘으면 💦 떨어져서 벌칙 (힘 게이지 없이 감으로!)",
-     "en": "🥌 New Wolf Curling (Quick Games): pull the wolf curling stone back and let go to slide it down the table. Closest to the edge gets 🥇, past it and it 💦 falls off — penalty! (No power meter, go by feel!)",
-     "ja": "🥌 オオカミカーリング追加（反射神経ゲーム）：オオカミのストーンを後ろに引いて放すとテーブルを滑ります。端に近いほど🥇、越えたら💦落ちて罰ゲーム（パワーゲージなし、感覚で！）",
-     "zh": "🥌 新增狼冰壶（反应游戏）：把狼冰壶石往后拉再松手，它会在桌上滑行。离桌边越近越好 🥇，超过就 💦 掉下去要受惩罚（没有力度条，全凭手感！）",
-     "th": "🥌 เพิ่มเคิร์ลลิงหมาป่า (เกมความไว): ดึงสโตนหมาป่าลงแล้วปล่อยให้ไถลไปบนโต๊ะ ใกล้ขอบที่สุดได้ 🥇 เลยขอบจะ 💦 ตกแล้วโดนทำโทษ (ไม่มีเกจแรง ใช้ความรู้สึก!)",
-     "vi": "🥌 Thêm Bi đá sói (Trò phản xạ): kéo hòn đá sói về sau rồi thả cho nó trượt trên bàn. Gần mép nhất được 🥇, vượt mép là 💦 rơi và bị phạt (không có thanh lực, dựa vào cảm giác!)"
+     "ko": "🍺 늑대컬링 추가 (순발력게임): 늑대 모양 맥주잔을 뒤로 당겼다가 놓으면 테이블 위를 미끄러져요. 끝에 가까울수록 🥇, 끝을 넘으면 💦 떨어져서 벌칙 (힘 게이지 없이 감으로!)",
+     "en": "🍺 New Wolf Curling (Quick Games): pull the wolf-shaped beer mug back and let go to slide it down the table. Closest to the edge gets 🥇, past it and it 💦 falls off — penalty! (No power meter, go by feel!)",
+     "ja": "🍺 オオカミカーリング追加（反射神経ゲーム）：オオカミ形のジョッキを後ろに引いて放すとテーブルを滑ります。端に近いほど🥇、越えたら💦落ちて罰ゲーム（パワーゲージなし、感覚で！）",
+     "zh": "🍺 新增狼冰壶（反应游戏）：把狼形啤酒杯往后拉再松手，它会在桌上滑行。离桌边越近越好 🥇，超过就 💦 掉下去要受惩罚（没有力度条，全凭手感！）",
+     "th": "🍺 เพิ่มเคิร์ลลิงหมาป่า (เกมความไว): ดึงแก้วเบียร์รูปหมาป่าลงแล้วปล่อยให้ไถลไปบนโต๊ะ ใกล้ขอบที่สุดได้ 🥇 เลยขอบจะ 💦 ตกแล้วโดนทำโทษ (ไม่มีเกจแรง ใช้ความรู้สึก!)",
+     "vi": "🍺 Thêm Bi đá sói (Trò phản xạ): kéo cốc bia hình sói về sau rồi thả cho nó trượt trên bàn. Gần mép nhất được 🥇, vượt mép là 💦 rơi và bị phạt (không có thanh lực, dựa vào cảm giác!)"
     }
    ],
    [
@@ -410,14 +410,14 @@ export const CHANGELOG = [
     }
    ],
    [
-    "💧",
+    "🍺",
     {
-     "ko": "💧 물컵 채우기: 물이 빨라졌다 느려졌다 하면서 차올라요 (판마다 다르게)",
-     "en": "💧 Fill the Cup: the water now speeds up and slows down as it fills (different every round)",
-     "ja": "💧 コップ満タン：水が速くなったり遅くなったりしながら注がれます（毎回ちがう）",
-     "zh": "💧 倒满水杯：水忽快忽慢地往上涨（每局都不一样）",
-     "th": "💧 เติมน้ำให้เต็มแก้ว: น้ำจะเติมเร็วบ้างช้าบ้าง (แต่ละรอบไม่เหมือนกัน)",
-     "vi": "💧 Rót đầy cốc: nước rót lúc nhanh lúc chậm (mỗi ván một kiểu)"
+     "ko": "🍺 맥주 거품 채우기: 맥주가 빨라졌다 느려졌다 하면서 차올라요 (판마다 다르게)",
+     "en": "🍺 Beer Pour: the beer now speeds up and slows down as it fills (different every round)",
+     "ja": "🍺 ビール注ぎ：ビールが速くなったり遅くなったりしながら注がれます（毎回ちがう）",
+     "zh": "🍺 倒啤酒：啤酒忽快忽慢地往上涨（每局都不一样）",
+     "th": "🍺 รินเบียร์: เบียร์จะเติมเร็วบ้างช้าบ้าง (แต่ละรอบไม่เหมือนกัน)",
+     "vi": "🍺 Rót bia: bia rót lúc nhanh lúc chậm (mỗi ván một kiểu)"
     }
    ]
   ]
@@ -451,23 +451,23 @@ export const CHANGELOG = [
    [
     "👑",
     {
-     "ko": "👑 글로벌 킹스컵 추가 (카드): 카드마다 그림으로 할 일 표시, K가 나올 때마다 왕관 👑을 모으고 4번째 K는 킹스컵 큰 벌칙",
-     "en": "New 👑 Global King's Cup (Cards): every card shows its rule as a picture; each King collects a crown 👑 and the 4th King gets the King's Cup big penalty",
-     "ja": "👑 グローバル・キングスカップ追加（カード）：カードごとにやることを絵で表示、Kが出るたびに王冠👑を集め4枚目のKはキングスカップの大きな罰ゲーム",
-     "zh": "新增👑 全球国王杯（扑克）：每张牌用图显示规则，每出一张K就收集一顶皇冠👑，第4张K接受国王杯大惩罚",
-     "th": "เพิ่ม 👑 คิงส์คัพสากล (ไพ่): ทุกใบบอกกติกาเป็นรูป ได้ K จะเก็บมงกุฎ 👑 K ใบที่ 4 โดนทำโทษใหญ่คิงส์คัพ",
-     "vi": "Thêm 👑 King's Cup toàn cầu (Bài): mỗi lá hiện luật bằng hình, mỗi lá K thu một vương miện 👑, lá K thứ 4 bị phạt nặng King's Cup"
+     "ko": "👑 글로벌 킹스컵 추가 (카드): 카드마다 그림으로 할 일 표시, K가 나올 때마다 킹스컵 잔이 차고 4번째 K는 킹스컵 큰 벌칙",
+     "en": "New 👑 Global King's Cup (Cards): every card shows its rule as a picture; the cup fills with each King and the 4th King gets the King's Cup big penalty",
+     "ja": "👑 グローバル・キングスカップ追加（カード）：カードごとにやることを絵で表示、Kが出るたびに杯が満ち4枚目のKはキングスカップの大きな罰ゲーム",
+     "zh": "新增👑 全球国王杯（扑克）：每张牌用图显示规则，每出一张K杯子就满一点，第4张K接受国王杯大惩罚",
+     "th": "เพิ่ม 👑 คิงส์คัพสากล (ไพ่): ทุกใบบอกกติกาเป็นรูป ได้ K แก้วจะเต็มขึ้น K ใบที่ 4 โดนทำโทษใหญ่คิงส์คัพ",
+     "vi": "Thêm 👑 King's Cup toàn cầu (Bài): mỗi lá hiện luật bằng hình, mỗi lá K làm ly đầy thêm, lá K thứ 4 bị phạt nặng King's Cup"
     }
    ],
    [
-    "💧",
+    "🍺",
     {
-     "ko": "💧 물컵 채우기 추가 (순발력게임): 점점 빨리 차오르는 물을 선에 맞춰 멈추기, 넘치면 꼴찌",
-     "en": "New 💧 Fill the Cup (Quick Games): stop the ever-faster water right at the line — overflow means last place",
-     "ja": "💧 コップ満タン追加（反射神経ゲーム）：どんどん速くなる水を線で止める、あふれたらビリ",
-     "zh": "新增💧 倒满水杯（反应游戏）：越倒越快的水要停在线上，溢出就垫底",
-     "th": "เพิ่ม 💧 เติมน้ำให้เต็มแก้ว (เกมไหวพริบ): หยุดน้ำที่เติมเร็วขึ้นเรื่อยๆ ให้ตรงเส้น ล้นแก้วได้ที่โหล่",
-     "vi": "Thêm 💧 Rót đầy cốc (Phản xạ): dừng nước đang rót ngày càng nhanh đúng vạch — tràn là bét"
+     "ko": "🍺 맥주 거품 채우기 추가 (순발력게임): 점점 빨리 차오르는 맥주를 선에 맞춰 멈추기, 넘치면 꼴찌",
+     "en": "New 🍺 Beer Pour (Quick Games): stop the ever-faster beer right at the line — overflow means last place",
+     "ja": "🍺 ビール注ぎ追加（反射神経ゲーム）：どんどん速くなるビールを線で止める、あふれたらビリ",
+     "zh": "新增🍺 倒啤酒（反应游戏）：越倒越快的啤酒要停在线上，溢出就垫底",
+     "th": "เพิ่ม 🍺 รินเบียร์ (เกมไหวพริบ): หยุดเบียร์ที่เติมเร็วขึ้นเรื่อยๆ ให้ตรงเส้น ล้นแก้วได้ที่โหล่",
+     "vi": "Thêm 🍺 Rót bia (Phản xạ): dừng bia đang rót ngày càng nhanh đúng vạch — tràn là bét"
     }
    ],
    [

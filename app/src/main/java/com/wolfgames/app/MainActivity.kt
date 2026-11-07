@@ -192,7 +192,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🏁", s.menuRace, s.menuRaceSub, Screen.Race),
                 MenuItem("🗡️", s.menuPirate, s.menuPirateSub, Screen.Pirate),
                 MenuItem("🔄", s.menuArrow, s.menuArrowSub, Screen.Arrow),
-                MenuItem("🥌", s.cuTitle, s.cuSub, Screen.Curling),
+                MenuItem("🍺", s.cuTitle, s.cuSub, Screen.Curling),
             )) { screen = it }
             Screen.LuckMenu -> CategoryScreen("🍀 ${s.menuLuck}", back, listOf(
                 MenuItem("@ladder", s.menuLadder, s.menuLadderSub, Screen.Ladder),
@@ -210,7 +210,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🟢", s.reactTitle, s.reactSub, Screen.Reaction),
                 MenuItem("🎨", s.colorTitle, s.colorSub, Screen.ColorReact),
                 MenuItem("⏱️", s.stopTitle, s.stopSub, Screen.Stopwatch),
-                MenuItem("💧", s.beerTitle, s.beerSub, Screen.Beer),
+                MenuItem("🍺", s.beerTitle, s.beerSub, Screen.Beer),
                 MenuItem("🏗️", s.tsTitle, s.tsSub, Screen.Tower),
                 MenuItem("🔴", s.smTitle, s.smSub, Screen.Simon),
             )) { screen = it }

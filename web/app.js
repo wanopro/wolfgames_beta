@@ -215,7 +215,7 @@ function wolfMenu(root) {
     card('🏁', s.menuRace, s.menuRaceSub, () => go('race')),
     card('🗡️', s.menuPirate, s.menuPirateSub, () => go('pirate')),
     card('🔄', s.menuArrow, s.menuArrowSub, () => go('arrow')),
-    card('🥌', s.cuTitle, s.cuSub, () => go('curling'))));
+    card('🍺', s.cuTitle, s.cuSub, () => go('curling'))));
 }
 function quickMenu(root) {
   const s = S();
@@ -223,7 +223,7 @@ function quickMenu(root) {
     card('🟢', s.reactTitle, s.reactSub, () => go('react')),
     card('🎨', s.colorTitle, s.colorSub, () => go('color')),
     card('⏱️', s.stopTitle, s.stopSub, () => go('stop')),
-    card('💧', s.beerTitle, s.beerSub, () => go('beer')),
+    card('🍺', s.beerTitle, s.beerSub, () => go('beer')),
     card('🏗️', s.tsTitle, s.tsSub, () => go('tower')),
     card('🔴', s.smTitle, s.smSub, () => go('simon'))));
 }
