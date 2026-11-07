@@ -17,6 +17,8 @@ import { numberBomb, balloon } from './games-v17.js';
 import { tower, simon, wireCut, curling } from './games-v18.js';
 import { phraseScreen } from './phrase.js';
 import { settleScreen } from './settle.js';
+import { yabawi } from './games-v19.js';
+import { shareScreen } from './share.js';
 
 const HOMEPAGE = 'https://wolf.community';
 const FEEDBACK = 'https://wolf.community/traveltalk/6860756';
@@ -76,11 +78,13 @@ const SCREENS = {
   tower,
   simon,
   wire: wireCut,
+  yabawi,
+  share: shareScreen,
   curling,
   phrase: phraseScreen,
   settle: settleScreen,
 };
-const PARENT = { roll: 'dice', shut: 'dice', five: 'dice', d789: 'dice', duel: 'dice', react: 'quick', color: 'quick', stop: 'quick', bomb: 'luck', updown: 'cards', hcm: 'cards', finger: 'luck', teeth: 'wolves', race: 'wolves', pirate: 'wolves', arrow: 'wolves', ladder: 'luck', roulette: 'luck', four: 'battle', tug: 'battle', slap: 'battle', ttt: 'battle', gomoku: 'battle', plinko: 'luck', nbomb: 'luck', balloon: 'luck', tower: 'quick', simon: 'quick', curling: 'quick', wire: 'luck', beer: 'quick', coin: 'luck', kings: 'cards' };
+const PARENT = { roll: 'dice', shut: 'dice', five: 'dice', d789: 'dice', duel: 'dice', react: 'quick', color: 'quick', stop: 'quick', bomb: 'luck', updown: 'cards', hcm: 'cards', finger: 'luck', teeth: 'wolves', race: 'wolves', pirate: 'wolves', arrow: 'wolves', ladder: 'luck', roulette: 'luck', four: 'battle', tug: 'battle', slap: 'battle', ttt: 'battle', gomoku: 'battle', plinko: 'luck', nbomb: 'luck', balloon: 'luck', tower: 'quick', simon: 'quick', curling: 'quick', wire: 'luck', yabawi: 'luck', beer: 'quick', coin: 'luck', kings: 'cards' };
 
 // ---------- 화면 이동 (휴대폰 뒤로가기 버튼과 연동) ----------
 function show(name) {
@@ -118,7 +122,8 @@ function homeScreen(root) {
           btn('▦ QR', () => go('qr'), 'chip'),
           btn(m(s.hotelBtn), () => go('hotel'), 'chip'),
           btn(m(s.phraseBtn), () => go('phrase'), 'chip'),
-          btn(m(s.mapBtn), () => { vibe.tap(); location.href = `map.html?lang=${lang.current}`; }, 'chip')))),
+          btn(m(s.mapBtn), () => { vibe.tap(); location.href = `map.html?lang=${lang.current}`; }, 'chip'),
+          btn(m(s.shBtn), () => go('share'), 'chip')))),
     h('div', { style: 'height:4px' }),
     card('🎲', s.menuDice, s.menuDiceSub, () => go('dice')),
     card('🃏', s.menuCards, s.menuCardsSub, () => go('cards')),
@@ -233,6 +238,7 @@ function luckMenu(root) {
     card('🔢', s.nbTitle, s.nbSub, () => go('nbomb')),
     card('🎈', s.blTitle, s.blSub, () => go('balloon')),
     card('✂️', s.wcTitle, s.wcSub, () => go('wire')),
+    card('🐺', s.ybTitle, s.ybSub, () => go('yabawi')),
     card('☝️', s.fingerTitle, s.fingerSub, () => go('finger'))));
 }
 function battleMenu(root) {

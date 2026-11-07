@@ -79,6 +79,8 @@ import com.wolfgames.app.games.BalloonScreen
 import com.wolfgames.app.games.TowerScreen
 import com.wolfgames.app.games.SimonScreen
 import com.wolfgames.app.games.WireCutScreen
+import com.wolfgames.app.games.YabawiScreen
+import com.wolfgames.app.games.ShareScreen
 import com.wolfgames.app.games.CurlingScreen
 import com.wolfgames.app.games.SizeScreen
 import com.wolfgames.app.games.PhraseScreen
@@ -149,7 +151,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Curling, Sizes, CalcSettle, Phrase, Settle, Map }
+enum class Screen { Home, DiceMenu, RollDice, ShutBox, FiveDice, D789, CardMenu, UpDown, HoChiMinh, FingerMenu, Finger, WolfMenu, LuckMenu, BattleMenu, DiceDuel, QuickMenu, Reaction, ColorReact, Stopwatch, Bomb, Croc, Ladder, Roulette, Race, Pirate, Arrow, Four, Calc, Fx, Language, Changelog, Tug, Slap, Beer, Coin, Kings, Qr, Plinko, Ttt, Gomoku, Hotel, NumberBomb, Balloon, Tower, Simon, WireCut, Curling, Sizes, CalcSettle, Phrase, Settle, Map, Yabawi, Share }
 
 @Composable
 fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String, String?) -> Unit) {
@@ -160,7 +162,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.RollDice, Screen.ShutBox, Screen.FiveDice, Screen.D789, Screen.DiceDuel -> Screen.DiceMenu
             Screen.Reaction, Screen.ColorReact, Screen.Stopwatch, Screen.Beer, Screen.Tower, Screen.Simon, Screen.Curling -> Screen.QuickMenu
             Screen.Tug, Screen.Slap, Screen.Ttt, Screen.Gomoku -> Screen.BattleMenu
-            Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon, Screen.WireCut, Screen.Finger -> Screen.LuckMenu
+            Screen.Coin, Screen.Plinko, Screen.NumberBomb, Screen.Balloon, Screen.WireCut, Screen.Yabawi, Screen.Finger -> Screen.LuckMenu
             Screen.Kings -> Screen.CardMenu
             Screen.UpDown, Screen.HoChiMinh -> Screen.CardMenu
             Screen.Croc, Screen.Race, Screen.Pirate, Screen.Arrow -> Screen.WolfMenu
@@ -200,6 +202,7 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
                 MenuItem("🔢", s.nbTitle, s.nbSub, Screen.NumberBomb),
                 MenuItem("🎈", s.blTitle, s.blSub, Screen.Balloon),
                 MenuItem("✂️", s.wcTitle, s.wcSub, Screen.WireCut),
+                MenuItem("🐺", s.ybTitle, s.ybSub, Screen.Yabawi),
                 MenuItem("☝️", s.fingerTitle, s.fingerSub, Screen.Finger),
             )) { screen = it }
             Screen.QuickMenu -> CategoryScreen("⚡ ${s.menuQuick}", back, listOf(
@@ -242,6 +245,8 @@ fun App(langPref: String, currentLang: Lang, lang2: Lang?, onLangChange: (String
             Screen.Tower -> TowerScreen(onBack = back)
             Screen.Simon -> SimonScreen(onBack = back)
             Screen.WireCut -> WireCutScreen(onBack = back)
+            Screen.Yabawi -> YabawiScreen(onBack = back)
+            Screen.Share -> ShareScreen(onBack = back)
             Screen.Curling -> CurlingScreen(onBack = back)
             Screen.Phrase -> PhraseScreen(onBack = back, mine = currentLang, second = lang2)
             Screen.Settle, Screen.CalcSettle -> SettleScreen(onBack = back)
@@ -366,6 +371,17 @@ fun HomeScreen(currentLang: Lang, onSelect: (Screen) -> Unit) {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(m.mapBtn, color = WG.Text, fontSize = 14.sp)
+                        }
+                        // 📤 앱 공유하기 (친구 폰 고르기 → 앱으로 공유 · 링크 복사 · QR)
+                        Row(
+                            Modifier
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(WG.Surface)
+                                .clickable { vibe.tap(); onSelect(Screen.Share) }
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(m.shBtn, color = WG.Text, fontSize = 14.sp)
                         }
                     }
                 }

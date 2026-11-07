@@ -12,8 +12,8 @@ android {
         applicationId = "com.wolfgames.app.beta"
         minSdk = 26
         targetSdk = 35
-        versionCode = 16
-        versionName = "1.8.1-beta"
+        versionCode = 17
+        versionName = "1.9-beta"
     }
 
     // 고정 서명키: 새 버전을 설치할 때 기존 앱을 지우지 않고 바로 업데이트됨

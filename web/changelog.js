@@ -1,6 +1,56 @@
 // 자동 생성 파일: tools/changelog.py 를 고친 뒤  python3 tools/gen_changelog.py
 export const CHANGELOG = [
  {
+  "ver": "1.9-beta",
+  "date": "2026-11-07",
+  "items": [
+   [
+    "🐺",
+    {
+     "ko": "🐺 🍀 운빨게임에 늑대 야바위 추가: 늑대들이 코인을 하나씩 먹는데 한 마리만 굶어요 → 섞이고 나면 한 명씩 골라서 빈 입이면 원샷 (1~6명)",
+     "en": "🐺 New 🍀 Luck game, Wolf Shell Game: the wolves each eat a coin except one → after the shuffle, take turns picking — empty mouth drinks (1–6 players)",
+     "ja": "🐺 🍀 運ゲーに オオカミ当て を追加：オオカミがコインを1枚ずつ食べ、1匹だけおあずけ → シャッフル後に1人ずつ選んで空っぽなら一気（1〜6人）",
+     "zh": "🐺 🍀 拼手气新增 狼猜猜猜：狼一只只吃硬币，只有一只没吃到 → 洗完后轮流选，选到空嘴的干杯（1~6人）",
+     "th": "🐺 เพิ่มใน 🍀 เกมดวง: หมาป่าซ่อนเหรียญ — หมาป่ากินเหรียญทีละตัว มีตัวเดียวที่อด → สลับเสร็จผลัดกันเลือก ปากว่างต้องดื่ม (1–6 คน)",
+     "vi": "🐺 Thêm vào 🍀 Trò may rủi: Đoán sói — các con sói lần lượt ăn xu, chỉ một con nhịn → trộn xong lần lượt chọn, trúng miệng trống là uống (1–6 người)"
+    }
+   ],
+   [
+    "📤",
+    {
+     "ko": "📤 메인 화면에 공유 버튼: 친구 폰(안드로이드 / 아이폰·PC)을 고르면 맞는 링크로 앱 공유 · 링크만 복사 · QR 바로 찍기",
+     "en": "📤 Share button on the main screen: pick your friend's phone (Android / iPhone·PC) and share the right link via apps, copy just the link, or let them scan the QR",
+     "ja": "📤 メイン画面に共有ボタン：友だちのスマホ（Android / iPhone・PC）を選ぶと合うリンクをアプリで共有・リンクだけコピー・QRをその場で撮影",
+     "zh": "📤 主页新增分享按钮：选朋友的手机（安卓 / iPhone·电脑），用应用分享对应链接、只复制链接，或直接扫二维码",
+     "th": "📤 ปุ่มแชร์ที่หน้าหลัก: เลือกมือถือเพื่อน (Android / iPhone·PC) แล้วแชร์ลิงก์ที่ถูกผ่านแอป คัดลอกลิงก์ หรือสแกน QR ได้เลย",
+     "vi": "📤 Nút Chia sẻ ở màn hình chính: chọn điện thoại của bạn (Android / iPhone·PC) rồi chia sẻ đúng link qua ứng dụng, chỉ sao chép link, hoặc quét mã QR"
+    }
+   ],
+   [
+    "🏁",
+    {
+     "ko": "🏁 늑대달리기: 순위를 레인 가운데에 크게 — 1등 👑 · 2등 · 3등 메달색, 꼴찌 💀 빨간색 + 동물 이름까지",
+     "en": "🏁 Wolf Race: rankings now show big in the middle of each lane — 1st 👑, 2nd and 3rd in medal colors, last 💀 in red, with the animal name",
+     "ja": "🏁 ウルフレース：順位を各レーンの真ん中に大きく — 1位👑・2位・3位はメダル色、最下位は💀赤＋動物の名前",
+     "zh": "🏁 群狼赛跑：名次在每条跑道中间大大地显示 — 第1名 👑、第2·3名奖牌色、最后一名 💀 红色，还有动物名字",
+     "th": "🏁 วิ่งแข่งหมาป่า: อันดับตัวใหญ่กลางลู่ — ที่ 1 👑 ที่ 2·3 สีเหรียญ ที่โหล่ 💀 สีแดง พร้อมชื่อสัตว์",
+     "vi": "🏁 Sói chạy đua: thứ hạng hiện to ở giữa mỗi làn — hạng 1 👑, hạng 2·3 màu huy chương, bét 💀 màu đỏ, kèm tên con vật"
+    }
+   ],
+   [
+    "🗺️",
+    {
+     "ko": "🗺️ 지도(베타): 지도에서 가게를 눌러 바로 등록 · 호텔·클럽·마사지 추가 · 썽태우 노선 끄기/켜기 · 📍 내 위치 버튼",
+     "en": "🗺️ Map (beta): tap a place on the map to add it · hotels, clubs, massage · toggle songthaew routes · 📍 my-location button",
+     "ja": "🗺️ 地図（ベータ）：地図上のお店をタップしてすぐ登録・ホテル/クラブ/マッサージ追加・ソンテウ路線のオン/オフ・📍現在地ボタン",
+     "zh": "🗺️ 地图（测试）：在地图上点店铺直接登记 · 新增酒店/夜店/按摩 · 双条车路线开关 · 📍 我的位置按钮",
+     "th": "🗺️ แผนที่ (เบต้า): แตะร้านบนแผนที่เพื่อเพิ่มได้เลย · เพิ่มโรงแรม คลับ นวด · เปิด/ปิดสายสองแถว · ปุ่ม 📍 ตำแหน่งของฉัน",
+     "vi": "🗺️ Bản đồ (beta): chạm vào quán trên bản đồ để thêm ngay · thêm khách sạn, club, massage · bật/tắt tuyến songthaew · nút 📍 vị trí của tôi"
+    }
+   ]
+  ]
+ },
+ {
   "ver": "1.8.1-beta",
   "date": "2026-11-04",
   "items": [

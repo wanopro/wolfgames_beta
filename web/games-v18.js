@@ -12,7 +12,7 @@ const pill = (c, W, H, label) => { c.fillStyle = 'rgba(0,0,0,.55)'; c.beginPath(
 // 🔊 짧은 소리 (WebAudio, 실패하면 조용히)
 let ac = null;
 function audio() { try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === 'suspended') ac.resume(); } catch (_) { ac = null; } return ac; }
-function tone(hz, dur, type = 'sine', vol = 0.22) {
+export function tone(hz, dur, type = 'sine', vol = 0.22) {
   const a = audio(); if (!a) return;
   try {
     const o = a.createOscillator(), g = a.createGain(), t = a.currentTime;
@@ -22,7 +22,7 @@ function tone(hz, dur, type = 'sine', vol = 0.22) {
   } catch (_) { /* 무시 */ }
 }
 
-function stage(root, title, setup, draw, onDown) {
+export function stage(root, title, setup, draw, onDown) {
   const body = h('div', { class: 'body', style: 'touch-action:none' });
   root.replaceChildren(top(title, setup), body);
   const t0 = performance.now(), now = () => (performance.now() - t0) / 1000;

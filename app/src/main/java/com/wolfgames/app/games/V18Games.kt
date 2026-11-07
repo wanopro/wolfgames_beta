@@ -77,7 +77,7 @@ object Beep {
 }
 
 @Composable
-private fun SetupThen18(title: String, onBack: () -> Unit, setup: @Composable (start: () -> Unit) -> Unit, game: @Composable () -> Unit) {
+internal fun SetupThen18(title: String, onBack: () -> Unit, setup: @Composable (start: () -> Unit) -> Unit, game: @Composable () -> Unit) {
     var started by rememberSaveable { mutableStateOf(com.wolfgames.app.DebugOpen.autostart) }
     var round by remember { mutableIntStateOf(0) }
     if (!started) GameScaffold(title, onBack) { setup { started = true; round++ } }
@@ -86,7 +86,7 @@ private fun SetupThen18(title: String, onBack: () -> Unit, setup: @Composable (s
 
 /** 매 프레임 다시 그리는 캔버스 + 누른 곳 (x, y, t, w, h) */
 @Composable
-private fun Anim18(key: Any, onDown: (Float, Float, Float, Float, Float) -> Unit, draw: (Ctx, Float, Float, Float) -> Unit) {
+internal fun Anim18(key: Any, onDown: (Float, Float, Float, Float, Float) -> Unit, draw: (Ctx, Float, Float, Float) -> Unit) {
     val density = LocalDensity.current.density
     val t0 = remember(key) { System.nanoTime() }
     val now = { (System.nanoTime() - t0) / 1e9f }
