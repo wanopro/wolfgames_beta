@@ -43,6 +43,13 @@
     padding:9px 15px; border-radius:10px; font-size:14px; opacity:0; transition:opacity .2s; z-index:20; pointer-events:none; }
   .toast.show { opacity:1; }
   .setup { margin:auto; max-width:340px; padding:24px; text-align:center; line-height:1.6; color:var(--sub); }
+  .legend { position:fixed; left:10px; bottom:calc(14px + env(safe-area-inset-bottom)); background:rgba(18,18,26,.94); border-radius:14px; padding:10px 12px;
+    box-shadow:0 4px 16px rgba(0,0,0,.5); z-index:5; max-width:calc(100% - 20px); display:none; }
+  .legend.show { display:block; }
+  .legend b { display:block; font-size:14px; margin-bottom:6px; }
+  .lg { display:flex; align-items:center; gap:8px; font-size:13px; padding:4px 0; cursor:pointer; }
+  .lg i { flex:none; width:22px; height:5px; border-radius:3px; }
+  .icon.on { background:var(--accent); color:#000; }
   .pin { background:#1E1E2A; border:2px solid var(--accent); border-radius:20px; padding:3px 8px; font-size:13px; font-weight:700; color:#F2F2F7;
     box-shadow:0 2px 6px rgba(0,0,0,.4); white-space:nowrap; max-width:160px; overflow:hidden; text-overflow:ellipsis; }
 </style>
@@ -52,6 +59,7 @@
   <header>
     <a class="back" id="back" href="./">←</a>
     <h1 id="title"></h1>
+    <button class="icon" id="btnRoutes">🚐</button>
     <button class="icon" id="btnLocate">📍</button>
     <button class="primary" id="btnAdd" style="padding:8px 12px;font-size:14px"></button>
   </header>
@@ -77,10 +85,13 @@
   <div class="row"><button class="primary" id="btnSave"></button></div>
 </div>
 
+<div class="legend" id="legend"></div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { GOOGLE_MAPS_API_KEY, firebaseConfig, WOLF_SEARCH } from './map-config.js';
+import { ROUTES, RT, routeLayer } from './routes.js';
 
 // ---------- 6개 언어 ----------
 const T = {
@@ -148,6 +159,7 @@ $('lSearch').textContent = t.search; $('lCat').textContent = t.cat; $('lMenu').t
 $('fMenu1').placeholder = t.menuPh1; $('fMenu2').placeholder = t.menuPh2;
 $('lNick').textContent = t.nick; $('fNick').placeholder = t.nickPh; $('lComment').textContent = t.comment;
 $('fComment').placeholder = t.commentPh; $('btnSave').textContent = t.save;
+const rt = RT[L] || RT.en; $('btnRoutes').title = rt.btn;
 if (inApp) $('back').style.display = 'none'; // 앱에서는 앱의 뒤로가기 사용
 
 // 구글맵 앱 링크 (폰에 앱이 있으면 앱으로 열림)
@@ -155,7 +167,7 @@ const viewUrl = (p) => p.mapsUrl || `https://www.google.com/maps/search/?api=1&q
 
 if (GOOGLE_MAPS_API_KEY.startsWith('YOUR_') || firebaseConfig.projectId.startsWith('YOUR_')) {
   $('map').replaceWith(Object.assign(document.createElement('div'), { className: 'setup', textContent: t.setup, style: 'white-space:pre-line' }));
-  $('btnAdd').disabled = true; $('btnLocate').disabled = true;
+  $('btnAdd').disabled = true; $('btnLocate').disabled = true; $('btnRoutes').disabled = true;
 } else {
   start().catch((e) => { console.error(e); toast(t.loadFail); });
 }
@@ -211,6 +223,25 @@ async function start() {
   $('fNick').value = store('wg-map-nick') || '';
   ['fNick', 'fMenu1'].forEach((id) => $(id).addEventListener('input', () => $(id).classList.remove('bad')));
   $('btnAdd').onclick = () => { picked = null; $('picked').textContent = ''; $('catBox').style.display = ''; openSheet('addSheet'); };
+  // 🚐 썽태우 노선
+  let routesOn = false;
+  const layer = routeLayer(map, google, L, (r) => routeInfo(r));
+  function routeInfo(r) {
+    layer.focus(r.id);
+    $('detailBody').innerHTML = `<h2><span style="display:inline-block;width:26px;height:6px;border-radius:3px;background:${r.color};vertical-align:middle;margin-right:8px"></span>${esc(r.name[L] || r.name.en)}</h2>
+      <div style="font-size:15px;line-height:1.5;margin-top:6px">${esc(r.desc[L] || r.desc.en)}</div>
+      <div class="sub" style="margin-top:10px">💵 ${esc(rt.fare)}</div><div class="sub" style="margin-top:6px">⚠️ ${esc(rt.warn)}</div>`;
+    openSheet('detailSheet');
+  }
+  $('legend').innerHTML = `<b>${esc(rt.title)}</b>` + ROUTES.map((r) => `<div class="lg" data-r="${r.id}"><i style="background:${r.color}"></i>${esc(r.name[L] || r.name.en)}</div>`).join('') + `<div class="sub" style="margin-top:6px">${esc(rt.approx)}</div>`;
+  $('legend').querySelectorAll('.lg').forEach((el) => { el.onclick = () => routeInfo(ROUTES.find((r) => r.id === el.dataset.r)); });
+  $('btnRoutes').onclick = async () => {
+    routesOn = !routesOn; $('btnRoutes').classList.toggle('on', routesOn); $('legend').classList.toggle('show', routesOn);
+    closeSheets(); await layer.show(routesOn);
+    if (routesOn) toast(rt.warn);
+  };
+  if (qs.get('routes') === '1') $('btnRoutes').onclick();
+
   $('btnLocate').onclick = () => {
     if (!navigator.geolocation) return toast(t.locNo);
     navigator.geolocation.getCurrentPosition((p) => { map.setCenter({ lat: p.coords.latitude, lng: p.coords.longitude }); map.setZoom(15); }, () => toast(t.locNo));

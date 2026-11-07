@@ -13,7 +13,7 @@
 ## 2. Google Maps API 키
 1. https://console.cloud.google.com → 위에서 만든 **같은 프로젝트** 선택
 2. 결제 계정 연결 (카드 등록 필요. 월 무료 사용량 안에서는 과금 없음)
-3. API 및 서비스 → 라이브러리 → **Maps JavaScript API**, **Places API (New)** 사용 설정
+3. API 및 서비스 → 라이브러리 → **Maps JavaScript API**, **Places API (New)**, **Directions API** 사용 설정 (Directions는 🚐 썽태우 노선을 실제 도로 모양으로 그릴 때 씀 — 휴대폰마다 처음 한 번만 받고 저장)
 4. 사용자 인증 정보 → API 키 만들기 → `web/map-config.js` 의 `GOOGLE_MAPS_API_KEY` 에 붙여넣기
 5. **키 제한 (꼭!)**: 애플리케이션 제한 = 웹사이트 → `https://wanopro.github.io/*`
 6. 과금 방지: 결제 → 예산 및 알림 (예: 1달러), Google Maps Platform → 할당량에서 하루 최대 요청 수 제한
