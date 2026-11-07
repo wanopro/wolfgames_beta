@@ -1,6 +1,6 @@
 // 🍜 맛집 지도 설정 — 키를 받으면 여기만 채우면 됩니다 (자세한 방법: docs/MAP_SETUP.md)
 // 이 값들은 웹에 공개돼도 되는 값이에요. 대신 구글 클라우드에서 'wanopro.github.io' 로 키 사용처를 꼭 제한하세요.
-export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
+export const GOOGLE_MAPS_API_KEY = 'AIzaSyA6kXYyB68Jv0YfusnEorn1VqOKpIqnp8k';
 export const firebaseConfig = {
   apiKey: 'AIzaSyBuUgyRRiN9JIWhTOnx9J04MVkubfxZjy0',
   authDomain: 'wolfgames-map.firebaseapp.com',
