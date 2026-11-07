@@ -2,10 +2,12 @@
 // 이 값들은 웹에 공개돼도 되는 값이에요. 대신 구글 클라우드에서 'wanopro.github.io' 로 키 사용처를 꼭 제한하세요.
 export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
 export const firebaseConfig = {
-  apiKey: 'YOUR_FIREBASE_API_KEY',
-  authDomain: 'YOUR_PROJECT.firebaseapp.com',
-  projectId: 'YOUR_PROJECT',
-  appId: 'YOUR_APP_ID',
+  apiKey: 'AIzaSyBuUgyRRiN9JIWhTOnx9J04MVkubfxZjy0',
+  authDomain: 'wolfgames-map.firebaseapp.com',
+  projectId: 'wolfgames-map',
+  storageBucket: 'wolfgames-map.firebasestorage.app',
+  messagingSenderId: '265586471992',
+  appId: '1:265586471992:web:b5c2a68f586423a522a2cd',
 };
 
 // 🐺 울프 커뮤니티 가게 이름 검색 주소 — 끝에 가게 이름이 붙음
