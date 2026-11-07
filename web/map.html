@@ -49,6 +49,7 @@
   .legend b { display:block; font-size:14px; margin-bottom:6px; }
   .lg { display:flex; align-items:center; gap:8px; font-size:13px; padding:4px 0; cursor:pointer; }
   .lg i { flex:none; width:22px; height:5px; border-radius:3px; }
+  .lg.off { opacity:.35; text-decoration:line-through; }
   .icon.on { background:var(--accent); color:#000; }
   .pin { background:#1E1E2A; border:2px solid var(--accent); border-radius:20px; padding:3px 8px; font-size:13px; font-weight:700; color:#F2F2F7;
     box-shadow:0 2px 6px rgba(0,0,0,.4); white-space:nowrap; max-width:160px; overflow:hidden; text-overflow:ellipsis; }
@@ -92,7 +93,7 @@
 
 <script type="module">
 import { GOOGLE_MAPS_API_KEY, firebaseConfig, WOLF_SEARCH } from './map-config.js';
-import { ROUTES, RT, routeLayer } from './routes.js?v=2';
+import { ROUTES, RT, routeLayer } from './routes.js?v=3';
 
 // ---------- 6개 언어 ----------
 const T = {
@@ -289,7 +290,11 @@ async function start() {
     openSheet('detailSheet');
   }
   $('legend').innerHTML = `<b>${esc(rt.title)}</b>` + ROUTES.map((r) => `<div class="lg" data-r="${r.id}"><i style="background:${r.color}"></i>${esc(r.name[L] || r.name.en)}</div>`).join('') + `<div class="sub" style="margin-top:6px">${esc(rt.approx)}</div>`;
-  $('legend').querySelectorAll('.lg').forEach((el) => { el.onclick = () => routeInfo(ROUTES.find((r) => r.id === el.dataset.r)); });
+  // 범례 누르면 그 노선 끄기/켜기 (설명은 지도 위 선을 누르면 나옴)
+  $('legend').querySelectorAll('.lg').forEach((el) => {
+    el.classList.toggle('off', layer.isOff(el.dataset.r));
+    el.onclick = () => { el.classList.toggle('off', !layer.toggle(el.dataset.r)); };
+  });
   $('btnRoutes').onclick = async () => {
     routesOn = !routesOn; $('btnRoutes').classList.toggle('on', routesOn); $('legend').classList.toggle('show', routesOn);
     closeSheets(); await layer.show(routesOn);

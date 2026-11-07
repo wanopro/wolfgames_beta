@@ -1,7 +1,7 @@
 // 🚐 파타야 썽태우(바트버스) 노선 — 맛집 지도 위에 색깔 선으로
 // 길 모양(pts)은 구글 Routes API(운전)로 실제 도로를 따라 미리 받아서 넣어둠 → 휴대폰에서는 API 안 부름. pts 가 짧으면 그때만 Routes API로 받아 저장.
 // 출처: pattayaunlimited.com · pattayapointer (2026-04 기준 요금). 기사님마다 다를 수 있어서 타기 전에 행선지 확인 안내.
-export const ROUTES_VER = 2;
+export const ROUTES_VER = 3;
 export const ROUTE_CENTER = { lat: 12.928, lng: 100.885 };
 
 const P = (s) => `${s}, Pattaya, Chon Buri, Thailand`;
@@ -44,12 +44,12 @@ export const ROUTES = [
 ];
 
 export const RT = {
-  ko: { btn: '🚐 썽태우', title: '🚐 파타야 썽태우 노선', fare: '요금: 10km까지 15바트, 넘으면 20바트 (2026년 4월부터) · 내릴 때 벨 누르고 기사님께 현금', warn: '기사님마다 노선이 다를 수 있어요. 타기 전에 행선지를 꼭 물어보세요.', approx: '대략적인 노선이에요', hide: '노선 숨기기' },
-  en: { btn: '🚐 Baht bus', title: '🚐 Pattaya baht bus routes', fare: 'Fare: 15 THB up to 10 km, 20 THB beyond (from Apr 2026) · ring the bell, pay the driver in cash', warn: 'Drivers sometimes change routes — always confirm your destination before boarding.', approx: 'Routes are approximate', hide: 'Hide routes' },
-  ja: { btn: '🚐 ソンテウ', title: '🚐 パタヤ ソンテウ路線', fare: '運賃：10kmまで15バーツ、それ以上は20バーツ（2026年4月から）・降りるときはベルを押して運転手に現金で', warn: '運転手によって路線が変わることがあります。乗る前に必ず行き先を確認しましょう。', approx: '路線はおおよそです', hide: '路線を隠す' },
-  zh: { btn: '🚐 双条车', title: '🚐 芭提雅双条车路线', fare: '车费：10公里内15泰铢，超过20泰铢（2026年4月起）· 下车按铃，现金付给司机', warn: '司机有时会改路线，上车前一定要问清目的地。', approx: '路线为大致路线', hide: '隐藏路线' },
-  th: { btn: '🚐 สองแถว', title: '🚐 สายรถสองแถวพัทยา', fare: 'ค่าโดยสาร: ไม่เกิน 10 กม. 15 บาท เกินนั้น 20 บาท (ตั้งแต่ เม.ย. 2026) · กดกริ่งแล้วจ่ายเงินสดกับคนขับ', warn: 'คนขับบางคันอาจเปลี่ยนเส้นทาง ถามปลายทางก่อนขึ้นทุกครั้ง', approx: 'เส้นทางโดยประมาณ', hide: 'ซ่อนเส้นทาง' },
-  vi: { btn: '🚐 Xe songthaew', title: '🚐 Tuyến xe songthaew Pattaya', fare: 'Giá vé: tới 10 km 15 baht, xa hơn 20 baht (từ 4/2026) · bấm chuông khi xuống, trả tiền mặt cho tài xế', warn: 'Tài xế đôi khi đổi tuyến — luôn hỏi điểm đến trước khi lên xe.', approx: 'Tuyến chỉ mang tính ước lượng', hide: 'Ẩn tuyến' },
+  ko: { btn: '🚐 썽태우', title: '🚐 파타야 썽태우 노선', fare: '요금: 10km까지 15바트, 넘으면 20바트 (2026년 4월부터) · 내릴 때 벨 누르고 기사님께 현금', warn: '기사님마다 노선이 다를 수 있어요. 타기 전에 행선지를 꼭 물어보세요.', approx: '누르면 끄기/켜기 · 선을 누르면 설명', hide: '노선 숨기기' },
+  en: { btn: '🚐 Baht bus', title: '🚐 Pattaya baht bus routes', fare: 'Fare: 15 THB up to 10 km, 20 THB beyond (from Apr 2026) · ring the bell, pay the driver in cash', warn: 'Drivers sometimes change routes — always confirm your destination before boarding.', approx: 'Tap to hide/show · tap a line for details', hide: 'Hide routes' },
+  ja: { btn: '🚐 ソンテウ', title: '🚐 パタヤ ソンテウ路線', fare: '運賃：10kmまで15バーツ、それ以上は20バーツ（2026年4月から）・降りるときはベルを押して運転手に現金で', warn: '運転手によって路線が変わることがあります。乗る前に必ず行き先を確認しましょう。', approx: 'タップで表示/非表示・線をタップで説明', hide: '路線を隠す' },
+  zh: { btn: '🚐 双条车', title: '🚐 芭提雅双条车路线', fare: '车费：10公里内15泰铢，超过20泰铢（2026年4月起）· 下车按铃，现金付给司机', warn: '司机有时会改路线，上车前一定要问清目的地。', approx: '点一下隐藏/显示 · 点线看说明', hide: '隐藏路线' },
+  th: { btn: '🚐 สองแถว', title: '🚐 สายรถสองแถวพัทยา', fare: 'ค่าโดยสาร: ไม่เกิน 10 กม. 15 บาท เกินนั้น 20 บาท (ตั้งแต่ เม.ย. 2026) · กดกริ่งแล้วจ่ายเงินสดกับคนขับ', warn: 'คนขับบางคันอาจเปลี่ยนเส้นทาง ถามปลายทางก่อนขึ้นทุกครั้ง', approx: 'แตะเพื่อซ่อน/แสดง · แตะเส้นเพื่อดูรายละเอียด', hide: 'ซ่อนเส้นทาง' },
+  vi: { btn: '🚐 Xe songthaew', title: '🚐 Tuyến xe songthaew Pattaya', fare: 'Giá vé: tới 10 km 15 baht, xa hơn 20 baht (từ 4/2026) · bấm chuông khi xuống, trả tiền mặt cho tài xế', warn: 'Tài xế đôi khi đổi tuyến — luôn hỏi điểm đến trước khi lên xe.', approx: 'Chạm để ẩn/hiện · chạm vào tuyến để xem chi tiết', hide: 'Ẩn tuyến' },
 };
 
 /** 노선을 지도 위에 그리기. 돌려주는 값: { show(on), focus(id) } */
@@ -99,10 +99,16 @@ export function routeLayer(map, google, L, onPick) {
       lines.push({ r, under, line, path });
     }
   }
+  // 범례에서 끈 노선 (이 휴대폰에 기억)
+  let off = new Set(); try { off = new Set(JSON.parse(store('wg-route-off') || '[]')); } catch (_) { /* 무시 */ }
+  let shown = false;
+  const apply = () => lines.forEach((x) => { const v = shown && !off.has(x.r.id); x.under.setMap(v ? map : null); x.line.setMap(v ? map : null); });
   return {
+    isOff: (id) => off.has(id),
+    toggle(id) { if (off.has(id)) off.delete(id); else off.add(id); store('wg-route-off', JSON.stringify([...off])); apply(); return !off.has(id); },
     async show(on) {
       if (on && !built) await build();
-      lines.forEach((x) => { x.under.setMap(on ? map : null); x.line.setMap(on ? map : null); });
+      shown = on; apply();
       if (on) { map.setCenter(ROUTE_CENTER); map.setZoom(14); }
     },
     focus(id) {
